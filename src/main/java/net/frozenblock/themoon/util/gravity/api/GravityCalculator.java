@@ -16,7 +16,7 @@ public class GravityCalculator {
 	public static double calculateGravity(Level level, double y) {
 		ResourceKey<DimensionType> dimensionType = level.dimensionTypeId();
 		if (LEVEL_GRAVITY_FUNCTIONS.containsKey(dimensionType)) {
-
+			return LEVEL_GRAVITY_FUNCTIONS.get(dimensionType).get(level, y);
 		}
 		return 1;
 	}
