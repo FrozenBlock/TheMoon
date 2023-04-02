@@ -3,6 +3,8 @@ package net.frozenblock.themoon;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.ModContainer;
 import net.frozenblock.themoon.mod_compat.TheMoonModIntegrations;
+import net.frozenblock.themoon.registry.TheMoonBiomeSources;
+import net.frozenblock.themoon.registry.TheMoonFeatures;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import org.jetbrains.annotations.NotNull;
 import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.QuiltDataFixerBuilder;
@@ -15,6 +17,8 @@ public class TheMoonMod implements ModInitializer {
 		TheMoonSharedConstants.startMeasuring(this);
 		applyDataFixes(TheMoonSharedConstants.MOD_CONTAINER);
 
+		TheMoonFeatures.register();
+		TheMoonBiomeSources.register();
 		TheMoonModIntegrations.init();
 
 		TheMoonSharedConstants.stopMeasuring(this);

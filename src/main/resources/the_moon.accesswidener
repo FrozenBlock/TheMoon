@@ -1,1 +1,4 @@
 accessWidener    v2    named
+accessible    method    net/minecraft/world/level/levelgen/NoiseRouterData    postProcess    (Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible    method    net/minecraft/world/level/levelgen/NoiseRouterData    slide    (Lnet/minecraft/world/level/levelgen/DensityFunction;IIIIDIID)Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible    method    net/minecraft/world/level/levelgen/NoiseRouterData    getFunction    (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/level/levelgen/DensityFunction;
