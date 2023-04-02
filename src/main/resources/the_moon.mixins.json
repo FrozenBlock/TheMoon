@@ -6,10 +6,12 @@
   "mixins": [
     "DimensionSpecialEffectsMixin",
     "gravity.AbstractArrowMixin",
+    "gravity.BoatMixin",
     "gravity.EntityMixin",
     "gravity.FallingBlockEntityMixin",
     "gravity.ItemEntityMixin",
     "gravity.LivingEntityMixin",
+    "gravity.PrimedTntMixin",
     "gravity.ShulkerBulletMixin",
     "gravity.ThrowableProjectileMixin"
   ],
