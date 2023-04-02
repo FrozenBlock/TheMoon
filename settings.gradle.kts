@@ -25,7 +25,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "Template Mod"
+rootProject.name = "The Moon"
 
 localRepository("FrozenLib", "maven.modrinth:frozenlib", false)
 

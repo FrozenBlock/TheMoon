@@ -1,4 +1,4 @@
-package net.frozenblock.template.util;
+package net.frozenblock.themoon.util;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
@@ -11,10 +11,9 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TemplateSharedConstants {
-	public static final String MOD_ID = "frozenblock_template_mod";
+public class TheMoonSharedConstants {
+	public static final String MOD_ID = "the_moon";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	public static boolean DEV_LOGGING = false;
 	/**
 	 * Used for features that may be unstable and crash in public builds.
 	 * <p>

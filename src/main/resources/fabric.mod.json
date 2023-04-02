@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "frozenblock_template_mod",
+  "id": "the_moon",
   "version": "${version}",
 
-  "name": "FrozenBlock Template Mod",
+  "name": "The Moon",
   "description": "Template description",
   "authors": [
     "FrozenBlock"
@@ -20,19 +20,19 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.frozenblock.template.TemplateMod"
+      "net.frozenblock.themoon.TheMoonMod"
     ],
     "client": [
-      "net.frozenblock.template.TemplateModClient"
+      "net.frozenblock.themoon.TheMoonModClient"
     ],
     "fabric-datagen": [
-      "net.frozenblock.template.datagen.TemplateModDataGenerator"
+      "net.frozenblock.themoon.datagen.TheMoonModDataGenerator"
     ]
   },
   "mixins": [
-    "frozenblock_template_mod.mixins.json"
+    "the_moon.mixins.json"
   ],
-  "accessWidener": "frozenblock_template_mod.accesswidener",
+  "accessWidener": "the_moon.accesswidener",
 
   "depends": {
     "frozenlib": ">=1.1.11-",

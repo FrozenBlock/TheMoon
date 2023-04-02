@@ -1,7 +1,7 @@
-package net.frozenblock.template.mod_compat;
+package net.frozenblock.themoon.mod_compat;
 
 import net.frozenblock.lib.integration.api.ModIntegration;
-import net.frozenblock.template.util.TemplateSharedConstants;
+import net.frozenblock.themoon.util.TheMoonSharedConstants;
 
 public class FrozenLibIntegration extends ModIntegration {
 	public FrozenLibIntegration() {
@@ -10,6 +10,6 @@ public class FrozenLibIntegration extends ModIntegration {
 
 	@Override
 	public void init() {
-		TemplateSharedConstants.log("FrozenLib integration ran!", TemplateSharedConstants.UNSTABLE_LOGGING);
+		TheMoonSharedConstants.log("FrozenLib integration ran!", TheMoonSharedConstants.UNSTABLE_LOGGING);
 	}
 }
