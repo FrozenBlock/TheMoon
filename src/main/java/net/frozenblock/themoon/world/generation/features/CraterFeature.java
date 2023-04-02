@@ -28,30 +28,40 @@ public class CraterFeature extends Feature<CraterFeatureConfiguration> {
 		int j = craterFeatureConfiguration.depth().sample(randomSource);
 		if (j > i) {
 			return false;
-		}
-		int a = (j * j + i * i) / (2 * j);
-		BlockPos blockPos2 = blockPos.above(a - j);
-		BlockPos.MutableBlockPos mutableBlockPos = blockPos.mutable();
-		Consumer<LevelAccessor> consumer = levelAccessor -> {
-			for (int k = -j; k <= a; ++k) {
-				boolean bl = false;
-				for (int l = -k; l <= k; ++l) {
-					for (int m = -k; m <= k; ++m) {
-						mutableBlockPos.setWithOffset(blockPos, l, k, m);
-						if (!(mutableBlockPos.distSqr(blockPos2) < (double)(k * k)) || levelAccessor.getBlockState(mutableBlockPos).isAir()) continue;
-						bl = true;
-						levelAccessor.setBlock(mutableBlockPos, Blocks.AIR.defaultBlockState(), 3);
+		} else {
+			int k = (j * j + i * i) / (2 * j);
+			BlockPos blockPos2 = blockPos.above(k - j);
+			BlockPos.MutableBlockPos mutableBlockPos = blockPos.mutable();
+			Consumer<LevelAccessor> consumer = (levelAccessor) -> {
+				for(int kx = -j; kx <= k; ++kx) {
+					boolean bl = false;
+
+					for(int l = -k; l <= k; ++l) {
+						for(int m = -k; m <= k; ++m) {
+							mutableBlockPos.setWithOffset(blockPos, l, kx, m);
+							if (mutableBlockPos.distSqr(blockPos2) < (double)(k * k) && !levelAccessor.getBlockState(mutableBlockPos).isAir()) {
+								bl = true;
+								levelAccessor.setBlock(mutableBlockPos, Blocks.AIR.defaultBlockState(), 3);
+							}
+						}
+					}
+
+					if (!bl && kx > 0) {
+						break;
 					}
 				}
-				if (!bl && k > 0) break;
+
+			};
+			if (k < 15) {
+				consumer.accept(worldGenLevel);
+			} else {
+				ServerLevel serverLevel = worldGenLevel.getLevel();
+				serverLevel.getServer().execute(() -> {
+					consumer.accept(serverLevel);
+				});
 			}
-		};
-		if (a < 15) {
-			consumer.accept(worldGenLevel);
-		} else {
-			ServerLevel serverLevel = worldGenLevel.getLevel();
-			serverLevel.getServer().execute(() -> consumer.accept(serverLevel));
+
+			return true;
 		}
-		return true;
 	}
 }

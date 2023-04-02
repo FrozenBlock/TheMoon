@@ -26,7 +26,7 @@ public class TheMoonNoiseGeneratorSettings {
 	}
 
 	private static DensityFunction slideMoon(DensityFunction densityFunction) {
-		return NoiseRouterData.slide(densityFunction, 0, 256, 80, 64, -0.1, 0, 24, 0.1);
+		return NoiseRouterData.slide(densityFunction, 0, 208, 80, 64, -0.1, 0, 24, 0.1);
 	}
 
 	public static void bootstrap(BootstapContext<NoiseGeneratorSettings> context) {
