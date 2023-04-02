@@ -49,18 +49,13 @@ public val maven_group: String by project
 public val archives_base_name: String by project
 
 public val fabric_version: String by project
-public val fabric_asm_version: String by project
 public val frozenlib_version: String by project
 
-public val betterend_version: String by project
-public val betternether_version: String by project
 public val modmenu_version: String by project
 public val cloth_config_version: String by project
 public val copperpipes_version: String by project
 public val nbtcrafting_version: String by project
 public val terrablender_version: String by project
-public val terralith_version: String by project
-public val tomsstorage_version: String by project
 
 public val sodium_version: String by project
 public val iris_version: String by project
@@ -260,49 +255,6 @@ dependencies {
     // Sodium
     modCompileOnly("maven.modrinth:sodium:${sodium_version}")
     modCompileOnly("org.anarres:jcpp:1.4.14")
-
-    // BetterEnd
-    modCompileOnly("maven.modrinth:betterend:${betterend_version}")
-
-    // BetterNether
-    modCompileOnly("maven.modrinth:betternether:${betternether_version}")
-    /*
-        // only affects runClient, does not affect gradlew build.
-        // add -PuseThirdPartyMods=false to not use these
-        if (findProperty("useThirdPartyMods") != "false") {
-            modRuntimeOnly("maven.modrinth:ferrite-core:${ferritecore_version}")
-            modRuntimeOnly("maven.modrinth:lazydfu:${lazydfu_version}")
-            modRuntimeOnly("maven.modrinth:starlight:${starlight_version}")
-            modRuntimeOnly("maven.modrinth:lithium:${lithium_version}")
-            modRuntimeOnly("maven.modrinth:fastanim:${fastanim_version}")
-
-            modRuntimeOnly("maven.modrinth:entityculling:${entityculling_version}")
-            modRuntimeOnly("maven.modrinth:memoryleakfix:${memoryleakfix_version}")
-            modRuntimeOnly("maven.modrinth:no-unused-chunks:${no_unused_chunks_version}")
-            //modRuntimeOnly("maven.modrinth:exordium:${exordium_version}")
-            //modRuntimeOnly("maven.modrinth:entity-collision-fps-fix:${entity_collision_fps_fix_version}")
-            //modRuntimeOnly("maven.modrinth:cull-less-leaves:${cull_less_leaves_version}")
-            //modRuntimeOnly("maven.modrinth:c2me-fabric:${c2me_version}")
-            //modRuntimeOnly("maven.modrinth:moreculling:${more_culling_version}")
-            //modRuntimeOnly("maven.modrinth:smoothboot-fabric:${smoothboot_version}")
-        }
-
-        // only affects runClient, does not affect gradlew build.
-        // add -PuseExperimentalThirdParty=true to the gradle runClient
-        // command to use these
-        if (findProperty("useExperimentalThirdParty") == "true") {
-            modRuntimeOnly("maven.modrinth:terralith:${terralith_version}")
-            modRuntimeOnly("maven.modrinth:sodium:${sodium_version}")
-            modRuntimeOnly("org.joml:joml:1.10.4")
-            modRuntimeOnly("org.anarres:jcpp:1.4.14")
-            //modRuntimeOnly "maven.modrinth:iris:${iris_version}"
-            modRuntimeOnly("maven.modrinth:indium:${indium_version}")
-            modRuntimeOnly("me.flashyreese.mods:reeses-sodium-options:${reeses_sodium_options_version}") {
-                exclude(group = "net.coderbot.iris_mc1_19", module = "iris")
-            }
-            modRuntimeOnly("me.flashyreese.mods:sodium-extra-fabric:${sodium_extra_version}")
-            modRuntimeOnly("io.github.douira:glsl-transformer:0.27.0")
-        }*/
 }
 
 quiltflower {

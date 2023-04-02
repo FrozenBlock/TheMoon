@@ -27,7 +27,7 @@ pluginManagement {
 
 rootProject.name = "The Moon"
 
-localRepository("FrozenLib", "maven.modrinth:frozenlib", false)
+localRepository("FrozenLib", "maven.modrinth:frozenlib", true)
 
 
 fun localRepository(repo: String, dependencySub: String, kotlin: Boolean) {
