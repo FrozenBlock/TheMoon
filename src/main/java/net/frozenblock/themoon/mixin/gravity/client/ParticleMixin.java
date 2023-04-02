@@ -1,6 +1,6 @@
 package net.frozenblock.themoon.mixin.gravity.client;
 
-import net.frozenblock.themoon.util.gravity.api.GravityGetter;
+import net.frozenblock.themoon.util.gravity.api.GravityCalculator;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import org.spongepowered.asm.mixin.Final;
@@ -27,6 +27,9 @@ public class ParticleMixin {
 	@Shadow @Final
 	public ClientLevel level;
 
+	@Shadow
+	public double y;
+
 	@Inject(method = "tick", at = @At("HEAD"))
 	public void theMoon$storeY(CallbackInfo info) {
 		this.theMoon$oldYD = this.yd;
@@ -34,7 +37,7 @@ public class ParticleMixin {
 
 	@Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/particle/Particle;move(DDD)V", ordinal = 0, shift = Shift.BEFORE))
 	public void theMoon$useGravity(CallbackInfo info) {
-		this.yd = this.theMoon$oldYD - (0.04 * GravityGetter.getGravity(this.level) * (double)this.gravity);
+		this.yd = this.theMoon$oldYD - (0.04 * GravityCalculator.calculateGravity(this.level, this.y) * (double)this.gravity);
 	}
 
 }

@@ -9,7 +9,6 @@
     "gravity.EntityMixin",
     "gravity.FallingBlockEntityMixin",
     "gravity.ItemEntityMixin",
-    "gravity.LevelMixin",
     "gravity.LivingEntityMixin",
     "gravity.ShulkerBulletMixin",
     "gravity.ThrowableProjectileMixin"
