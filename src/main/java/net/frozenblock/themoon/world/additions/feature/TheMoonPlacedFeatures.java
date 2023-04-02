@@ -27,21 +27,21 @@ public final class TheMoonPlacedFeatures {
 
 		TheMoonSharedConstants.logMod("Registering TheMoonPlacedFeatures for", true);
 
-		CRATER_SMALL.makeAndSetHolder(TheMoonConfiguredFeatures.CRATER_SMALL.getHolder(),
+		CRATER_SMALL.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.CRATER_SMALL.getKey()),
 				RarityFilter.onAverageOnceEvery(4),
 				InSquarePlacement.spread(),
 				PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
 				BiomeFilter.biome()
 		);
 
-		CRATER_LARGE.makeAndSetHolder(TheMoonConfiguredFeatures.CRATER_LARGE.getHolder(),
+		CRATER_LARGE.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.CRATER_LARGE.getKey()),
 				RarityFilter.onAverageOnceEvery(12),
 				InSquarePlacement.spread(),
 				PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
 				BiomeFilter.biome()
 		);
 
-		CRATER_MEGA.makeAndSetHolder(TheMoonConfiguredFeatures.CRATER_MEGA.getHolder(),
+		CRATER_MEGA.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.CRATER_MEGA.getKey()),
 				RarityFilter.onAverageOnceEvery(256),
 				InSquarePlacement.spread(),
 				PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
