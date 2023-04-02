@@ -34,7 +34,8 @@ public class TheMoonDimensionTypes {
 								false,
 								false,
 								UniformInt.of(0, 7),
-								0)
+								0
+						)
 				)
 		);
 	}

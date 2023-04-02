@@ -38,7 +38,7 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 		registryBuilder.add(Registries.PLACED_FEATURE, TheMoonFeatureBootstrap::bootstrapPlaced);
 		registryBuilder.add(Registries.BIOME, TheMoonBiomes::bootstrap);
 		registryBuilder.add(Registries.DIMENSION_TYPE, TheMoonDimensionTypes::bootstrap);
-		registryBuilder.add(Registries.NOISE_SETTINGS, TheMoonNoiseGeneratorSettings::bootstrap);
+		registryBuilder.add(Registries.NOISE_SETTINGS, TheMoonFeatureBootstrap::bootstrapNoiseSettings);
 		//registryBuilder.add(Registries.PROCESSOR_LIST, RegisterStructures::bootstrapProcessor);
 		//registryBuilder.add(Registries.TEMPLATE_POOL, RegisterStructures::bootstrapTemplatePool);
 		//registryBuilder.add(Registries.STRUCTURE, RegisterStructures::bootstrap);
