@@ -1,10 +1,10 @@
 {
+  "type": "the_moon:the_moon",
   "generator": {
-    "type": "the_moon:the_moon",
-    "custom_bool": true,
+    "type": "minecraft:noise",
+    "settings": "the_moon:the_moon",
     "biome_source": {
       "type": "the_moon:the_moon"
     }
-  },
-  "type": "the_moon:the_moon"
+  }
 }
