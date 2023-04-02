@@ -51,7 +51,6 @@ public class TheMoonFeatureBootstrap {
 		final var configuredFeatures = asLookup(entries.getLookup(Registries.CONFIGURED_FEATURE));
 		final var placedFeatures = asLookup(entries.placedFeatures());
 		final var biomes = asLookup(entries.getLookup(Registries.BIOME));
-		final var biomeSources = asLookup(entries.getLookup(Registries.BIOME_SOURCE));
 		final var noises = asLookup(entries.getLookup(Registries.NOISE));
 		final var processorLists = asLookup(entries.getLookup(Registries.PROCESSOR_LIST));
 		final var templatePools = asLookup(entries.getLookup(Registries.TEMPLATE_POOL));
@@ -65,8 +64,6 @@ public class TheMoonFeatureBootstrap {
 		entries.addAll(placedFeatures);
 		TheMoonSharedConstants.log("Adding finalized biomes to datagen", true);
 		entries.addAll(biomes);
-		TheMoonSharedConstants.log("Adding finalized biome sources to datagen", true);
-		entries.addAll(biomeSources);
 		TheMoonSharedConstants.log("Adding finalized noises to datagen", true);
 		entries.addAll(noises);
 		TheMoonSharedConstants.log("Adding finalized processor lists to datagen", true);
