@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.frozenblock.lib.datagen.api.FrozenBiomeTagProvider;
 import net.frozenblock.themoon.registry.TheMoonBiomes;
 import net.frozenblock.themoon.registry.TheMoonDimensionTypes;
-import net.frozenblock.themoon.registry.TheMoonNoiseGeneratorSettings;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;

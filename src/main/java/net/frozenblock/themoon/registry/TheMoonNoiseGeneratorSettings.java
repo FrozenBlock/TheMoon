@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.NoiseSettings;
 
 public class TheMoonNoiseGeneratorSettings {
 
-	public static final ResourceKey<NoiseGeneratorSettings> MOON = ResourceKey.create(Registries.NOISE_SETTINGS, TheMoonSharedConstants.id("moon"));
+	public static final ResourceKey<NoiseGeneratorSettings> MOON = ResourceKey.create(Registries.NOISE_SETTINGS, TheMoonSharedConstants.id("the_moon"));
 
 	public static final NoiseSettings MOON_NOISE_SETTINGS = NoiseSettings.create(0, 256, 2, 1);
 
