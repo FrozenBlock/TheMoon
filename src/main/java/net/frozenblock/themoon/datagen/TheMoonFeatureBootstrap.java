@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.frozenblock.lib.worldgen.feature.api.FrozenConfiguredFeatureUtils;
 import net.frozenblock.lib.worldgen.feature.api.FrozenFeatureUtils;
 import net.frozenblock.lib.worldgen.feature.api.FrozenPlacementUtils;
+import net.frozenblock.themoon.registry.TheMoonNoiseGeneratorSettings;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import net.frozenblock.themoon.world.additions.feature.TheMoonConfiguredFeatures;
 import net.frozenblock.themoon.world.additions.feature.TheMoonPlacedFeatures;
@@ -13,6 +14,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -41,6 +43,12 @@ public class TheMoonFeatureBootstrap {
 		TheMoonPlacedFeatures.registerPlacedFeatures(entries);
 	}
 
+	public static void bootstrapNoiseSettings(BootstapContext<NoiseGeneratorSettings> entries) {
+		FrozenFeatureUtils.BOOTSTAP_CONTEXT = (BootstapContext) entries;
+
+		TheMoonNoiseGeneratorSettings.bootstrap(entries);
+	}
+
 	public static void bootstrap(FabricDynamicRegistryProvider.Entries entries) {
 		final var configuredFeatures = asLookup(entries.getLookup(Registries.CONFIGURED_FEATURE));
 		final var placedFeatures = asLookup(entries.placedFeatures());
@@ -51,6 +59,7 @@ public class TheMoonFeatureBootstrap {
 		final var templatePools = asLookup(entries.getLookup(Registries.TEMPLATE_POOL));
 		final var structures = asLookup(entries.getLookup(Registries.STRUCTURE));
 		final var structureSets = asLookup(entries.getLookup(Registries.STRUCTURE_SET));
+		final var noiseSettings = asLookup(entries.getLookup(Registries.NOISE_SETTINGS));
 
 		TheMoonSharedConstants.log("Adding finalized configured features to datagen", true);
 		entries.addAll(configuredFeatures);
@@ -70,6 +79,8 @@ public class TheMoonFeatureBootstrap {
 		entries.addAll(structures);
 		TheMoonSharedConstants.log("Adding finalized structure sets to datagen", true);
 		entries.addAll(structureSets);
+		TheMoonSharedConstants.log("Adding finalized noise settings to datagen", true);
+		entries.addAll(noiseSettings);
 	}
 
 	/**

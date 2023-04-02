@@ -1,4 +1,4 @@
-package net.frozenblock.themoon.mixin;
+package net.frozenblock.themoon.mixin.gravity;
 
 import net.frozenblock.themoon.registry.TheMoonDimensionTypes;
 import net.minecraft.world.entity.LivingEntity;

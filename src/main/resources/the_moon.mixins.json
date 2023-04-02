@@ -5,9 +5,17 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "DimensionSpecialEffectsMixin",
-    "LivingEntityMixin"
+    "gravity.AbstractArrowMixin",
+    "gravity.EntityMixin",
+    "gravity.FallingBlockEntityMixin",
+    "gravity.ItemEntityMixin",
+    "gravity.LevelMixin",
+    "gravity.LivingEntityMixin",
+    "gravity.ShulkerBulletMixin",
+    "gravity.ThrowableProjectileMixin"
   ],
   "client": [
+    "gravity.client.ParticleMixin"
   ],
   "injectors": {
     "defaultRequire": 1
