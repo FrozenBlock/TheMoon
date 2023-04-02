@@ -15,8 +15,8 @@ public class LivingEntityMixin {
 		LivingEntity entity = LivingEntity.class.cast(this);
 		if (entity.level.dimensionTypeId() == TheMoonDimensionTypes.MOON) {
 			double e = entity.getY();
-			if (e < 256.0) {
-				double gravity = 1.0F - e / 256.0F;
+			if (e < 286.0) {
+				double gravity = 1.0F - e / 286.0F;
 				double g = Math.signum(gravity);
 				double h = g * Math.max(Math.abs(gravity), 0.2);
 				copiedOriginal = 0.02 * h;
