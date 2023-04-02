@@ -7,11 +7,9 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 
 public class TheMoonFeatures {
-
 	public static final CraterFeature CRATER = new CraterFeature(CraterFeatureConfiguration.CODEC);
 
 	public static void register() {
 		Registry.register(BuiltInRegistries.FEATURE, TheMoonSharedConstants.id("crater"), CRATER);
 	}
-
 }

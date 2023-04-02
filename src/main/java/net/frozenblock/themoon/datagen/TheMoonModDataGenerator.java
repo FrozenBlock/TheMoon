@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.frozenblock.lib.datagen.api.FrozenBiomeTagProvider;
 import net.frozenblock.themoon.registry.TheMoonBiomes;
+import net.frozenblock.themoon.registry.TheMoonDimensionTypes;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
@@ -35,6 +36,7 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 		registryBuilder.add(Registries.CONFIGURED_FEATURE, TheMoonFeatureBootstrap::bootstrapConfigured);
 		registryBuilder.add(Registries.PLACED_FEATURE, TheMoonFeatureBootstrap::bootstrapPlaced);
 		registryBuilder.add(Registries.BIOME, TheMoonBiomes::bootstrap);
+		registryBuilder.add(Registries.DIMENSION_TYPE, TheMoonDimensionTypes::bootstrap);
 		//registryBuilder.add(Registries.PROCESSOR_LIST, RegisterStructures::bootstrapProcessor);
 		//registryBuilder.add(Registries.TEMPLATE_POOL, RegisterStructures::bootstrapTemplatePool);
 		//registryBuilder.add(Registries.STRUCTURE, RegisterStructures::bootstrap);

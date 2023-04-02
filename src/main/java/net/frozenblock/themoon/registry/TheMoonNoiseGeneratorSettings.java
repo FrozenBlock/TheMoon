@@ -20,7 +20,7 @@ public class TheMoonNoiseGeneratorSettings {
 
 	public static final ResourceKey<NoiseGeneratorSettings> MOON = ResourceKey.create(Registries.NOISE_SETTINGS, TheMoonSharedConstants.id("moon"));
 
-	public static final NoiseSettings MOON_NOISE_SETTINGS = NoiseSettings.create(0, 320, 2, 1);
+	public static final NoiseSettings MOON_NOISE_SETTINGS = NoiseSettings.create(0, 256, 2, 1);
 
 	protected static NoiseRouter moonNoiseRouter(HolderGetter<DensityFunction> holderGetter) {
 		DensityFunction densityFunction = NoiseRouterData.postProcess(slideMoon(NoiseRouterData.getFunction(holderGetter, NoiseRouterData.DEPTH)));
