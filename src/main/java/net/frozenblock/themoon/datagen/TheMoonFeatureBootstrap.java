@@ -44,8 +44,6 @@ public class TheMoonFeatureBootstrap {
 	}
 
 	public static void bootstrapNoiseSettings(BootstapContext<NoiseGeneratorSettings> entries) {
-		FrozenFeatureUtils.BOOTSTAP_CONTEXT = (BootstapContext) entries;
-
 		TheMoonNoiseGeneratorSettings.bootstrap(entries);
 	}
 
