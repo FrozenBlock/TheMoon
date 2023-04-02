@@ -1,0 +1,10 @@
+{
+  "generator": {
+    "type": "the_moon:the_moon",
+    "custom_bool": true,
+    "biome_source": {
+      "type": "the_moon:the_moon"
+    }
+  },
+  "type": "the_moon:the_moon"
+}
