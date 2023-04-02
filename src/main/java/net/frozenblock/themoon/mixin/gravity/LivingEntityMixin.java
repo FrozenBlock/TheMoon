@@ -19,7 +19,7 @@ public class LivingEntityMixin {
 				double gravity = 1.0F - e / 128.0F;
 				double g = Math.signum(gravity);
 				double h = g * Math.max(Math.abs(gravity), 0.2);
-				double d = 0.02 * h;
+				copiedOriginal = 0.02 * h;
 			} else {
 				double f = entity.getDeltaMovement().y;
 				copiedOriginal = Math.signum(f == 0.0 ? 1.0 : -f) * 0.02;
