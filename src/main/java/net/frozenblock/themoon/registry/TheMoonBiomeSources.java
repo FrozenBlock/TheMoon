@@ -7,7 +7,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.BiomeSource;
 
 public class TheMoonBiomeSources {
@@ -21,6 +20,6 @@ public class TheMoonBiomeSources {
 	}
 
 	private static ResourceKey<Codec<? extends BiomeSource>> register(String key) {
-		return ResourceKey.create(Registries.BIOME_SOURCE, new ResourceLocation(key));
+		return ResourceKey.create(Registries.BIOME_SOURCE, TheMoonSharedConstants.id(key));
 	}
 }
