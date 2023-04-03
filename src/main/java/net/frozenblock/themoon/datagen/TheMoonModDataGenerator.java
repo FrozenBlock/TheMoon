@@ -24,6 +24,7 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 	public void onInitializeDataGenerator(FabricDataGenerator dataGenerator) {
 		final FabricDataGenerator.Pack pack = dataGenerator.createPack();
 		pack.addProvider(TheMoonRegistryProvider::new);
+		pack.addProvider(TheMoonEntityTagProvider::new);
 		pack.addProvider(TheMoonBiomeTagProvider::new);
 		pack.addProvider(TheMoonBlockTagProvider::new);
 		//pack.addProvider(TheMoonDamageTypeTagProvider::new);
