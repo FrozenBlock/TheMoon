@@ -59,7 +59,7 @@ public class Asteroid extends Mob {
 	@Override
 	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
 		this.setPos(this.position().add(0, 320, 0));
-		this.setDeltaMovement(this.getDeltaMovement().add(0, -50, 0));
+		this.setDeltaMovement(this.getDeltaMovement().add(0, -25, 0));
 		return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
 	}
 
