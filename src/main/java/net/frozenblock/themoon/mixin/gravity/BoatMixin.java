@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(Boat.class)
 public class BoatMixin {
 
-	@ModifyArgs(method = "floatBoat", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;setDeltaMovement(DDD)V", ordinal = 0))
+	@ModifyArgs(method = "floatBoat", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/vehicle/Boat;setDeltaMovement(DDD)V", ordinal = 0))
 	public void theMoon$useGravity(Args args) {
 		double y = (double)args.get(1) + (double)0.04F;
 		Boat boat = Boat.class.cast(this);
