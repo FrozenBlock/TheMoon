@@ -44,6 +44,7 @@ public class Asteroid extends Mob {
 	public float prevRoll;
 	public float pitch;
 	public float roll;
+	public boolean falling;
 
     public Asteroid(EntityType<Asteroid> entityType, Level level) {
 		super(entityType, level);
@@ -248,6 +249,7 @@ public class Asteroid extends Mob {
 		super.readAdditionalSaveData(compound);
 		this.pitch = compound.getFloat("TumblePitch");
 		this.roll = compound.getFloat("TumbleRoll");
+		this.falling = compound.getBoolean("Falling");
 	}
 
 	@Override
@@ -255,6 +257,7 @@ public class Asteroid extends Mob {
 		super.addAdditionalSaveData(compound);
 		compound.putFloat("TumblePitch", this.pitch);
 		compound.putFloat("TumbleRoll", this.roll);
+		compound.putBoolean("Falling", this.falling);
 	}
 
 	@Override
@@ -272,7 +275,7 @@ public class Asteroid extends Mob {
 
 	public void spawnBreakParticles() {
 		if (this.level instanceof ServerLevel level) {
-			level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), this.getX(), this.getY(0.6666666666666666D), this.getZ(), 50, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.1D);
+			level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), this.getX(), this.getY(0.6666666666666666D), this.getZ(), 90, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.5D);
 		}
 	}
 

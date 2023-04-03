@@ -2,14 +2,16 @@ package net.frozenblock.themoon.mixin.gravity;
 
 import net.frozenblock.themoon.util.gravity.api.GravityCalculator;
 import net.frozenblock.themoon.util.gravity.impl.EntityGravityInterface;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity.class)
 public class EntityMixin implements EntityGravityInterface {
@@ -17,11 +19,12 @@ public class EntityMixin implements EntityGravityInterface {
 	@Shadow
 	public Level level;
 
-	@ModifyArgs(method = "checkFallDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/Block;fallOn(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;F)V"))
-	protected void checkFallDamage(Args args) {
-		Entity entity = Entity.class.cast(this);
-		float fallDistance = args.get(4);
-		args.set(4, fallDistance * (float) GravityCalculator.calculateGravity(this.level, entity.position().y()));
+	@Shadow
+	public float fallDistance;
+
+	@Inject(method = "checkFallDamage", at = @At("TAIL"))
+	private void theMoon$checkFallDamage(double d, boolean bl, BlockState blockState, BlockPos blockPos, CallbackInfo info) {
+		this.fallDistance *= GravityCalculator.calculateGravity(Entity.class.cast(this));
 	}
 
 	@Unique
@@ -34,6 +37,6 @@ public class EntityMixin implements EntityGravityInterface {
 	@Override
 	public float getEffectiveGravity() {
 		Entity entity = Entity.class.cast(this);
-		return this.theMoon$getGravity() * ((float) GravityCalculator.calculateGravity(entity.level, entity.position().y()));
+		return this.theMoon$getGravity() * ((float) GravityCalculator.calculateGravity(entity));
 	}
 }
