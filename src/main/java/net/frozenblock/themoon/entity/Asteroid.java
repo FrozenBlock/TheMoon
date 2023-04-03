@@ -130,6 +130,10 @@ public class Asteroid extends Mob {
 			this.prevRoll -= 360F;
 		}
 		if (!this.falling && this.level instanceof ServerLevel serverLevel) {
+			this.spawnSmokeParticles();
+			if (deltaPos.length() > 0.5) {
+				this.spawnFlameParticles();
+			}
 			Vec3 deltaMovement = this.getDeltaMovement();
 			WindManager windManager = WindManager.getWindManager(serverLevel);
 			Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.00075);
@@ -311,6 +315,19 @@ public class Asteroid extends Mob {
 	public void spawnBreakParticles() {
 		if (this.level instanceof ServerLevel level) {
 			level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), this.getX(), this.getY(0.6666666666666666D), this.getZ(), 90, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.5D);
+		}
+	}
+
+	public void spawnFlameParticles() {
+		if (this.level instanceof ServerLevel level) {
+			level.sendParticles(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 5, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.01D);
+			level.sendParticles(ParticleTypes.FLAME, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 5, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.01D);
+		}
+	}
+
+	public void spawnSmokeParticles() {
+		if (this.level instanceof ServerLevel level) {
+			level.sendParticles(ParticleTypes.SMOKE, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 5, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.01D);
 		}
 	}
 

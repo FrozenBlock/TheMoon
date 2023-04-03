@@ -23,7 +23,7 @@ public class AsteroidRenderer extends MobRenderer<Asteroid, AsteroidModel<Astero
 
 	@Override
 	public Vec3 getRenderOffset(@NotNull Asteroid entity, float partialTicks) {
-		return new Vec3(0, 0.2375, 0);
+		return new Vec3(0, 0, 0);
 	}
 
 	@Override
