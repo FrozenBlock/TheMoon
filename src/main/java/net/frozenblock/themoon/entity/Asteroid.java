@@ -98,9 +98,7 @@ public class Asteroid extends Mob {
 	public void tick() {
 		Vec3 prevMovement = this.getDeltaMovement();
 		super.tick();
-		if (this.falling) {
-			this.setDeltaMovement(prevMovement);
-		}
+		this.setDeltaMovement(prevMovement);
 		Vec3 deltaPosTest = this.getDeltaPos();
 		Vec3 deltaPos = new Vec3(
 				Math.abs(deltaPosTest.x()),
