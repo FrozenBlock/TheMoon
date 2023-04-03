@@ -62,6 +62,6 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 
 	@Override
 	public void newCategories(ArrayList<FrozenMobCategory> context) {
-		context.add(FrozenMobCategoryEntrypoint.createCategory(TheMoonSharedConstants.id("asteroids"), 100, true, false, 516));
+		context.add(FrozenMobCategoryEntrypoint.createCategory(TheMoonSharedConstants.id("asteroids"), 100, true, false, 1000));
 	}
 }
