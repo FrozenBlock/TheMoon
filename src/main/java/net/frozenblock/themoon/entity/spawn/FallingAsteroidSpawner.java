@@ -22,14 +22,21 @@ public class FallingAsteroidSpawner {
 		}
 		RandomSource randomSource = level.getRandom();
 		double levelHeight = level.getLogicalHeight();
-		for (BlockPos pos : poses) {
-			Holder<Biome> biome = level.getBiome(pos);
-			if (biome.is(TheMoonBiomeTags.FALLING_ASTEROIDS) || spawnBypass) {
-				if (level.getRandom().nextFloat() < 0.05F) {
-					Asteroid asteroid = new Asteroid(TheMoonEntities.ASTEROID, level);
-					asteroid.setPos(pos.getX(), levelHeight * 1.5, pos.getZ());
-					asteroid.setDeltaMovement(randomSource.nextDouble() * posOrNeg(randomSource), -2, randomSource.nextDouble() * posOrNeg(randomSource));
-					level.addFreshEntity(asteroid);
+		for (BlockPos blockPos : poses) {
+			BlockPos pos = new BlockPos(
+					blockPos.getX() + randomSource.nextInt(-64, 64),
+					0,
+					blockPos.getZ() + randomSource.nextInt(-64, 64)
+			);
+			if (level.isLoaded(pos)) {
+				Holder<Biome> biome = level.getBiome(pos);
+				if (biome.is(TheMoonBiomeTags.FALLING_ASTEROIDS) || spawnBypass) {
+					if (level.getRandom().nextFloat() < 0.05F) {
+						Asteroid asteroid = new Asteroid(TheMoonEntities.ASTEROID, level);
+						asteroid.setPos(pos.getX(), levelHeight * 1.5, pos.getZ());
+						asteroid.setDeltaMovement(randomSource.nextDouble() * 5 * posOrNeg(randomSource), -3, randomSource.nextDouble() * 5 * posOrNeg(randomSource));
+						level.addFreshEntity(asteroid);
+					}
 				}
 			}
 		}
