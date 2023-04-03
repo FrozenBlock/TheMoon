@@ -59,10 +59,9 @@ public class Asteroid extends Mob {
 	}
 
 	@Override
-	protected AABB makeBoundingBox() {
-		float f = (this.getDimensions(Pose.STANDING).width * this.getScale()) / 2F;
-		float g = this.getDimensions(Pose.STANDING).height * this.getScale();
-		return new AABB(this.getX() - (double)f, this.getY(), this.getZ() - (double)f, this.getX() + (double)f, this.getY() + (double)g, this.getZ() + (double)f);
+	@NotNull
+	public AABB makeBoundingBox() {
+		return super.makeBoundingBox().inflate(this.getScale() / 2F);
 	}
 
 	public static AttributeSupplier.Builder addAttributes() {
@@ -88,14 +87,8 @@ public class Asteroid extends Mob {
 
 	@Override
 	protected void doPush(@NotNull Entity entity) {
-		boolean isSmall = entity.getBoundingBox().getSize() < this.getBoundingBox().getSize() * 0.9;
-		if (this.falling && this.getDeltaPos().length() > (isSmall ? 0.2 : 0.3) && this.isMovingTowards(entity)) {
-			//super.doPush(entity);
-			boolean hurt = entity.hurt(this.damageSources().fallingBlock(this), (float) this.getDeltaPos().length() * 2F);
-			isSmall = isSmall || !entity.isAlive() || !hurt;
-			if (!isSmall) {
-				this.destroy(false);
-			}
+		if (this.falling || this.getBoundingBox().getSize() > entity.getBoundingBox().getSize() * 1.4) {
+			super.doPush(entity);
 		}
 	}
 

@@ -28,7 +28,11 @@ public class AsteroidRenderer extends MobRenderer<Asteroid, AsteroidModel<Astero
 
 	@Override
 	public void render(@NotNull Asteroid entity, float entityYaw, float partialTick, @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight) {
+		poseStack.pushPose();
+		float scale = entity.getScale();
+		poseStack.scale(scale, scale, scale);
 		super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
+		poseStack.popPose();
 	}
 
 	@Override
