@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.loader.api.ModContainer;
 import net.frozenblock.lib.mobcategory.api.entrypoint.FrozenMobCategoryEntrypoint;
 import net.frozenblock.lib.mobcategory.impl.FrozenMobCategory;
+import net.frozenblock.lib.screenshake.api.ScreenShakeManager;
+import net.frozenblock.lib.wind.api.WindManager;
 import net.frozenblock.themoon.entity.spawn.FallingAsteroidSpawner;
 import net.frozenblock.themoon.mod_compat.TheMoonModIntegrations;
 import net.frozenblock.themoon.registry.TheMoonBiomeSources;
