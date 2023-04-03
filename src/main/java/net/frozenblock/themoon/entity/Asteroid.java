@@ -1,7 +1,6 @@
 package net.frozenblock.themoon.entity;
 
 import net.frozenblock.lib.wind.api.WindManager;
-import net.frozenblock.lib.wind.api.wind3d.WindManager3D;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -132,8 +131,8 @@ public class Asteroid extends Mob {
 		}
 		if (!this.falling && this.level instanceof ServerLevel serverLevel) {
 			Vec3 deltaMovement = this.getDeltaMovement();
-			WindManager3D windManager = WindManager3D.getWindManager3D(serverLevel);
-			Vec3 wind = windManager.getWindMovement(this.position(), 5, windClamp);
+			WindManager windManager = WindManager.getWindManager(serverLevel);
+			Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp);
 			double windX = wind.x();
 			double windY = wind.y() * 0.2;
 			double windZ = wind.z();
