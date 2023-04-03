@@ -209,6 +209,7 @@ public class Asteroid extends Mob {
 	@Override
 	public boolean causeFallDamage(float fallDistance, float multiplier, @NotNull DamageSource source) {
 		this.level.explode(this, this.getX(), this.getEyeY(), this.getZ(), fallDistance, Level.ExplosionInteraction.MOB);
+		this.destroy(false);
 		return true;
 	}
 
