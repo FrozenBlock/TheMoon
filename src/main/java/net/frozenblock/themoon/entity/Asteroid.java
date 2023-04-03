@@ -64,7 +64,7 @@ public class Asteroid extends Mob {
 	}
 
 	public static boolean canSpawn(EntityType<Asteroid> type, ServerLevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-		return random.nextInt(0, 75) == 1;
+		return random.nextInt(0, 25) == 1;
 	}
 
 	public static AttributeSupplier.Builder addAttributes() {
