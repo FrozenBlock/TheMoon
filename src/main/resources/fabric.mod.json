@@ -22,6 +22,9 @@
     "main": [
       "net.frozenblock.themoon.TheMoonMod"
     ],
+    "frozenlib:mob_categories": [
+      "net.frozenblock.themoon.TheMoonMod"
+    ],
     "client": [
       "net.frozenblock.themoon.TheMoonModClient"
     ],
