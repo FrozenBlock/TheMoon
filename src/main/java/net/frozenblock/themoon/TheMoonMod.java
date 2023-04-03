@@ -3,6 +3,8 @@ package net.frozenblock.themoon;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.loader.api.ModContainer;
+import net.frozenblock.lib.mobcategory.api.entrypoint.FrozenMobCategoryEntrypoint;
+import net.frozenblock.lib.mobcategory.impl.FrozenMobCategory;
 import net.frozenblock.themoon.entity.spawn.FallingAsteroidSpawner;
 import net.frozenblock.themoon.mod_compat.TheMoonModIntegrations;
 import net.frozenblock.themoon.registry.TheMoonBiomeSources;
@@ -15,8 +17,9 @@ import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import org.jetbrains.annotations.NotNull;
 import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.QuiltDataFixerBuilder;
 import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.QuiltDataFixes;
+import java.util.ArrayList;
 
-public class TheMoonMod implements ModInitializer {
+public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 
 	@Override
 	public void onInitialize() {
@@ -55,5 +58,10 @@ public class TheMoonMod implements ModInitializer {
 
 		QuiltDataFixes.buildAndRegisterFixer(mod, builder);
 		TheMoonSharedConstants.log("DataFixes for The Moon have been applied", true);
+	}
+
+	@Override
+	public void newCategories(ArrayList<FrozenMobCategory> context) {
+		context.add(FrozenMobCategoryEntrypoint.createCategory(TheMoonSharedConstants.id("asteroids"), 100, true, false, 516));
 	}
 }

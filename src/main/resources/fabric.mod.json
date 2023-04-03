@@ -25,6 +25,9 @@
     "client": [
       "net.frozenblock.themoon.TheMoonModClient"
     ],
+    "frozenlib:mob_categories": [
+      "net.frozenblock.themoon.TheMoonMod"
+    ],
     "fabric-datagen": [
       "net.frozenblock.themoon.datagen.TheMoonModDataGenerator"
     ]
