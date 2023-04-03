@@ -47,6 +47,7 @@ public class AsteroidModel<T extends Asteroid> extends HierarchicalModel<T> {
 	private float pitch;
 	private float prevRoll;
 	private float roll;
+	private float scale;
 
 	public static final int blackOverlay = OverlayTexture.pack(0, 10);
 
@@ -58,6 +59,7 @@ public class AsteroidModel<T extends Asteroid> extends HierarchicalModel<T> {
 		this.pitch = entity.pitch;
 		this.prevRoll = entity.prevRoll;
 		this.roll = entity.roll;
+		this.scale = entity.getScale();
 	}
 
 	@Override
@@ -74,6 +76,7 @@ public class AsteroidModel<T extends Asteroid> extends HierarchicalModel<T> {
 		poseStack.pushPose();
 		poseStack.mulPose(Axis.ZP.rotation(Mth.lerp(partialTick, this.prevRoll, this.roll) * pi180));
 		poseStack.pushPose();
+		poseStack.scale(this.scale, this.scale, this.scale);
 		this.bone.render(poseStack, vertexConsumer, packedLight, blackOverlay, red, green, blue, alpha);
 		poseStack.popPose();
 		poseStack.popPose();

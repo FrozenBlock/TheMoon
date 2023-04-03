@@ -41,6 +41,7 @@ public class FallingAsteroidSpawner {
 							asteroid.setNoGravity(true);
 							asteroid.setDeltaMovement(randomSource.nextDouble() * 0.3 * posOrNeg(randomSource), 0, randomSource.nextDouble() * 0.3 * posOrNeg(randomSource));
 						}
+						asteroid.setScale((randomSource.nextFloat() * 2) + 0.7F);
 						level.addFreshEntity(asteroid);
 					}
 				}

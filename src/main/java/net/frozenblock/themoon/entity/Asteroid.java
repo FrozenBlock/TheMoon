@@ -9,6 +9,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -36,6 +39,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -47,9 +51,18 @@ public class Asteroid extends Mob {
 	public float roll;
 	public boolean falling;
 
+	private static final EntityDataAccessor<Float> SCALE = SynchedEntityData.defineId(Asteroid.class, EntityDataSerializers.FLOAT);
+
     public Asteroid(EntityType<Asteroid> entityType, Level level) {
 		super(entityType, level);
 		this.blocksBuilding = true;
+	}
+
+	@Override
+	protected AABB makeBoundingBox() {
+		float f = (this.getDimensions(Pose.STANDING).width * this.getScale()) / 2F;
+		float g = this.getDimensions(Pose.STANDING).height * this.getScale();
+		return new AABB(this.getX() - (double)f, this.getY(), this.getZ() - (double)f, this.getX() + (double)f, this.getY() + (double)g, this.getZ() + (double)f);
 	}
 
 	public static AttributeSupplier.Builder addAttributes() {
@@ -64,7 +77,7 @@ public class Asteroid extends Mob {
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		Player closestPlayer = this.level.getNearestPlayer(this, -1.0);
-		return closestPlayer == null || this.horizontalDistanceTo(closestPlayer.getX(), closestPlayer.getY()) < 128;
+		return closestPlayer == null || this.horizontalDistanceTo(closestPlayer.getX(), closestPlayer.getY()) > 128;
 	}
 
 	public double horizontalDistanceTo(double x, double z) {
@@ -76,8 +89,8 @@ public class Asteroid extends Mob {
 	@Override
 	protected void doPush(@NotNull Entity entity) {
 		boolean isSmall = entity.getBoundingBox().getSize() < this.getBoundingBox().getSize() * 0.9;
-		if (this.getDeltaPos().length() > (isSmall ? 0.2 : 0.3) && this.isMovingTowards(entity)) {
-			super.doPush(entity);
+		if (this.falling && this.getDeltaPos().length() > (isSmall ? 0.2 : 0.3) && this.isMovingTowards(entity)) {
+			//super.doPush(entity);
 			boolean hurt = entity.hurt(this.damageSources().fallingBlock(this), (float) this.getDeltaPos().length() * 2F);
 			isSmall = isSmall || !entity.isAlive() || !hurt;
 			if (!isSmall) {
@@ -93,12 +106,12 @@ public class Asteroid extends Mob {
 		}
 	}
 
-	private float rotationAmount = this.falling ? 55F : 10;
 	private static final double windClamp = 0.2;
 
 	@Override
 	public void tick() {
 		super.tick();
+		float rotationAmount = this.falling ? 55F : 10;
 		Vec3 deltaPosTest = this.getDeltaPos();
 		Vec3 deltaPos = new Vec3(
 				Math.abs(deltaPosTest.x()),
@@ -110,9 +123,9 @@ public class Asteroid extends Mob {
 		}
 		this.prevPitch = this.pitch;
 		this.prevRoll = this.roll;
-		float yRotAmount = (float) ((deltaPos.y * 0.5F) * this.rotationAmount);
-		this.pitch += deltaPos.z * this.rotationAmount;
-		this.roll += deltaPos.x * this.rotationAmount;
+		float yRotAmount = (float) ((deltaPos.y * 0.5F) * rotationAmount);
+		this.pitch += deltaPos.z * rotationAmount;
+		this.roll += deltaPos.x * rotationAmount;
 		this.pitch += yRotAmount;
 		this.roll += yRotAmount;
 		if (this.pitch > 360F) {
@@ -127,9 +140,9 @@ public class Asteroid extends Mob {
 			Vec3 deltaMovement = this.getDeltaMovement();
 			WindManager windManager = WindManager.getWindManager(serverLevel);
 			double windX = Mth.clamp(windManager.windX * 5, -windClamp, windClamp);
-			double windY = Mth.clamp(windManager.windY * 5, -windClamp, windClamp);
+			double windY = Mth.clamp(windManager.windY * 5, -windClamp * 0.01, windClamp * 0.01);
 			double windZ = Mth.clamp(windManager.windZ * 5, -windClamp, windClamp);
-			deltaMovement = deltaMovement.add((windX * 0.2), (windY * 0.2), (windZ * 0.2));
+			deltaMovement = deltaMovement.add((windX * 0.05), (windY * 0.0025), (windZ * 0.05));
 			this.setDeltaMovement(deltaMovement);
 		}
 	}
@@ -221,6 +234,15 @@ public class Asteroid extends Mob {
 	}
 
 	@Override
+	public float getScale() {
+		return this.entityData.get(SCALE);
+	}
+
+	public void setScale(float value) {
+		this.entityData.set(SCALE, value);
+	}
+
+	@Override
 	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return new ClientboundAddEntityPacket(
 				this.getId(),
@@ -261,6 +283,7 @@ public class Asteroid extends Mob {
 		this.pitch = compound.getFloat("TumblePitch");
 		this.roll = compound.getFloat("TumbleRoll");
 		this.falling = compound.getBoolean("Falling");
+		this.setScale(compound.getFloat("Scale"));
 	}
 
 	@Override
@@ -269,6 +292,13 @@ public class Asteroid extends Mob {
 		compound.putFloat("TumblePitch", this.pitch);
 		compound.putFloat("TumbleRoll", this.roll);
 		compound.putBoolean("Falling", this.falling);
+		compound.putFloat("Scale", this.getScale());
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(SCALE, 1.0F);
 	}
 
 	@Override
