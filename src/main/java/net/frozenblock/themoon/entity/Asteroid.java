@@ -1,5 +1,6 @@
 package net.frozenblock.themoon.entity;
 
+import net.frozenblock.lib.wind.api.WindManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -93,12 +94,11 @@ public class Asteroid extends Mob {
 	}
 
 	private float rotationAmount = this.falling ? 55F : 10;
+	private static final double windClamp = 0.2;
 
 	@Override
 	public void tick() {
-		Vec3 prevMovement = this.getDeltaMovement();
 		super.tick();
-		this.setDeltaMovement(prevMovement);
 		Vec3 deltaPosTest = this.getDeltaPos();
 		Vec3 deltaPos = new Vec3(
 				Math.abs(deltaPosTest.x()),
@@ -122,6 +122,15 @@ public class Asteroid extends Mob {
 		if (this.roll > 360F) {
 			this.roll -= 360F;
 			this.prevRoll -= 360F;
+		}
+		if (!this.falling && this.level instanceof ServerLevel serverLevel) {
+			Vec3 deltaMovement = this.getDeltaMovement();
+			WindManager windManager = WindManager.getWindManager(serverLevel);
+			double windX = Mth.clamp(windManager.windX * 5, -windClamp, windClamp);
+			double windY = Mth.clamp(windManager.windY * 5, -windClamp, windClamp);
+			double windZ = Mth.clamp(windManager.windZ * 5, -windClamp, windClamp);
+			deltaMovement = deltaMovement.add((windX * 0.2), (windY * 0.2), (windZ * 0.2));
+			this.setDeltaMovement(deltaMovement);
 		}
 	}
 
