@@ -36,10 +36,10 @@ public class FallingAsteroidSpawner {
 						asteroid.setPos(pos.getX(), levelHeight * 0.5, pos.getZ());
 						asteroid.falling = randomSource.nextBoolean();
 						if (asteroid.falling) {
-							asteroid.setDeltaMovement(randomSource.nextDouble() * 5 * posOrNeg(randomSource), 0, randomSource.nextDouble() * 5 * posOrNeg(randomSource));
+							asteroid.setDeltaMovement(randomSource.nextDouble() * 2 * posOrNeg(randomSource), -1, randomSource.nextDouble() * 2 * posOrNeg(randomSource));
 						} else {
 							asteroid.setNoGravity(true);
-							asteroid.setDeltaMovement(randomSource.nextDouble() * 1.5 * posOrNeg(randomSource), 0, randomSource.nextDouble() * 1.55 * posOrNeg(randomSource));
+							asteroid.setDeltaMovement(randomSource.nextDouble() * 0.3 * posOrNeg(randomSource), 0, randomSource.nextDouble() * 0.3 * posOrNeg(randomSource));
 						}
 						level.addFreshEntity(asteroid);
 					}
