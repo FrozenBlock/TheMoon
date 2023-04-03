@@ -33,8 +33,14 @@ public class FallingAsteroidSpawner {
 					Holder<Biome> biome = level.getBiome(pos);
 					if (biome.is(TheMoonBiomeTags.FALLING_ASTEROIDS) || spawnBypass) {
 						Asteroid asteroid = new Asteroid(TheMoonEntities.ASTEROID, level);
-						asteroid.setPos(pos.getX(), levelHeight * 1.5, pos.getZ());
-						asteroid.setDeltaMovement(randomSource.nextDouble() * 7 * posOrNeg(randomSource), 0, randomSource.nextDouble() * 7 * posOrNeg(randomSource));
+						asteroid.setPos(pos.getX(), levelHeight * 0.5, pos.getZ());
+						asteroid.falling = randomSource.nextBoolean();
+						if (asteroid.falling) {
+							asteroid.setDeltaMovement(randomSource.nextDouble() * 10 * posOrNeg(randomSource), 0, randomSource.nextDouble() * 10 * posOrNeg(randomSource));
+						} else {
+							asteroid.setNoGravity(true);
+							asteroid.setDeltaMovement(randomSource.nextDouble() * 5 * posOrNeg(randomSource), 0, randomSource.nextDouble() * 5 * posOrNeg(randomSource));
+						}
 						level.addFreshEntity(asteroid);
 					}
 				}

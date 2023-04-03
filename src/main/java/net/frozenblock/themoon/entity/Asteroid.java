@@ -92,11 +92,15 @@ public class Asteroid extends Mob {
 		}
 	}
 
-	private static final float rotationAmount = 55F;
+	private float rotationAmount = this.falling ? 55F : 10;
 
 	@Override
 	public void tick() {
+		Vec3 prevMovement = this.getDeltaMovement();
 		super.tick();
+		if (this.falling) {
+			this.setDeltaMovement(prevMovement);
+		}
 		Vec3 deltaPosTest = this.getDeltaPos();
 		Vec3 deltaPos = new Vec3(
 				Math.abs(deltaPosTest.x()),
@@ -108,9 +112,9 @@ public class Asteroid extends Mob {
 		}
 		this.prevPitch = this.pitch;
 		this.prevRoll = this.roll;
-		float yRotAmount = (float) ((deltaPos.y * 0.5F) * rotationAmount);
-		this.pitch += deltaPos.z * rotationAmount;
-		this.roll += deltaPos.x * rotationAmount;
+		float yRotAmount = (float) ((deltaPos.y * 0.5F) * this.rotationAmount);
+		this.pitch += deltaPos.z * this.rotationAmount;
+		this.roll += deltaPos.x * this.rotationAmount;
 		this.pitch += yRotAmount;
 		this.roll += yRotAmount;
 		if (this.pitch > 360F) {
