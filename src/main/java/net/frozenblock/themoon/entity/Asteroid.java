@@ -58,6 +58,8 @@ public class Asteroid extends Mob {
 	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
+		this.setPos(this.position().add(0, 320, 0));
+		this.setDeltaMovement(this.getDeltaMovement().add(0, -50, 0));
 		return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
 	}
 
@@ -99,7 +101,12 @@ public class Asteroid extends Mob {
 	@Override
 	public void tick() {
 		super.tick();
-		Vec3 deltaPos = this.getDeltaPos();
+		Vec3 deltaPosTest = this.getDeltaPos();
+		Vec3 deltaPos = new Vec3(
+				Math.abs(deltaPosTest.x()),
+				Math.abs(deltaPosTest.y()),
+				Math.abs(deltaPosTest.z())
+		);
 		if (deltaPos.horizontalDistance() != 0) {
 			this.setYRot(-((float) (Mth.atan2(deltaPos.x * 10, deltaPos.z * 10) * 57.2957763671875D) - 90));
 		}
