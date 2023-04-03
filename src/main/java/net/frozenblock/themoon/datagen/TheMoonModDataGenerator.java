@@ -9,6 +9,9 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.frozenblock.lib.datagen.api.FrozenBiomeTagProvider;
 import net.frozenblock.themoon.registry.TheMoonBiomes;
 import net.frozenblock.themoon.registry.TheMoonDimensionTypes;
+import net.frozenblock.themoon.registry.TheMoonEntities;
+import net.frozenblock.themoon.tag.TheMoonBiomeTags;
+import net.frozenblock.themoon.tag.TheMoonEntityTags;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
@@ -44,6 +47,18 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 		//registryBuilder.add(Registries.STRUCTURE_SET, RegisterStructures::bootstrapStructureSet);
 	}
 
+	private static final class TheMoonEntityTagProvider extends FabricTagProvider.EntityTypeTagProvider {
+		public TheMoonEntityTagProvider(FabricDataOutput output, CompletableFuture completableFuture) {
+			super(output, completableFuture);
+		}
+
+		@Override
+		protected void addTags(HolderLookup.Provider arg) {
+			this.getOrCreateTagBuilder(TheMoonEntityTags.NOT_AFFECTED_BY_GRAVITY)
+					.addOptional(TheMoonEntities.ASTEROID.builtInRegistryHolder().key());
+		}
+	}
+
 	private static class TheMoonBiomeTagProvider extends FrozenBiomeTagProvider {
 
 		public TheMoonBiomeTagProvider(FabricDataOutput output, CompletableFuture registriesFuture) {
@@ -52,7 +67,8 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 
 		@Override
 		protected void addTags(HolderLookup.Provider arg) {
-
+			this.getOrCreateTagBuilder(TheMoonBiomeTags.FALLING_ASTEROIDS)
+					.addOptional(TheMoonBiomes.LUNAR_WASTELANDS);
 		}
 	}
 

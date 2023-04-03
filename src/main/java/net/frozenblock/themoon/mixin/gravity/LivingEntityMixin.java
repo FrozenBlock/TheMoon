@@ -12,6 +12,6 @@ public class LivingEntityMixin {
 	@ModifyVariable(method = "travel", at = @At(value = "STORE", ordinal = 0))
 	public double theMoon$Gravity(double original) {
 		LivingEntity entity = LivingEntity.class.cast(this);
-		return original * GravityCalculator.calculateGravity(entity.level, entity.position().y());
+		return original * GravityCalculator.calculateGravity(entity);
 	}
 }

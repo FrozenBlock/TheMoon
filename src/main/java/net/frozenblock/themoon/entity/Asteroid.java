@@ -13,7 +13,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -63,10 +62,6 @@ public class Asteroid extends Mob {
 		return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
 	}
 
-	public static boolean canSpawn(EntityType<Asteroid> type, ServerLevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-		return random.nextInt(0, 25) == 1;
-	}
-
 	public static AttributeSupplier.Builder addAttributes() {
 		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 6D);
 	}
@@ -74,6 +69,18 @@ public class Asteroid extends Mob {
 	@Override
 	public boolean canBeCollidedWith() {
 		return true;
+	}
+
+	@Override
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		Player closestPlayer = this.level.getNearestPlayer(this, -1.0);
+		return closestPlayer == null || this.horizontalDistanceTo(closestPlayer.getX(), closestPlayer.getY()) < 128;
+	}
+
+	public double horizontalDistanceTo(double x, double z) {
+		double d = this.getX() - x;
+		double f = this.getZ() - z;
+		return Math.sqrt(d * d + f * f);
 	}
 
 	@Override
@@ -277,7 +284,7 @@ public class Asteroid extends Mob {
 
 	public void spawnBreakParticles() {
 		if (this.level instanceof ServerLevel level) {
-			level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), this.getX(), this.getY(0.6666666666666666D), this.getZ(), 50, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
+			level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), this.getX(), this.getY(0.6666666666666666D), this.getZ(), 50, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.1D);
 		}
 	}
 
