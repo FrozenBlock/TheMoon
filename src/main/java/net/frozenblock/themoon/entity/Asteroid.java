@@ -132,11 +132,11 @@ public class Asteroid extends Mob {
 		if (!this.falling && this.level instanceof ServerLevel serverLevel) {
 			Vec3 deltaMovement = this.getDeltaMovement();
 			WindManager windManager = WindManager.getWindManager(serverLevel);
-			Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.0075);
+			Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.00075);
 			double windX = wind.x();
 			double windY = wind.y() * 0.2;
 			double windZ = wind.z();
-			deltaMovement = deltaMovement.add((windX * 0.025), (windY * 0.025), (windZ * 0.025));
+			deltaMovement = deltaMovement.add((windX * 0.015), (windY * 0.015), (windZ * 0.015));
 			this.setDeltaMovement(deltaMovement);
 		}
 	}
