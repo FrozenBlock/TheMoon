@@ -50,6 +50,7 @@ public class Asteroid extends Mob {
 	public float prevRoll;
 	public float pitch;
 	public float roll;
+	public int ticksSinceActive;
 
 	private static final EntityDataAccessor<State> STATE = SynchedEntityData.defineId(Asteroid.class, TheMoonEntityDataSerializers.ASTEROID_STATE);
 	private static final EntityDataAccessor<Float> SCALE = SynchedEntityData.defineId(Asteroid.class, EntityDataSerializers.FLOAT);
@@ -105,6 +106,9 @@ public class Asteroid extends Mob {
 	@Override
 	public void tick() {
 		super.tick();
+		if (this.isUnderWater()) {
+			this.setState(State.IDLE);
+		}
 		float rotationAmount = 10F;
 		Vec3 deltaPosTest = this.getDeltaPos();
 		Vec3 deltaPos = new Vec3(
@@ -130,20 +134,31 @@ public class Asteroid extends Mob {
 			this.roll -= 360F;
 			this.prevRoll -= 360F;
 		}
-		this.spawnSmokeParticles();
 		if (this.getState() == State.FALLING) {
-			if (deltaPos.length() > 0.2) {
-				this.spawnFlameParticles();
+			this.spawnFlameParticles();
+			this.spawnSmokeParticles();
+		} else if (this.getState() == State.NO_GRAV) {
+			if (this.level instanceof ServerLevel serverLevel) {
+				Vec3 deltaMovement = this.getDeltaMovement();
+				WindManager windManager = WindManager.getWindManager(serverLevel);
+				Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.00075);
+				double windX = wind.x();
+				double windY = wind.y() * 0.2;
+				double windZ = wind.z();
+				deltaMovement = deltaMovement.add((windX * 0.015), (windY * 0.015), (windZ * 0.015));
+				this.setDeltaMovement(deltaMovement);
+				this.spawnSmokeParticles();
 			}
-		} else if (this.getState() == State.NO_GRAV && this.level instanceof ServerLevel serverLevel) {
-			Vec3 deltaMovement = this.getDeltaMovement();
-			WindManager windManager = WindManager.getWindManager(serverLevel);
-			Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.00075);
-			double windX = wind.x();
-			double windY = wind.y() * 0.2;
-			double windZ = wind.z();
-			deltaMovement = deltaMovement.add((windX * 0.015), (windY * 0.015), (windZ * 0.015));
-			this.setDeltaMovement(deltaMovement);
+		} else {
+			Player closestPlayer = this.level.getNearestPlayer(this, -1.0);
+			if (!this.requiresCustomPersistence() && (((closestPlayer == null || closestPlayer.distanceTo(this) > 48)) || (this.wasTouchingWater))) {
+				++this.ticksSinceActive;
+				if (this.ticksSinceActive >= 400) {
+					this.destroy(false);
+				}
+			} else {
+				this.ticksSinceActive = 0;
+			}
 		}
 	}
 
@@ -239,11 +254,6 @@ public class Asteroid extends Mob {
 	}
 
 	@Override
-	public boolean isUnderWater() {
-		return false;
-	}
-
-	@Override
 	protected boolean updateInWaterStateAndDoFluidPushing() {
 		this.fluidHeight.clear();
 		return false;
@@ -310,6 +320,7 @@ public class Asteroid extends Mob {
 			this.setState(State.valueOf(compound.getString("AsteroidState")));
 		}
 		this.setScale(compound.getFloat("Scale"));
+		this.ticksSinceActive = compound.getInt("TicksSinceActive");
 	}
 
 	@Override
@@ -319,6 +330,7 @@ public class Asteroid extends Mob {
 		compound.putFloat("TumbleRoll", this.roll);
 		compound.putString("AsteroidState", this.getState().name());
 		compound.putFloat("Scale", this.getScale());
+		compound.putInt("TicksSinceActive", this.ticksSinceActive);
 	}
 
 	@Override
