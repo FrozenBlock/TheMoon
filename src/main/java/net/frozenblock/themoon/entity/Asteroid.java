@@ -233,8 +233,24 @@ public class Asteroid extends Mob {
 	}
 
 	@Override
+	protected float getWaterSlowDown() {
+		return 1.0F;
+	}
+
+	@Override
+	public boolean isUnderWater() {
+		return false;
+	}
+
+	@Override
+	protected boolean updateInWaterStateAndDoFluidPushing() {
+		this.fluidHeight.clear();
+		return false;
+	}
+
+	@Override
 	public void knockback(double strength, double x, double z) {
-		double scale = this.getScale() * 2;
+		double scale = this.getScale() * this.getScale();
 		super.knockback(strength, x / scale * 2, z / scale);
 	}
 
