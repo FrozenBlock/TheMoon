@@ -37,10 +37,10 @@ public class FallingAsteroidSpawner {
 						boolean falling = randomSource.nextBoolean();
 						asteroid.setState(falling ? Asteroid.State.FALLING : Asteroid.State.NO_GRAV);
 						if (falling) {
+							asteroid.setRemainingFireTicks(10);
 							asteroid.setDeltaMovement(randomSource.nextDouble() * 2 * posOrNeg(randomSource), -1, randomSource.nextDouble() * 2 * posOrNeg(randomSource));
 							asteroid.setScale((randomSource.nextFloat() * 0.5F) + 0.7F);
 						} else {
-							asteroid.setNoGravity(true);
 							asteroid.setScale((randomSource.nextFloat() * 2) + 0.7F);
 						}
 						level.addFreshEntity(asteroid);

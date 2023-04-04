@@ -106,8 +106,10 @@ public class Asteroid extends Mob {
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.isUnderWater()) {
+		if (this.wasTouchingWater && this.getState() != State.IDLE) {
 			this.setState(State.IDLE);
+			this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.5F, 0.8F);
+			this.extinguishFire();
 		}
 		float rotationAmount = 10F;
 		Vec3 deltaPosTest = this.getDeltaPos();
@@ -137,6 +139,7 @@ public class Asteroid extends Mob {
 		if (this.getState() == State.FALLING) {
 			this.spawnFlameParticles();
 			this.spawnSmokeParticles();
+			this.setRemainingFireTicks(10);
 		} else if (this.getState() == State.NO_GRAV) {
 			if (this.level instanceof ServerLevel serverLevel) {
 				Vec3 deltaMovement = this.getDeltaMovement();
@@ -250,19 +253,22 @@ public class Asteroid extends Mob {
 
 	@Override
 	protected float getWaterSlowDown() {
-		return 1.0F;
+		return this.getState() == State.FALLING ? 1.0F : 0.8F;
 	}
 
 	@Override
 	protected boolean updateInWaterStateAndDoFluidPushing() {
-		this.fluidHeight.clear();
-		return false;
+		if (this.getState() != State.IDLE) {
+			this.fluidHeight.clear();
+			return false;
+		}
+		return super.updateInWaterStateAndDoFluidPushing();
 	}
 
 	@Override
 	public void knockback(double strength, double x, double z) {
 		double scale = this.getScale() * this.getScale();
-		super.knockback(strength, x / scale * 2, z / scale);
+		super.knockback(strength, x / scale * 2, z / scale * 2);
 	}
 
 	@Override
@@ -274,6 +280,16 @@ public class Asteroid extends Mob {
 		this.entityData.set(SCALE, value);
 		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(6F * (6F * value));
 		this.setHealth(this.getMaxHealth());
+	}
+
+	public State getState() {
+		return this.entityData.get(STATE);
+	}
+
+	public Asteroid setState(State state) {
+		this.entityData.set(STATE, state);
+		this.setNoGravity(state == State.NO_GRAV);
+		return this;
 	}
 
 	@Override
@@ -361,14 +377,21 @@ public class Asteroid extends Mob {
 
 	public void spawnFlameParticles() {
 		if (this.level instanceof ServerLevel level) {
-			level.sendParticles(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 5, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
-			level.sendParticles(ParticleTypes.FLAME, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 5, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
+			level.sendParticles(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 15, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
+			level.sendParticles(ParticleTypes.FLAME, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 15, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
 		}
 	}
 
 	public void spawnSmokeParticles() {
 		if (this.level instanceof ServerLevel level) {
-			level.sendParticles(ParticleTypes.SMOKE, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 5, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
+			level.sendParticles(ParticleTypes.SMOKE, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 15, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
+		}
+	}
+
+	public void spawnExtinguishParticles() {
+		if (this.level instanceof ServerLevel level) {
+			level.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 5, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
+			level.sendParticles(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 5, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
 		}
 	}
 
@@ -397,15 +420,6 @@ public class Asteroid extends Mob {
 	@Override
 	public HumanoidArm getMainArm() {
 		return HumanoidArm.LEFT;
-	}
-
-	public State getState() {
-		return this.entityData.get(STATE);
-	}
-
-	public Asteroid setState(State state) {
-		this.entityData.set(STATE, state);
-		return this;
 	}
 
 	public static enum State {

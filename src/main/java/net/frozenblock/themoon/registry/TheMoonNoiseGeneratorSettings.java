@@ -65,7 +65,7 @@ public class TheMoonNoiseGeneratorSettings {
 	}
 
 	private static NoiseGeneratorSettings moon(BootstapContext<?> bootstapContext) {
-		return new NoiseGeneratorSettings(MOON_NOISE_SETTINGS, Blocks.END_STONE.defaultBlockState(), Blocks.AIR.defaultBlockState(), moonNoiseRouter(bootstapContext.lookup(Registries.DENSITY_FUNCTION), bootstapContext.lookup(Registries.NOISE)), TheMoonSurfaceRules.moon(), List.of(), 0, false, false, true, false);
+		return new NoiseGeneratorSettings(MOON_NOISE_SETTINGS, Blocks.TUFF.defaultBlockState(), Blocks.AIR.defaultBlockState(), moonNoiseRouter(bootstapContext.lookup(Registries.DENSITY_FUNCTION), bootstapContext.lookup(Registries.NOISE)), TheMoonSurfaceRules.moon(), List.of(), 0, false, false, true, false);
 	}
 
 	private static DensityFunction yLimitedInterpolatable(DensityFunction input, DensityFunction whenInRange, int minInclusive, int maxInclusive, int maxRange) {
