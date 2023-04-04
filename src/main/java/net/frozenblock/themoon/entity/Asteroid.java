@@ -59,6 +59,7 @@ public class Asteroid extends Mob {
 
     public Asteroid(EntityType<Asteroid> entityType, Level level) {
 		super(entityType, level);
+		this.setScale(1F);
 		this.blocksBuilding = true;
 		AsteroidSpawner.add(this);
 	}
@@ -86,7 +87,7 @@ public class Asteroid extends Mob {
 
 	@Override
 	protected void doPush(@NotNull Entity entity) {
-		if (this.getState() == State.FALLING || this.getBoundingBox().getSize() > entity.getBoundingBox().getSize() * 1.4) {
+		if (this.getState() == State.FALLING || this.getBoundingBox().getSize() > entity.getBoundingBox().getSize()) {
 			super.doPush(entity);
 		}
 	}
@@ -105,8 +106,10 @@ public class Asteroid extends Mob {
 		super.tick();
 		if (this.wasTouchingWater && this.getState() != State.IDLE) {
 			this.setState(State.IDLE);
-			this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.5F, 0.8F);
-			this.extinguishFire();
+			if (this.getState() == State.FALLING) {
+				this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.5F, 0.8F);
+				this.extinguishFire();
+			}
 		}
 		float rotationAmount = 10F;
 		Vec3 deltaPosTest = this.getDeltaPos();
@@ -188,7 +191,8 @@ public class Asteroid extends Mob {
 
 	@Override
 	public boolean isInvulnerableTo(@NotNull DamageSource source) {
-		return source.is(DamageTypeTags.WITCH_RESISTANT_TO) || source.is(DamageTypes.CACTUS) || source.is(DamageTypes.FREEZE) || source.is(DamageTypes.SWEET_BERRY_BUSH) || source.is(DamageTypes.WITHER) || super.isInvulnerableTo(source);
+		return source.is(DamageTypeTags.WITCH_RESISTANT_TO) || source.is(DamageTypes.CACTUS) || source.is(DamageTypes.FREEZE) || source.is(DamageTypes.SWEET_BERRY_BUSH) || source.is(DamageTypes.WITHER) || source.is(DamageTypes.ARROW)
+				|| source.is(DamageTypes.STARVE) || source.is(DamageTypes.DROWN) || source.is(DamageTypes.STING) || source.is(DamageTypes.IN_WALL) || source.is(DamageTypes.FIREBALL) || source.is(DamageTypes.UNATTRIBUTED_FIREBALL) || source.is(DamageTypes.MAGIC) || source.is(DamageTypes.INDIRECT_MAGIC) || super.isInvulnerableTo(source);
 	}
 
 	@Override
@@ -250,7 +254,10 @@ public class Asteroid extends Mob {
 
 	@Override
 	protected float getWaterSlowDown() {
-		return this.getState() == State.FALLING ? 1.0F : 0.8F;
+		if (this.getState() == State.FALLING) {
+			return 1F;
+		}
+		return 0.8F / Math.min(this.getScale(), 1F);
 	}
 
 	@Override
@@ -265,12 +272,7 @@ public class Asteroid extends Mob {
 	@Override
 	public void knockback(double strength, double x, double z) {
 		double scale = this.getScale() * this.getScale();
-		super.knockback(strength / scale, x / scale, z / scale);
-	}
-
-	@Override
-	public boolean requiresCustomPersistence() {
-		return false;
+		super.knockback(strength / scale, x, z);
 	}
 
 	@Override

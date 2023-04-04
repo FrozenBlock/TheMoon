@@ -93,7 +93,7 @@ public class AsteroidSpawner {
 						Asteroid asteroid = new Asteroid(TheMoonEntities.ASTEROID, level);
 						asteroid.setPos(pos.getX(), (levelHeight * 0.5) + randomSource.nextInt(0, 64), pos.getZ());
 						asteroid.setState(Asteroid.State.FALLING);
-						if (getFallingAsteroids(level) < players.size()) {
+						if (getFallingAsteroids(level) <= players.size()) {
 							asteroid.setRemainingFireTicks(10);
 							asteroid.setDeltaMovement(randomSource.nextDouble() * 2 * posOrNeg(randomSource), -1, randomSource.nextDouble() * 2 * posOrNeg(randomSource));
 							asteroid.setScale((randomSource.nextFloat() * 0.5F) + 0.7F);
