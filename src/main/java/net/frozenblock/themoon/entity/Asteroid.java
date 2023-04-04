@@ -268,7 +268,12 @@ public class Asteroid extends Mob {
 	@Override
 	public void knockback(double strength, double x, double z) {
 		double scale = this.getScale() * this.getScale();
-		super.knockback(strength, x / scale * 2, z / scale * 2);
+		super.knockback(strength / scale, x / scale, z / scale);
+	}
+
+	@Override
+	public boolean requiresCustomPersistence() {
+		return false;
 	}
 
 	@Override
