@@ -382,14 +382,14 @@ public class Asteroid extends Mob {
 
 	public void spawnFlameParticles() {
 		if (this.level instanceof ServerLevel level) {
-			level.sendParticles(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 15, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
-			level.sendParticles(ParticleTypes.FLAME, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 15, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
+			//level.sendParticles(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 15, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
+			//level.sendParticles(ParticleTypes.FLAME, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 15, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
 		}
 	}
 
 	public void spawnSmokeParticles() {
 		if (this.level instanceof ServerLevel level) {
-			level.sendParticles(ParticleTypes.SMOKE, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 15, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
+			//level.sendParticles(ParticleTypes.SMOKE, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 15, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
 		}
 	}
 

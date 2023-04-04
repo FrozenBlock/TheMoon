@@ -7,10 +7,12 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 
 public class TheMoonDimensionTypes {
 	public static final ResourceKey<DimensionType> MOON = register("the_moon");
+	public static final ResourceKey<Level> MOON_LEVEL = registerLevel("the_moon");
 
 	public static void bootstrap(BootstapContext<DimensionType> bootstapContext) {
 		TheMoonSharedConstants.logMod("Registering Dimension Types for", TheMoonSharedConstants.UNSTABLE_LOGGING);
@@ -42,5 +44,9 @@ public class TheMoonDimensionTypes {
 
 	private static ResourceKey<DimensionType> register(String name) {
 		return ResourceKey.create(Registries.DIMENSION_TYPE, TheMoonSharedConstants.id(name));
+	}
+
+	private static ResourceKey<Level> registerLevel(String name) {
+		return ResourceKey.create(Registries.DIMENSION, TheMoonSharedConstants.id(name));
 	}
 }

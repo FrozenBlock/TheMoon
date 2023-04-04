@@ -16,7 +16,6 @@
     "gravity.ThrowableProjectileMixin"
   ],
   "client": [
-    "client.LevelRendererMixin",
     "gravity.client.ParticleMixin"
   ],
   "injectors": {
