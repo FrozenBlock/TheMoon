@@ -18,6 +18,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -274,6 +275,32 @@ public class Asteroid extends Mob {
 	@Override
 	public boolean requiresCustomPersistence() {
 		return false;
+	}
+
+	@Override
+	public void checkDespawn() {
+		if (this.level.getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
+			this.discard();
+			return;
+		}
+		if (this.isPersistenceRequired() || this.requiresCustomPersistence()) {
+			this.noActionTime = 0;
+			return;
+		}
+		Player entity = this.level.getNearestPlayer(this, -1.0);
+		if (entity != null) {
+			double d = entity.distanceTo(this);
+			if (this.removeWhenFarAway(d)) {
+				this.discard();
+			}
+			int k = this.getType().getCategory().getNoDespawnDistance();
+			int l = k * k;
+			if (this.noActionTime > 600 && this.random.nextInt(800) == 0 && d > (double)l && this.removeWhenFarAway(d)) {
+				this.discard();
+			} else if (d < (double)l) {
+				this.noActionTime = 0;
+			}
+		}
 	}
 
 	@Override
