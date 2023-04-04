@@ -190,7 +190,7 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 
 	private static float getSkyOffset(double d) {
 		float progress = (float) ((d + WORLD_WIDTH) / WORLD_LENGTH);
-		return timeOfDay((long) Mth.lerp(progress, -MIDNIGHT_TIME, MIDNIGHT_TIME));
+		return timeOfDay((long) ((long) Mth.lerp(progress, -MIDNIGHT_TIME, MIDNIGHT_TIME) + NOON_TIME));
 	}
 
 	private void createDarkSky() {
