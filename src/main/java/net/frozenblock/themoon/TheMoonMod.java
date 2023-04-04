@@ -7,6 +7,7 @@ import net.frozenblock.lib.mobcategory.api.entrypoint.FrozenMobCategoryEntrypoin
 import net.frozenblock.lib.mobcategory.impl.FrozenMobCategory;
 import net.frozenblock.lib.screenshake.api.ScreenShakeManager;
 import net.frozenblock.lib.wind.api.WindManager;
+import net.frozenblock.themoon.entity.data.TheMoonEntityDataSerializers;
 import net.frozenblock.themoon.entity.spawn.FallingAsteroidSpawner;
 import net.frozenblock.themoon.mod_compat.TheMoonModIntegrations;
 import net.frozenblock.themoon.registry.TheMoonBiomeSources;
@@ -32,6 +33,7 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 		TheMoonFeatures.register();
 		TheMoonBiomeSources.register();
 		TheMoonModIntegrations.init();
+		TheMoonEntityDataSerializers.init();
 
 		GravityCalculator.register(TheMoonDimensionTypes.MOON, (level, y) -> {
 			double gravity = 0.1;

@@ -1,6 +1,7 @@
 package net.frozenblock.themoon.entity;
 
 import net.frozenblock.lib.wind.api.WindManager;
+import net.frozenblock.themoon.entity.data.TheMoonEntityDataSerializers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -49,8 +50,8 @@ public class Asteroid extends Mob {
 	public float prevRoll;
 	public float pitch;
 	public float roll;
-	public boolean falling;
 
+	private static final EntityDataAccessor<State> STATE = SynchedEntityData.defineId(Asteroid.class, TheMoonEntityDataSerializers.ASTEROID_STATE);
 	private static final EntityDataAccessor<Float> SCALE = SynchedEntityData.defineId(Asteroid.class, EntityDataSerializers.FLOAT);
 
     public Asteroid(EntityType<Asteroid> entityType, Level level) {
@@ -87,7 +88,7 @@ public class Asteroid extends Mob {
 
 	@Override
 	protected void doPush(@NotNull Entity entity) {
-		if (this.falling || this.getBoundingBox().getSize() > entity.getBoundingBox().getSize() * 1.4) {
+		if (this.getState() == State.FALLING || this.getBoundingBox().getSize() > entity.getBoundingBox().getSize() * 1.4) {
 			super.doPush(entity);
 		}
 	}
@@ -104,7 +105,7 @@ public class Asteroid extends Mob {
 	@Override
 	public void tick() {
 		super.tick();
-		float rotationAmount = this.falling ? 55F : 10;
+		float rotationAmount = 10F;
 		Vec3 deltaPosTest = this.getDeltaPos();
 		Vec3 deltaPos = new Vec3(
 				Math.abs(deltaPosTest.x()),
@@ -130,11 +131,11 @@ public class Asteroid extends Mob {
 			this.prevRoll -= 360F;
 		}
 		this.spawnSmokeParticles();
-		if (this.falling) {
+		if (this.getState() == State.FALLING) {
 			if (deltaPos.length() > 0.2) {
 				this.spawnFlameParticles();
 			}
-		} else if (this.level instanceof ServerLevel serverLevel) {
+		} else if (this.getState() == State.NO_GRAV && this.level instanceof ServerLevel serverLevel) {
 			Vec3 deltaMovement = this.getDeltaMovement();
 			WindManager windManager = WindManager.getWindManager(serverLevel);
 			Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.00075);
@@ -305,7 +306,9 @@ public class Asteroid extends Mob {
 		super.readAdditionalSaveData(compound);
 		this.pitch = compound.getFloat("TumblePitch");
 		this.roll = compound.getFloat("TumbleRoll");
-		this.falling = compound.getBoolean("Falling");
+		if (compound.contains("AsteroidState")) {
+			this.setState(State.valueOf(compound.getString("AsteroidState")));
+		}
 		this.setScale(compound.getFloat("Scale"));
 	}
 
@@ -314,7 +317,7 @@ public class Asteroid extends Mob {
 		super.addAdditionalSaveData(compound);
 		compound.putFloat("TumblePitch", this.pitch);
 		compound.putFloat("TumbleRoll", this.roll);
-		compound.putBoolean("Falling", this.falling);
+		compound.putString("AsteroidState", this.getState().name());
 		compound.putFloat("Scale", this.getScale());
 	}
 
@@ -322,6 +325,7 @@ public class Asteroid extends Mob {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(SCALE, 1.0F);
+		this.entityData.define(STATE, State.IDLE);
 	}
 
 	@Override
@@ -383,4 +387,18 @@ public class Asteroid extends Mob {
 		return HumanoidArm.LEFT;
 	}
 
+	public State getState() {
+		return this.entityData.get(STATE);
+	}
+
+	public Asteroid setState(State state) {
+		this.entityData.set(STATE, state);
+		return this;
+	}
+
+	public static enum State {
+		FALLING,
+		NO_GRAV,
+		IDLE;
+	}
 }
