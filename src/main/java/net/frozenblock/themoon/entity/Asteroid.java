@@ -76,12 +76,6 @@ public class Asteroid extends Mob {
 		return true;
 	}
 
-	@Override
-	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		Player closestPlayer = this.level.getNearestPlayer(this, -1.0);
-		return closestPlayer == null || this.horizontalDistanceTo(closestPlayer.getX(), closestPlayer.getY()) >= 76;
-	}
-
 	public double horizontalDistanceTo(double x, double z) {
 		double d = this.getX() - x;
 		double f = this.getZ() - z;
@@ -289,8 +283,10 @@ public class Asteroid extends Mob {
 		}
 		Player entity = this.level.getNearestPlayer(this, -1.0);
 		if (entity != null) {
-			double d = entity.distanceToSqr(this);
-			if (this.removeWhenFarAway(d)) {
+			int i;
+			double d = this.horizontalDistanceTo(entity.getX(), entity.getZ());
+			d *= d;
+			if (d > (double)((i = this.getType().getCategory().getDespawnDistance()) * i) && this.removeWhenFarAway(d)) {
 				this.discard();
 			}
 			int k = this.getType().getCategory().getNoDespawnDistance();

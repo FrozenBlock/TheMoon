@@ -144,23 +144,23 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, SUN_LOCATION);
 		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-		bufferBuilder.vertex(matrix4f3, -k, 100.0f, -k).uv(0.0f, 0.0f).endVertex();
-		bufferBuilder.vertex(matrix4f3, k, 100.0f, -k).uv(1.0f, 0.0f).endVertex();
-		bufferBuilder.vertex(matrix4f3, k, 100.0f, k).uv(1.0f, 1.0f).endVertex();
-		bufferBuilder.vertex(matrix4f3, -k, 100.0f, k).uv(0.0f, 1.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, -k, 100F, -k).uv(0.0f, 0.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, k, 100F, -k).uv(1.0f, 0.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, k, 100F, k).uv(1.0f, 1.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, -k, 100F, k).uv(0.0f, 1.0f).endVertex();
 		BufferUploader.drawWithShader(bufferBuilder.end());
 		poseStack.popPose();
 
-		poseStack.mulPose(Axis.XP.rotationDegrees((xRot - MIDNIGHT_TIME_FIXED) * 360F));
-		poseStack.mulPose(Axis.ZP.rotationDegrees((zRot - MIDNIGHT_TIME_FIXED) * 360F));
+		poseStack.mulPose(Axis.XP.rotationDegrees((xRot + MIDNIGHT_TIME_FIXED) * 360F));
+		poseStack.mulPose(Axis.ZP.rotationDegrees((zRot + MIDNIGHT_TIME_FIXED) * 360F));
 		matrix4f3 = poseStack.last().pose();
 		k = EARTH_SIZE;
 		RenderSystem.setShaderTexture(0, EARTH_LOCATION);
 		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-		bufferBuilder.vertex(matrix4f3, -k, -99.9f, k).uv(0.0f, 0.0f).endVertex();
-		bufferBuilder.vertex(matrix4f3, k, -99.9f, k).uv(1.0f, 0.0f).endVertex();
-		bufferBuilder.vertex(matrix4f3, k, -99.9f, -k).uv(1.0f, 1.0f).endVertex();
-		bufferBuilder.vertex(matrix4f3, -k, -99.9f, -k).uv(0.0f, 1.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, -k, 99F, k).uv(0.0f, 0.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, k, 99F, k).uv(1.0f, 0.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, k, 99F, -k).uv(1.0f, 1.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, -k, 99F, -k).uv(0.0f, 1.0f).endVertex();
 		BufferUploader.drawWithShader(bufferBuilder.end());
 
 		//STARS
