@@ -107,14 +107,6 @@ public class FallingAsteroidSpawner {
 		}
 	}
 
-	boolean canSpawnForCategory(MobCategory category, ChunkPos pos) {
-		int i = category.getMaxInstancesPerChunk() * this.spawnableChunkCount / MAGIC_NUMBER;
-		if (this.mobCategoryCounts.getInt(category) >= i) {
-			return false;
-		}
-		return this.localMobCapCalculator.canSpawn(category, pos);
-	}
-
 	private static double posOrNeg(RandomSource randomSource) {
 		return randomSource.nextBoolean() ? -1 : 1;
 	}
