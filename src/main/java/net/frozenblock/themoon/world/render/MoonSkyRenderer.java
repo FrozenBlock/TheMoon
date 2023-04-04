@@ -151,8 +151,8 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		BufferUploader.drawWithShader(bufferBuilder.end());
 		poseStack.popPose();
 
-		poseStack.mulPose(Axis.XP.rotationDegrees((xRot + MIDNIGHT_TIME_FIXED) * 360F));
-		poseStack.mulPose(Axis.ZP.rotationDegrees((zRot + MIDNIGHT_TIME_FIXED) * 360F));
+		poseStack.mulPose(Axis.XP.rotationDegrees((xRot - MIDNIGHT_TIME_FIXED) * 360F));
+		poseStack.mulPose(Axis.ZP.rotationDegrees((zRot - MIDNIGHT_TIME_FIXED) * 360F));
 		matrix4f3 = poseStack.last().pose();
 		k = EARTH_SIZE;
 		RenderSystem.setShaderTexture(0, EARTH_LOCATION);
