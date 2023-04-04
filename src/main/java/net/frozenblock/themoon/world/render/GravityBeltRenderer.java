@@ -22,7 +22,7 @@ public class GravityBeltRenderer {
 		RenderSystem.defaultBlendFunc();
 		BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
 		double y = camera.getPosition().y();
-		RenderSystem.setShaderColor(0.0f, 0.25f, 1.0f, 1.0f);
+		RenderSystem.setShaderColor(0.25f, 0.45f, 1.0f, 1.0f);
 		for (GravityCalculator.GravityBelt gravityBelt : GravityCalculator.getAllBelts(level)) {
 			poseStack.pushPose();
 			poseStack.mulPose(Axis.YP.rotationDegrees(-90F));
@@ -79,5 +79,6 @@ public class GravityBeltRenderer {
 			}
 			poseStack.popPose();
 		}
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 }
