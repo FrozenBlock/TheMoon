@@ -31,6 +31,10 @@ public class AsteroidSpawner {
 		}
 	}
 
+	public static void clear(Level level) {
+		getAsteroids(level).removeIf(asteroid -> asteroid == null || asteroid.isRemoved());
+	}
+
 	public static List<Asteroid> getAsteroids(Level level) {
 		if (ASTEROIDS.containsKey(level)) {
 			return ASTEROIDS.get(level);

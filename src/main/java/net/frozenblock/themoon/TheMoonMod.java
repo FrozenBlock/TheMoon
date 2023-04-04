@@ -58,7 +58,7 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 			return -Mth.lerp(progress, 0.05, 0.5);
 		})));
 
-
+		ServerTickEvents.START_WORLD_TICK.register(AsteroidSpawner::clear);
 		ServerTickEvents.START_WORLD_TICK.register((listener) -> AsteroidSpawner.spawn(listener, true));
 		ServerTickEvents.START_WORLD_TICK.register((listener) -> AsteroidSpawner.spawnFalling(listener, true));
 
