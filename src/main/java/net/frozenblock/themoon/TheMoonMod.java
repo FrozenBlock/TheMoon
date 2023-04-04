@@ -35,19 +35,27 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 		TheMoonEntityDataSerializers.init();
 
 		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(-64, true, 128, false, ((entity, y) -> {
-			if (entity instanceof Asteroid asteroid) {
+			if (entity instanceof Asteroid) {
 				return 1;
 			}
 			return 0.1;
 		})));
 
 
-		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(128, false, 256, true, ((entity, y) -> {
-			if (entity instanceof Asteroid asteroid) {
+		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(128, false, 320, true, ((entity, y) -> {
+			if (entity instanceof Asteroid) {
 				return 1;
 			}
-			double progress = (y - 128) / 128;
-			return Math.max(Mth.lerp(progress, 0.1, 0), 0.;
+			double progress = (y - 192) / 192;
+			return Math.max(Mth.lerp(progress, 0.1, 0), 0.05);
+		})));
+
+		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(320, false, Double.MAX_VALUE, false, ((entity, y) -> {
+			if (entity instanceof Asteroid) {
+				return 1;
+			}
+			double progress = Math.min(Math.min((y - 320), 64) / 64, 1);
+			return -Mth.lerp(progress, 0.05, 0.5);
 		})));
 
 
