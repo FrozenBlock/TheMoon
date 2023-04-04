@@ -19,8 +19,10 @@ public class GravityBeltRenderer {
 	private static final ResourceLocation FORCEFIELD_LOCATION = new ResourceLocation("textures/misc/forcefield.png");
 
 	public static void renderGravityBelts(ClientLevel level, Camera camera, PoseStack poseStack) {
+		RenderSystem.defaultBlendFunc();
 		BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
 		double y = camera.getPosition().y();
+		RenderSystem.setShaderColor(0.0f, 0.25f, 1.0f, 1.0f);
 		for (GravityCalculator.GravityBelt gravityBelt : GravityCalculator.getAllBelts(level)) {
 			poseStack.pushPose();
 			poseStack.mulPose(Axis.YP.rotationDegrees(-90F));

@@ -80,7 +80,6 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 			return;
 		}
 		this.setup();
-
 		float q;
 		float p;
 		float o;
@@ -129,7 +128,6 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, i);
 
 		//SUN & EARTH
-		GravityBeltRenderer.renderGravityBelts(level, camera, poseStack);
 
 		Vec3 playerPos = camera.getPosition();
 		float xRot = getSkyOffset(playerPos.x());
@@ -189,6 +187,8 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		}
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		RenderSystem.depthMask(true);
+
+		GravityBeltRenderer.renderGravityBelts(level, camera, poseStack);
 	}
 
 	private static float getSkyOffset(double d) {

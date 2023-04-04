@@ -43,8 +43,11 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 
 
 		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(128, false, 256, true, ((entity, y) -> {
+			if (entity instanceof Asteroid asteroid) {
+				return 1;
+			}
 			double progress = (y - 128) / 128;
-			return Mth.lerp(progress, 0.1, 0);
+			return Math.max(Mth.lerp(progress, 0.1, 0), 0.;
 		})));
 
 

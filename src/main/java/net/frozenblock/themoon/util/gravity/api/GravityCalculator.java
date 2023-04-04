@@ -39,12 +39,7 @@ public class GravityCalculator {
 			Optional<GravityBelt> optionalGravityBelt = getEffectingGravityBelt(GRAVITY_BELTS.get(dimensionType), y);
 			if (optionalGravityBelt.isPresent()) {
 				GravityBelt gravityBelt = optionalGravityBelt.get();
-				double gravity = gravityBelt.getGravity(null, y);
-				double higherGravity = gravityBelt.getGravity(null, y + 1);
-				if (higherGravity < gravity && gravity < 0.025 && gravity > -0.025) {
-					return -0.025;
-				}
-				return gravity;
+				return gravityBelt.getGravity(null, y);
 			}
 		}
 		return 1;
@@ -57,12 +52,7 @@ public class GravityCalculator {
 			Optional<GravityBelt> optionalGravityBelt = getEffectingGravityBelt(GRAVITY_BELTS.get(dimensionType), y);
 			if (optionalGravityBelt.isPresent()) {
 				GravityBelt gravityBelt = optionalGravityBelt.get();
-				double gravity = gravityBelt.getGravity(entity, y);
-				double higherGravity = gravityBelt.getGravity(entity, y + 1);
-				if (higherGravity < gravity && gravity < 0.025 && gravity > -0.025) {
-					return -0.025;
-				}
-				return gravity;
+				return gravityBelt.getGravity(entity, y);
 			}
 		}
 		return 1;
