@@ -80,6 +80,7 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 			return;
 		}
 		this.setup();
+
 		float q;
 		float p;
 		float o;
@@ -128,6 +129,8 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, i);
 
 		//SUN & EARTH
+		GravityBeltRenderer.renderGravityBelts(level, camera, poseStack);
+
 		Vec3 playerPos = camera.getPosition();
 		float xRot = getSkyOffset(playerPos.x());
 		float zRot = getSkyOffset(playerPos.z());
@@ -157,10 +160,10 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		k = EARTH_SIZE;
 		RenderSystem.setShaderTexture(0, EARTH_LOCATION);
 		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-		bufferBuilder.vertex(matrix4f3, -k, 99F, k).uv(0.0f, 0.0f).endVertex();
-		bufferBuilder.vertex(matrix4f3, k, 99F, k).uv(1.0f, 0.0f).endVertex();
-		bufferBuilder.vertex(matrix4f3, k, 99F, -k).uv(1.0f, 1.0f).endVertex();
-		bufferBuilder.vertex(matrix4f3, -k, 99F, -k).uv(0.0f, 1.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, -k, 99F, -k).uv(0.0f, 0.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, k, 99F, -k).uv(1.0f, 0.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, k, 99F, k).uv(1.0f, 1.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, -k, 99F, k).uv(0.0f, 1.0f).endVertex();
 		BufferUploader.drawWithShader(bufferBuilder.end());
 
 		//STARS

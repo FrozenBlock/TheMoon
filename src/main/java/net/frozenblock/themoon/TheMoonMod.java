@@ -1,12 +1,12 @@
 package net.frozenblock.themoon;
 
+import java.util.ArrayList;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.loader.api.ModContainer;
 import net.frozenblock.lib.mobcategory.api.entrypoint.FrozenMobCategoryEntrypoint;
 import net.frozenblock.lib.mobcategory.impl.FrozenMobCategory;
-import net.frozenblock.lib.screenshake.api.ScreenShakeManager;
-import net.frozenblock.lib.wind.api.WindManager;
+import net.frozenblock.themoon.entity.Asteroid;
 import net.frozenblock.themoon.entity.data.TheMoonEntityDataSerializers;
 import net.frozenblock.themoon.entity.spawn.FallingAsteroidSpawner;
 import net.frozenblock.themoon.mod_compat.TheMoonModIntegrations;
@@ -16,11 +16,10 @@ import net.frozenblock.themoon.registry.TheMoonEntities;
 import net.frozenblock.themoon.registry.TheMoonFeatures;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import net.frozenblock.themoon.util.gravity.api.GravityCalculator;
-import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.QuiltDataFixerBuilder;
 import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.QuiltDataFixes;
-import java.util.ArrayList;
 
 public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 
@@ -35,19 +34,19 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 		TheMoonModIntegrations.init();
 		TheMoonEntityDataSerializers.init();
 
-		GravityCalculator.register(TheMoonDimensionTypes.MOON, (level, y) -> {
-			double gravity = 0.1;
-			double levelWidth = level.getMaxBuildHeight() - level.getMinBuildHeight();
-			double fixedY = Math.max(levelWidth * 0.6, y);
-			return gravity * Math.sin((fixedY * Math.PI) / levelWidth);
-		});
+		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(-64, true, 128, false, ((entity, y) -> {
+			if (entity instanceof Asteroid asteroid) {
+				return 1;
+			}
+			return 0.1;
+		})));
 
-		GravityCalculator.register(BuiltinDimensionTypes.OVERWORLD, (level, y) -> {
-			double gravity = 1;
-			double levelWidth = level.getMaxBuildHeight() - level.getMinBuildHeight();
-			double fixedY = Math.max(levelWidth * 0.4, y);
-			return gravity * Math.sin((fixedY * Math.PI) / levelWidth);
-		});
+
+		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(128, false, 256, true, ((entity, y) -> {
+			double progress = (y - 128) / 128;
+			return Mth.lerp(progress, 0.1, 0);
+		})));
+
 
 		ServerTickEvents.START_WORLD_TICK.register((listener) -> FallingAsteroidSpawner.spawn(listener, true));
 
