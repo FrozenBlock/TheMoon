@@ -13,6 +13,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import org.joml.Matrix4f;
 
 public class GravityBeltRenderer {
@@ -22,14 +23,15 @@ public class GravityBeltRenderer {
 		RenderSystem.defaultBlendFunc();
 		BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
 		double y = camera.getPosition().y();
-		RenderSystem.setShaderColor(0.25f, 0.45f, 1.0f, 1.0f);
 		for (GravityCalculator.GravityBelt gravityBelt : GravityCalculator.getAllBelts(level)) {
 			poseStack.pushPose();
 			poseStack.mulPose(Axis.YP.rotationDegrees(-90F));
 			if (gravityBelt.renderTop) {
-				float offset = (float) (gravityBelt.maxY - y);
+				float distance = (float) (gravityBelt.maxY - y);
+				float alpha = Mth.lerp(Mth.clamp(Math.abs(distance), 0, 32), 0F, 1F);
+				RenderSystem.setShaderColor(0.25f, 0.45f, 1.0f, alpha);
 				poseStack.pushPose();
-				poseStack.translate(0, offset, 0);
+				poseStack.translate(0, distance, 0);
 				//poseStack.mulPose(Axis.XP.rotationDegrees((rotation - xRot) * 360F));
 				Matrix4f matrix4f3 = poseStack.last().pose();
 
@@ -53,9 +55,11 @@ public class GravityBeltRenderer {
 			}
 
 			if (gravityBelt.renderBottom) {
-				float offset = (float) (gravityBelt.minY - y);
+				float distance = (float) (gravityBelt.minY - y);
+				float alpha = Mth.lerp(Mth.clamp(Math.abs(distance), 0, 32), 0F, 1F);
+				RenderSystem.setShaderColor(0.25f, 0.45f, 1.0f, alpha);
 				poseStack.pushPose();
-				poseStack.translate(0, offset, 0);
+				poseStack.translate(0, distance, 0);
 				//poseStack.mulPose(Axis.XP.rotationDegrees((rotation - xRot) * 360F));
 				Matrix4f matrix4f3 = poseStack.last().pose();
 

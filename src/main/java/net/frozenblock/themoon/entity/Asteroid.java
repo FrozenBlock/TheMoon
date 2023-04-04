@@ -2,7 +2,7 @@ package net.frozenblock.themoon.entity;
 
 import net.frozenblock.lib.wind.api.WindManager;
 import net.frozenblock.themoon.entity.data.TheMoonEntityDataSerializers;
-import net.frozenblock.themoon.entity.spawn.FallingAsteroidSpawner;
+import net.frozenblock.themoon.entity.spawn.AsteroidSpawner;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -60,7 +60,7 @@ public class Asteroid extends Mob {
     public Asteroid(EntityType<Asteroid> entityType, Level level) {
 		super(entityType, level);
 		this.blocksBuilding = true;
-		FallingAsteroidSpawner.add(this);
+		AsteroidSpawner.add(this);
 	}
 
 	@Override

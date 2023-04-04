@@ -8,7 +8,7 @@ import net.frozenblock.lib.mobcategory.api.entrypoint.FrozenMobCategoryEntrypoin
 import net.frozenblock.lib.mobcategory.impl.FrozenMobCategory;
 import net.frozenblock.themoon.entity.Asteroid;
 import net.frozenblock.themoon.entity.data.TheMoonEntityDataSerializers;
-import net.frozenblock.themoon.entity.spawn.FallingAsteroidSpawner;
+import net.frozenblock.themoon.entity.spawn.AsteroidSpawner;
 import net.frozenblock.themoon.mod_compat.TheMoonModIntegrations;
 import net.frozenblock.themoon.registry.TheMoonBiomeSources;
 import net.frozenblock.themoon.registry.TheMoonDimensionTypes;
@@ -59,7 +59,8 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 		})));
 
 
-		ServerTickEvents.START_WORLD_TICK.register((listener) -> FallingAsteroidSpawner.spawn(listener, true));
+		ServerTickEvents.START_WORLD_TICK.register((listener) -> AsteroidSpawner.spawn(listener, true));
+		ServerTickEvents.START_WORLD_TICK.register((listener) -> AsteroidSpawner.spawnFalling(listener, true));
 
 		TheMoonSharedConstants.stopMeasuring(this);
 	}
