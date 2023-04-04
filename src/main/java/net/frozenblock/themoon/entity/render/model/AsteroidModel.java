@@ -36,8 +36,7 @@ public class AsteroidModel<T extends Asteroid> extends HierarchicalModel<T> {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 		PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create()
-				.texOffs(0, 28).addBox(-6.0F, -6.0F, -6.0F, 12.0F, 12.0F, 12.0F, new CubeDeformation(0.0F))
-				.texOffs(0, 0).addBox(-7.0F, -7.0F, -7.0F, 14.0F, 14.0F, 14.0F, new CubeDeformation(0.0F)), PartPose.offset(0F, 0F, 0F));
+				.texOffs(0, 0).addBox(-8.0F, -8.0F, -8.0F, 16.0F, 16.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0F, 0F, 0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
