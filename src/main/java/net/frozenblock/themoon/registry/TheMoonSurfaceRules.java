@@ -1,6 +1,7 @@
 package net.frozenblock.themoon.registry;
 
 import net.frozenblock.lib.worldgen.surface.FrozenSurfaceRules;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 
@@ -14,7 +15,7 @@ public class TheMoonSurfaceRules {
 						),
 						FrozenSurfaceRules.BEDROCK
 				),
-				FrozenSurfaceRules.ENDSTONE
+				FrozenSurfaceRules.makeStateRule(Blocks.TUFF)
 		);
 	}
 
