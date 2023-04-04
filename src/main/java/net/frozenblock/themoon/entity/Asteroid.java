@@ -234,8 +234,8 @@ public class Asteroid extends Mob {
 
 	@Override
 	public void knockback(double strength, double x, double z) {
-		double scale = this.getScale();
-		super.knockback(strength, x / scale, z / scale);
+		double scale = this.getScale() * 2;
+		super.knockback(strength, x / scale * 2, z / scale);
 	}
 
 	@Override
@@ -245,7 +245,7 @@ public class Asteroid extends Mob {
 
 	public void setScale(float value) {
 		this.entityData.set(SCALE, value);
-		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(value * 6F);
+		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(6F * (6F * value));
 		this.setHealth(this.getMaxHealth());
 	}
 
