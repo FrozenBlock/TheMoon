@@ -198,7 +198,7 @@ public class Asteroid extends Mob {
 					this.ticksSinceActive = 0;
 					this.setState(State.NO_GRAV);
 				}
-			} else if (this.fallDistance > 30) {
+			} else if (this.fallDistance * this.fallDistance > 6) {
 				this.setState(State.FALLING);
 			}
 			Player closestPlayer = this.level.getNearestPlayer(this, -1.0);
