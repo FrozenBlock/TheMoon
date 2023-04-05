@@ -57,9 +57,11 @@ public class Asteroid extends Mob {
 	public float pitch;
 	public float roll;
 	public int ticksSinceActive;
+	public int ticksInAsteroidBelt;
 
 	public double fallX;
 	public double fallZ;
+	public boolean isInAsteroidBelt;
 
 	private static final EntityDataAccessor<State> STATE = SynchedEntityData.defineId(Asteroid.class, TheMoonEntityDataSerializers.ASTEROID_STATE);
 	private static final EntityDataAccessor<Float> SCALE = SynchedEntityData.defineId(Asteroid.class, EntityDataSerializers.FLOAT);
@@ -123,13 +125,18 @@ public class Asteroid extends Mob {
 		this.fallX = deltaMovement.x();
 		this.fallZ = deltaMovement.z();
 		super.tick();
+		if (this.isInAsteroidBelt) {
+			this.ticksInAsteroidBelt += 1;
+		} else {
+			this.ticksInAsteroidBelt = 0;
+		}
 		deltaMovement = this.getDeltaMovement();
 		if (this.wasTouchingWater && this.getState() != State.IDLE) {
-			this.setState(State.IDLE);
 			if (this.getState() == State.FALLING) {
 				this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.5F, 0.8F);
 				this.extinguishFire();
 			}
+			this.setState(State.IDLE);
 		}
 		float rotationAmount = 10F;
 		Vec3 deltaPosTest = this.getDeltaPos();
@@ -157,13 +164,21 @@ public class Asteroid extends Mob {
 			this.prevRoll -= 360F;
 		}
 		if (this.getState() == State.FALLING) {
+			this.ticksSinceActive = 0;
 			this.spawnFlameParticles();
 			this.spawnSmokeParticles();
-			this.setRemainingFireTicks(10);
-			double xToUse = Math.abs(fallX) > Math.abs(deltaMovement.x()) ? fallX : deltaMovement.x();
-			double zToUse = Math.abs(fallZ) > Math.abs(deltaMovement.z()) ? fallZ : deltaMovement.z();
-			this.setDeltaMovement(xToUse, deltaMovement.y(), zToUse);
+			if (!this.isInAsteroidBelt) {
+				this.setRemainingFireTicks(200);
+				double xToUse = Math.abs(fallX) > Math.abs(deltaMovement.x()) ? fallX : deltaMovement.x();
+				double zToUse = Math.abs(fallZ) > Math.abs(deltaMovement.z()) ? fallZ : deltaMovement.z();
+				this.setDeltaMovement(xToUse, deltaMovement.y(), zToUse);
+			} else if (this.ticksInAsteroidBelt == 200) {
+				this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.5F, 0.8F);
+				this.extinguishFire();
+				this.setState(State.IDLE);
+			}
 		} else if (this.getState() == State.NO_GRAV) {
+			this.ticksSinceActive = 0;
 			if (this.level instanceof ServerLevel serverLevel) {
 				WindManager windManager = WindManager.getWindManager(serverLevel);
 				Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.075);
@@ -173,8 +188,19 @@ public class Asteroid extends Mob {
 				deltaMovement = deltaMovement.add((windX * 0.015), (windY * 0.015), (windZ * 0.015));
 				this.setDeltaMovement(deltaMovement);
 				this.spawnSmokeParticles();
+				if (!this.isInAsteroidBelt) {
+					this.setState(State.IDLE);
+				}
 			}
 		} else {
+			if (this.isInAsteroidBelt) {
+				if (AsteroidSpawner.getNoGravAsteroids(this.level) < this.getType().getCategory().getMaxInstancesPerChunk() && this.ticksInAsteroidBelt > 200) {
+					this.ticksSinceActive = 0;
+					this.setState(State.NO_GRAV);
+				}
+			} else if (this.fallDistance > 30) {
+				this.setState(State.FALLING);
+			}
 			Player closestPlayer = this.level.getNearestPlayer(this, -1.0);
 			if (!this.requiresCustomPersistence() && (((closestPlayer == null || closestPlayer.distanceTo(this) > 48)) || (this.wasTouchingWater))) {
 				++this.ticksSinceActive;
@@ -352,7 +378,6 @@ public class Asteroid extends Mob {
 
 	public Asteroid setState(State state) {
 		this.entityData.set(STATE, state);
-		this.setNoGravity(state == State.NO_GRAV);
 		return this;
 	}
 
@@ -401,6 +426,7 @@ public class Asteroid extends Mob {
 		}
 		this.setScale(compound.getFloat("Scale"));
 		this.ticksSinceActive = compound.getInt("TicksSinceActive");
+		this.ticksInAsteroidBelt = compound.getInt("TicksInAsteroidBelt");
 	}
 
 	@Override
@@ -411,6 +437,7 @@ public class Asteroid extends Mob {
 		compound.putString("AsteroidState", this.getState().name());
 		compound.putFloat("Scale", this.getScale());
 		compound.putInt("TicksSinceActive", this.ticksSinceActive);
+		compound.putInt("TicksInAsteroidBelt", this.ticksInAsteroidBelt);
 	}
 
 	@Override
