@@ -3,13 +3,16 @@ package net.frozenblock.themoon;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.DimensionRenderingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.frozenblock.themoon.entity.render.model.AsteroidModel;
 import net.frozenblock.themoon.entity.render.renderer.AsteroidRenderer;
+import net.frozenblock.themoon.particle.MoonDustParticle;
 import net.frozenblock.themoon.registry.TheMoonDimensionTypes;
 import net.frozenblock.themoon.registry.TheMoonEntities;
+import net.frozenblock.themoon.registry.TheMoonParticleTypes;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import net.frozenblock.themoon.world.render.MoonSkyRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -24,5 +27,7 @@ public class TheMoonModClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(ASTEROID, AsteroidModel::createBodyLayer);
 
 		DimensionRenderingRegistry.registerSkyRenderer(TheMoonDimensionTypes.MOON_LEVEL, new MoonSkyRenderer());
+
+		ParticleFactoryRegistry.getInstance().register(TheMoonParticleTypes.MOON_DUST, MoonDustParticle.Provider::new);
     }
 }

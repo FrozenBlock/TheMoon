@@ -11,12 +11,14 @@ import net.frozenblock.themoon.registry.TheMoonBiomes;
 import net.frozenblock.themoon.registry.TheMoonDimensionTypes;
 import net.frozenblock.themoon.registry.TheMoonEntities;
 import net.frozenblock.themoon.tag.TheMoonBiomeTags;
+import net.frozenblock.themoon.tag.TheMoonBlockTags;
 import net.frozenblock.themoon.tag.TheMoonEntityTags;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.BlockTags;
 
 public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 
@@ -80,7 +82,11 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 
 		@Override
 		protected void addTags(HolderLookup.Provider arg) {
+			this.getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
+					.addOptional(TheMoonSharedConstants.id("moon_rock"));
 
+			this.getOrCreateTagBuilder(TheMoonBlockTags.MOON_DUST)
+					.addOptional(TheMoonSharedConstants.id("moon_rock"));
 		}
 	}
 

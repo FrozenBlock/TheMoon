@@ -65,19 +65,12 @@ public class Asteroid extends Mob {
 	public double fallZ;
 	public boolean isInAsteroidBelt;
 
-	@Override
-	public void clearFire() {
-		super.clearFire();
-	}
-
 	private static final EntityDataAccessor<State> STATE = SynchedEntityData.defineId(Asteroid.class, TheMoonEntityDataSerializers.ASTEROID_STATE);
 	private static final EntityDataAccessor<Float> SCALE = SynchedEntityData.defineId(Asteroid.class, EntityDataSerializers.FLOAT);
 
     public Asteroid(EntityType<Asteroid> entityType, Level level) {
 		super(entityType, level);
-		this.setScale(1F);
 		this.blocksBuilding = true;
-		AsteroidSpawner.add(this);
 	}
 
 	@Nullable
@@ -201,9 +194,11 @@ public class Asteroid extends Mob {
 			}
 		} else {
 			if (this.isInAsteroidBelt) {
-				if (AsteroidSpawner.getNoGravAsteroids(this.level) < this.getType().getCategory().getMaxInstancesPerChunk() && this.ticksInAsteroidBelt > 100 * this.getScale()) {
-					this.ticksSinceActive = 0;
-					this.setState(State.NO_GRAV);
+				if (this.level instanceof ServerLevel serverLevel) {
+					if (AsteroidSpawner.getNoGravAsteroids(serverLevel) < this.getType().getCategory().getMaxInstancesPerChunk() && this.ticksInAsteroidBelt > 100 * this.getScale()) {
+						this.ticksSinceActive = 0;
+						this.setState(State.NO_GRAV);
+					}
 				}
 			} else if (this.trueFallDistance > this.getScale() * 2 && !this.alreadyFell) {
 				this.trueFallDistance = 0;
@@ -255,7 +250,7 @@ public class Asteroid extends Mob {
 
 	@Override
 	public boolean isInvulnerableTo(@NotNull DamageSource source) {
-		return source.is(DamageTypeTags.WITCH_RESISTANT_TO) || source.is(DamageTypes.CACTUS) || source.is(DamageTypes.FREEZE) || source.is(DamageTypes.SWEET_BERRY_BUSH) || source.is(DamageTypes.WITHER) || source.is(DamageTypes.ARROW)
+		return source.is(DamageTypeTags.WITCH_RESISTANT_TO) || source.is(DamageTypes.CACTUS) || source.is(DamageTypes.FREEZE) || source.is(DamageTypes.SWEET_BERRY_BUSH) || source.is(DamageTypes.WITHER) || source.is(DamageTypes.ARROW) || source.is(DamageTypes.ON_FIRE) || source.is(DamageTypes.IN_FIRE)
 				|| source.is(DamageTypes.STARVE) || source.is(DamageTypes.DROWN) || source.is(DamageTypes.STING) || source.is(DamageTypes.IN_WALL) || source.is(DamageTypes.FIREBALL) || source.is(DamageTypes.UNATTRIBUTED_FIREBALL) || source.is(DamageTypes.MAGIC) || source.is(DamageTypes.INDIRECT_MAGIC) || super.isInvulnerableTo(source);
 	}
 

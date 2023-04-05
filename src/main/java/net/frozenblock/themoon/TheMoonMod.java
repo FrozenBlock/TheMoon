@@ -12,9 +12,11 @@ import net.frozenblock.themoon.entity.spawn.AsteroidBelts;
 import net.frozenblock.themoon.entity.spawn.AsteroidSpawner;
 import net.frozenblock.themoon.mod_compat.TheMoonModIntegrations;
 import net.frozenblock.themoon.registry.TheMoonBiomeSources;
+import net.frozenblock.themoon.registry.TheMoonBlocks;
 import net.frozenblock.themoon.registry.TheMoonDimensionTypes;
 import net.frozenblock.themoon.registry.TheMoonEntities;
 import net.frozenblock.themoon.registry.TheMoonFeatures;
+import net.frozenblock.themoon.registry.TheMoonParticleTypes;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import net.frozenblock.themoon.util.gravity.api.GravityCalculator;
 import net.minecraft.util.Mth;
@@ -29,11 +31,13 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 		TheMoonSharedConstants.startMeasuring(this);
 		applyDataFixes(TheMoonSharedConstants.MOD_CONTAINER);
 
+		TheMoonBlocks.register();
 		TheMoonEntities.init();
 		TheMoonFeatures.register();
 		TheMoonBiomeSources.register();
 		TheMoonModIntegrations.init();
 		TheMoonEntityDataSerializers.init();
+		TheMoonParticleTypes.registerParticles();
 
 		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(-64, true, 128, false, ((entity, y) -> {
 			return 0.1;
@@ -58,7 +62,6 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 		AsteroidBelts.register(TheMoonDimensionTypes.MOON, new AsteroidBelts.AsteroidBelt(256, 382, 272, 320));
 
 		ServerTickEvents.START_WORLD_TICK.register((serverLevel) -> {
-			AsteroidSpawner.clear(serverLevel);
 			AsteroidSpawner.spawn(serverLevel, true);
 			AsteroidSpawner.spawnFalling(serverLevel, true);
 		});

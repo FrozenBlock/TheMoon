@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "the_moon:block/moon_rock"
+      },
+      {
+        "model": "the_moon:block/moon_rock_mirrored"
+      },
+      {
+        "model": "the_moon:block/moon_rock",
+        "y": 180
+      },
+      {
+        "model": "the_moon:block/moon_rock_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}

@@ -15,7 +15,7 @@ public class TheMoonSurfaceRules {
 						),
 						FrozenSurfaceRules.BEDROCK
 				),
-				FrozenSurfaceRules.makeStateRule(Blocks.TUFF)
+				FrozenSurfaceRules.makeStateRule(TheMoonBlocks.MOON_ROCK)
 		);
 	}
 
