@@ -180,17 +180,10 @@ public class Asteroid extends Mob {
 			if (this.getRemainingFireTicks() > 0) {
 				this.spawnFlameParticles();
 			}
-			if (!this.isInAsteroidBelt) {
-				if (this.trueFallDistance > 3 * this.getScale()) {
-					this.setRemainingFireTicks(this.random.nextInt(80, 200));
-				}
-				double xToUse = Math.abs(fallX) > Math.abs(deltaMovement.x()) ? fallX : deltaMovement.x();
-				double zToUse = Math.abs(fallZ) > Math.abs(deltaMovement.z()) ? fallZ : deltaMovement.z();
-				this.setDeltaMovement(xToUse, deltaMovement.y(), zToUse);
-			} else {
-				this.extinguishFire();
-				this.setState(State.IDLE);
-			}
+			this.setRemainingFireTicks(200);
+			double xToUse = Math.abs(fallX) > Math.abs(deltaMovement.x()) ? fallX : deltaMovement.x();
+			double zToUse = Math.abs(fallZ) > Math.abs(deltaMovement.z()) ? fallZ : deltaMovement.z();
+			this.setDeltaMovement(xToUse, deltaMovement.y(), zToUse);
 		} else if (this.getState() == State.NO_GRAV) {
 			this.ticksSinceActive = 0;
 			if (this.level instanceof ServerLevel serverLevel) {
