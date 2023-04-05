@@ -58,6 +58,9 @@ public class Asteroid extends Mob {
 	public float roll;
 	public int ticksSinceActive;
 
+	public double fallX;
+	public double fallZ;
+
 	private static final EntityDataAccessor<State> STATE = SynchedEntityData.defineId(Asteroid.class, TheMoonEntityDataSerializers.ASTEROID_STATE);
 	private static final EntityDataAccessor<Float> SCALE = SynchedEntityData.defineId(Asteroid.class, EntityDataSerializers.FLOAT);
 
@@ -116,6 +119,9 @@ public class Asteroid extends Mob {
 
 	@Override
 	public void tick() {
+		Vec3 deltaMovement = this.getDeltaMovement();
+		this.fallX = deltaMovement.x();
+		this.fallZ = deltaMovement.z();
 		super.tick();
 		if (this.wasTouchingWater && this.getState() != State.IDLE) {
 			this.setState(State.IDLE);
@@ -153,9 +159,12 @@ public class Asteroid extends Mob {
 			this.spawnFlameParticles();
 			this.spawnSmokeParticles();
 			this.setRemainingFireTicks(10);
+			Vec3 newDeltaMovement = this.getDeltaMovement();
+			double xToUse = Math.abs(fallX) > Math.abs(newDeltaMovement.x()) ? fallX : newDeltaMovement.x();
+			double zToUse = Math.abs(fallZ) > Math.abs(newDeltaMovement.z()) ? fallZ : newDeltaMovement.z();
+			this.setDeltaMovement(xToUse, this.getDeltaMovement().y(), zToUse);
 		} else if (this.getState() == State.NO_GRAV) {
 			if (this.level instanceof ServerLevel serverLevel) {
-				Vec3 deltaMovement = this.getDeltaMovement();
 				WindManager windManager = WindManager.getWindManager(serverLevel);
 				Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.075);
 				double windX = wind.x();
@@ -268,8 +277,10 @@ public class Asteroid extends Mob {
 
 	@Override
 	public boolean causeFallDamage(float fallDistance, float multiplier, @NotNull DamageSource source) {
-		this.level.explode(this, this.getX(), this.getEyeY(), this.getZ(), Math.min(fallDistance, 7), Level.ExplosionInteraction.MOB);
-		this.destroy(false);
+		if (this.getState() == State.FALLING) {
+			this.level.explode(this, this.getX(), this.getEyeY(), this.getZ(), Math.min(fallDistance * this.getScale(), 10), Level.ExplosionInteraction.MOB);
+			this.destroy(false);
+		}
 		return true;
 	}
 
@@ -278,7 +289,7 @@ public class Asteroid extends Mob {
 		if (this.getState() == State.FALLING) {
 			return 1F;
 		}
-		return 0.8F / Math.min(this.getScale(), 1F);
+		return 0.8F / Mth.clamp(this.getScale(), 1F, 2.25F);
 	}
 
 	@Override
