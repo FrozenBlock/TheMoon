@@ -34,7 +34,7 @@ public class EntityMixin {
 	@Unique
 	private void theMoon$spawnMoonDustParticle() {
 		Entity entity = Entity.class.cast(this);
-		if (!entity.isPassenger() && (!(entity instanceof LivingEntity livingEntity) || !livingEntity.isFallFlying()) && entity.isOnGround() && entity.getDeltaMovement().length() > random.nextFloat() * 0.3) {
+		if (!entity.isPassenger() && (!(entity instanceof LivingEntity livingEntity) || !livingEntity.isFallFlying()) && entity.isOnGround() && entity.getDeltaMovement().length() > random.nextFloat() * 0.375) {
 			int i = Mth.floor(entity.getX());
 			BlockPos blockPos = new BlockPos(i, Mth.floor(entity.getY() - (double) 0.2f), Mth.floor(entity.getZ()));
 			BlockState blockState = entity.level.getBlockState(blockPos);

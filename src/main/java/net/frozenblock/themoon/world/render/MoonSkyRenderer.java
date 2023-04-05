@@ -176,7 +176,7 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		RenderSystem.defaultBlendFunc();
 		poseStack.popPose();
 		RenderSystem.setShaderColor(0.0f, 0.0f, 0.0f, 1.0f);
-		double d = minecraft.player.getEyePosition(tickDelta).y - level.getLevelData().getHorizonHeight(level);
+		double d = minecraft.player.getEyePosition(tickDelta).y + 64;
 		if (d < 0.0) {
 			poseStack.pushPose();
 			poseStack.translate(0.0f, 12.0f, 0.0f);
