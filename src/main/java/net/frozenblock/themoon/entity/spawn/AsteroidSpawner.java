@@ -9,14 +9,11 @@ import net.frozenblock.themoon.registry.TheMoonEntities;
 import net.frozenblock.themoon.tag.TheMoonBiomeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.chunk.LevelChunk;
 
 public class AsteroidSpawner {
 	private static final Map<Level, List<Asteroid>> ASTEROIDS = new HashMap<>();
@@ -75,35 +72,34 @@ public class AsteroidSpawner {
 		return count;
 	}
 
-	public static List<BlockPos> getRandomPoses(ServerLevel level) {
-		List<BlockPos> blockPoses = new ArrayList<>();
-		for (ChunkHolder holder : level.getChunkSource().chunkMap.getChunks()) {
-			blockPoses.add(getRandomPosWithin(level, holder.getPos()));
-		}
-		return blockPoses;
-	}
-
-	private static BlockPos getRandomPosWithin(Level world, ChunkPos pos) {
-		int i = pos.getMinBlockX() + world.random.nextInt(16);
-		int j = pos.getMinBlockZ() + world.random.nextInt(16);
-		return new BlockPos(i, 0, j);
-	}
-
 	public static void spawnFalling(ServerLevel level, boolean spawnBypass) {
 		RandomSource randomSource = level.getRandom();
 		double levelHeight = level.getLogicalHeight();
-		for (BlockPos pos : getRandomPoses(level)) {
+		BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+		BlockPos.MutableBlockPos mutableChunkBlockPos = new BlockPos.MutableBlockPos();
+		for (ServerPlayer player : level.players()) {
 			if (level.getRandom().nextFloat() < 0.075F) {
-				if (level.isLoaded(pos) && level.isNaturalSpawningAllowed(pos)) {
-					Holder<Biome> biome = level.getBiome(pos);
+				mutableBlockPos.set(player.blockPosition());
+				mutableBlockPos.set(
+						mutableBlockPos.getX() + randomSource.nextInt(-128, 128),
+						(int) ((levelHeight * 0.5) + randomSource.nextInt(0, 64)),
+						mutableBlockPos.getX() + randomSource.nextInt(-128, 128)
+				);
+				mutableChunkBlockPos.set(
+						mutableBlockPos.getX(),
+						0,
+						mutableBlockPos.getZ()
+				);
+				if (level.isLoaded(mutableChunkBlockPos)) {
+					Holder<Biome> biome = level.getBiome(mutableBlockPos);
 					if (biome.is(TheMoonBiomeTags.FALLING_ASTEROIDS) || spawnBypass) {
 						Asteroid asteroid = new Asteroid(TheMoonEntities.ASTEROID, level);
-						asteroid.setPos(pos.getX(), (levelHeight * 0.5) + randomSource.nextInt(0, 64), pos.getZ());
+						asteroid.setPos(mutableBlockPos.getX(), mutableBlockPos.getY(), mutableBlockPos.getZ());
+						asteroid.setScale((randomSource.nextFloat() * 0.5F) + 0.7F);
 						asteroid.setState(Asteroid.State.FALLING);
-						if (getFallingAsteroids(level) <= level.players().size() && !asteroid.isPlayerWithin(32)) {
+						if (getFallingAsteroids(level) <= level.players().size() && !asteroid.isPlayerWithin(32) && level.noCollision(asteroid.makeBoundingBox())) {
 							asteroid.setRemainingFireTicks(10);
 							asteroid.setDeltaMovement(randomSource.nextDouble() * 2 * posOrNeg(randomSource), -1, randomSource.nextDouble() * 2 * posOrNeg(randomSource));
-							asteroid.setScale((randomSource.nextFloat() * 0.5F) + 0.7F);
 							level.addFreshEntity(asteroid);
 						}
 					}
@@ -120,18 +116,29 @@ public class AsteroidSpawner {
 		}
 		RandomSource randomSource = level.getRandom();
 		double levelHeight = level.getLogicalHeight();
-		for (BlockPos pos : poses) {
+		BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+		BlockPos.MutableBlockPos mutableChunkBlockPos = new BlockPos.MutableBlockPos();
+		for (ServerPlayer player : level.players()) {
 			if (level.getRandom().nextFloat() < 0.075F) {
-				if (level.isLoaded(pos) && level.isNaturalSpawningAllowed(pos)) {
-					Holder<Biome> biome = level.getBiome(pos);
-					if (biome.is(TheMoonBiomeTags.FALLING_ASTEROIDS) || spawnBypass) {
-						Asteroid asteroid = new Asteroid(TheMoonEntities.ASTEROID, level);
-						asteroid.setPos(pos.getX(), (levelHeight * 0.5) + randomSource.nextInt(0, 64), pos.getZ());
-						if (getNoGravAsteroids(level) < asteroid.getType().getCategory().getMaxInstancesPerChunk() && !asteroid.isPlayerWithin(32)) {
-							asteroid.setScale((randomSource.nextFloat() * 2) + 0.7F);
-							asteroid.setState(Asteroid.State.NO_GRAV);
-							level.addFreshEntity(asteroid);
-						}
+				mutableBlockPos.set(player.blockPosition());
+				mutableBlockPos.set(
+						mutableBlockPos.getX() + randomSource.nextInt(-128, 128),
+						(int) ((levelHeight * 0.5) + randomSource.nextInt(0, 64)),
+						mutableBlockPos.getX() + randomSource.nextInt(-128, 128)
+				);
+				mutableChunkBlockPos.set(
+						mutableBlockPos.getX(),
+						0,
+						mutableBlockPos.getZ()
+				);
+				Holder<Biome> biome = level.getBiome(mutableBlockPos);
+				if (biome.is(TheMoonBiomeTags.FALLING_ASTEROIDS) || spawnBypass) {
+					Asteroid asteroid = new Asteroid(TheMoonEntities.ASTEROID, level);
+					asteroid.setPos(mutableBlockPos.getX(), mutableBlockPos.getY(), mutableBlockPos.getZ());
+					if (getNoGravAsteroids(level) < asteroid.getType().getCategory().getMaxInstancesPerChunk() && !asteroid.isPlayerWithin(32) && level.noCollision(asteroid.makeBoundingBox())) {
+						asteroid.setScale((randomSource.nextFloat() * 2) + 0.7F);
+						asteroid.setState(Asteroid.State.NO_GRAV);
+						level.addFreshEntity(asteroid);
 					}
 				}
 			}
