@@ -58,10 +58,17 @@ public class Asteroid extends Mob {
 	public float roll;
 	public int ticksSinceActive;
 	public int ticksInAsteroidBelt;
+	public boolean alreadyFell = true;
+	public double trueFallDistance;
 
 	public double fallX;
 	public double fallZ;
 	public boolean isInAsteroidBelt;
+
+	@Override
+	public void clearFire() {
+		super.clearFire();
+	}
 
 	private static final EntityDataAccessor<State> STATE = SynchedEntityData.defineId(Asteroid.class, TheMoonEntityDataSerializers.ASTEROID_STATE);
 	private static final EntityDataAccessor<Float> SCALE = SynchedEntityData.defineId(Asteroid.class, EntityDataSerializers.FLOAT);
@@ -127,15 +134,13 @@ public class Asteroid extends Mob {
 		super.tick();
 		if (this.isInAsteroidBelt) {
 			this.ticksInAsteroidBelt += 1;
+			this.alreadyFell = false;
 		} else {
 			this.ticksInAsteroidBelt = 0;
 		}
 		deltaMovement = this.getDeltaMovement();
-		if (this.wasTouchingWater && this.getState() != State.IDLE) {
-			if (this.getState() == State.FALLING) {
-				this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.5F, 0.8F);
-				this.extinguishFire();
-			}
+		if (this.wasTouchingWater && this.getState() == State.FALLING) {
+			this.extinguishFire();
 			this.setState(State.IDLE);
 		}
 		float rotationAmount = 10F;
@@ -145,6 +150,11 @@ public class Asteroid extends Mob {
 				Math.abs(deltaPosTest.y()),
 				Math.abs(deltaPosTest.z())
 		);
+		if (this.onGround || this.isInAsteroidBelt) {
+			this.trueFallDistance = 0;
+		} else if (this.getState() != State.NO_GRAV) {
+			this.trueFallDistance += deltaPos.y();
+		}
 		if (deltaPosTest.horizontalDistance() != 0) {
 			this.setYRot(-((float) (Mth.atan2(deltaPosTest.x * 10, deltaPosTest.z * 10) * 57.2957763671875D) - 90));
 		}
@@ -165,15 +175,19 @@ public class Asteroid extends Mob {
 		}
 		if (this.getState() == State.FALLING) {
 			this.ticksSinceActive = 0;
-			this.spawnFlameParticles();
+			this.alreadyFell = true;
 			this.spawnSmokeParticles();
+			if (this.getRemainingFireTicks() > 0) {
+				this.spawnFlameParticles();
+			}
 			if (!this.isInAsteroidBelt) {
-				this.setRemainingFireTicks(200);
+				if (this.trueFallDistance > 3 * this.getScale()) {
+					this.setRemainingFireTicks(this.random.nextInt(80, 200));
+				}
 				double xToUse = Math.abs(fallX) > Math.abs(deltaMovement.x()) ? fallX : deltaMovement.x();
 				double zToUse = Math.abs(fallZ) > Math.abs(deltaMovement.z()) ? fallZ : deltaMovement.z();
 				this.setDeltaMovement(xToUse, deltaMovement.y(), zToUse);
-			} else if (this.ticksInAsteroidBelt == 200) {
-				this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.5F, 0.8F);
+			} else {
 				this.extinguishFire();
 				this.setState(State.IDLE);
 			}
@@ -194,11 +208,12 @@ public class Asteroid extends Mob {
 			}
 		} else {
 			if (this.isInAsteroidBelt) {
-				if (AsteroidSpawner.getNoGravAsteroids(this.level) < this.getType().getCategory().getMaxInstancesPerChunk() && this.ticksInAsteroidBelt > 200) {
+				if (AsteroidSpawner.getNoGravAsteroids(this.level) < this.getType().getCategory().getMaxInstancesPerChunk() && this.ticksInAsteroidBelt > 100 * this.getScale()) {
 					this.ticksSinceActive = 0;
 					this.setState(State.NO_GRAV);
 				}
-			} else if (this.fallDistance * this.fallDistance > 6) {
+			} else if (this.trueFallDistance > this.getScale() * 2 && !this.alreadyFell) {
+				this.trueFallDistance = 0;
 				this.setState(State.FALLING);
 			}
 			Player closestPlayer = this.level.getNearestPlayer(this, -1.0);
@@ -427,6 +442,8 @@ public class Asteroid extends Mob {
 		this.setScale(compound.getFloat("Scale"));
 		this.ticksSinceActive = compound.getInt("TicksSinceActive");
 		this.ticksInAsteroidBelt = compound.getInt("TicksInAsteroidBelt");
+		this.trueFallDistance = compound.getDouble("TrueFallDistance");
+		this.alreadyFell = compound.getBoolean("AlreadyFell");
 	}
 
 	@Override
@@ -438,6 +455,8 @@ public class Asteroid extends Mob {
 		compound.putFloat("Scale", this.getScale());
 		compound.putInt("TicksSinceActive", this.ticksSinceActive);
 		compound.putInt("TicksInAsteroidBelt", this.ticksInAsteroidBelt);
+		compound.putDouble("TrueFallDistance", this.trueFallDistance);
+		compound.putBoolean("AlreadyFell", this.alreadyFell);
 	}
 
 	@Override
@@ -475,7 +494,7 @@ public class Asteroid extends Mob {
 
 	public void spawnSmokeParticles() {
 		if (this.level instanceof ServerLevel level) {
-			//level.sendParticles(ParticleTypes.SMOKE, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 15, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
+			level.sendParticles(ParticleTypes.SMOKE, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 2, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
 		}
 	}
 
@@ -484,6 +503,12 @@ public class Asteroid extends Mob {
 			level.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 5, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
 			level.sendParticles(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY(0.6666666666666666D), this.getZ(), 5, this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05D);
 		}
+	}
+
+	@Override
+	protected void playEntityOnFireExtinguishedSound() {
+		this.spawnExtinguishParticles();
+		super.playEntityOnFireExtinguishedSound();
 	}
 
 	@Override

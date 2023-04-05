@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nullable;
 import net.frozenblock.themoon.entity.Asteroid;
+import net.frozenblock.themoon.entity.spawn.AsteroidBelts;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -55,7 +57,7 @@ public class GravityCalculator {
 				GravityBelt gravityBelt = optionalGravityBelt.get();
 				double gravity = gravityBelt.getGravity(entity, y);
 				if (entity instanceof Asteroid asteroid) {
-					if (!gravityBelt.isAsteroidBelt) {
+					if (AsteroidBelts.getEffectingAsteroidBelt(AsteroidBelts.getAllBelts(entity.level), entity.getY()).isEmpty()) {
 						return asteroid.getState() == Asteroid.State.FALLING ? 1 : gravity;
 					} else {
 						asteroid.isInAsteroidBelt = true;
@@ -66,6 +68,14 @@ public class GravityCalculator {
 			}
 		}
 		return 1;
+	}
+
+	public static Direction getGravityDirection(Entity entity) {
+		return calculateGravity(entity) >= 0 ? Direction.DOWN : Direction.UP;
+	}
+
+	public static boolean isGravityDown(Entity entity) {
+		return getGravityDirection(entity) == Direction.DOWN;
 	}
 
 	public static Optional<GravityBelt> getEffectingGravityBelt(List<GravityBelt> belts, double y) {
@@ -84,15 +94,13 @@ public class GravityCalculator {
 		public final boolean renderBottom;
 		public final double maxY;
 		public final boolean renderTop;
-		public final boolean isAsteroidBelt;
 		private final GravityFunction function;
 
-		public GravityBelt(double minY, boolean renderBottom, double maxY, boolean renderTop, boolean isAsteroidBelt, GravityFunction function) {
+		public GravityBelt(double minY, boolean renderBottom, double maxY, boolean renderTop, GravityFunction function) {
 			this.minY = minY;
 			this.renderBottom = renderBottom;
 			this.maxY = maxY;
 			this.renderTop = renderTop;
-			this.isAsteroidBelt = isAsteroidBelt;
 			this.function = function;
 		}
 

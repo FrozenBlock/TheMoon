@@ -8,6 +8,7 @@ import net.frozenblock.lib.mobcategory.api.entrypoint.FrozenMobCategoryEntrypoin
 import net.frozenblock.lib.mobcategory.impl.FrozenMobCategory;
 import net.frozenblock.themoon.entity.Asteroid;
 import net.frozenblock.themoon.entity.data.TheMoonEntityDataSerializers;
+import net.frozenblock.themoon.entity.spawn.AsteroidBelts;
 import net.frozenblock.themoon.entity.spawn.AsteroidSpawner;
 import net.frozenblock.themoon.mod_compat.TheMoonModIntegrations;
 import net.frozenblock.themoon.registry.TheMoonBiomeSources;
@@ -34,25 +35,27 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 		TheMoonModIntegrations.init();
 		TheMoonEntityDataSerializers.init();
 
-		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(-64, true, 128, false, false, ((entity, y) -> {
+		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(-64, true, 128, false, ((entity, y) -> {
 			return 0.1;
 		})));
 
 
-		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(128, false, 256, false, false, ((entity, y) -> {
+		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(128, false, 256, false, ((entity, y) -> {
 			double progress = (y - 192) / 192;
 			return Math.max(Mth.lerp(progress, 0.1, 0), 0.05);
 		})));
 
-		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(256, false, 320, true, true, ((entity, y) -> {
+		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(256, false, 320, true, ((entity, y) -> {
 			double progress = (y - 192) / 192;
 			return Math.max(Mth.lerp(progress, 0.1, 0), 0.05);
 		})));
 
-		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(320, false, Double.MAX_VALUE, false, true, ((entity, y) -> {
+		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(320, false, Double.MAX_VALUE, false, ((entity, y) -> {
 			double progress = Math.min(Math.min((y - 320), 64) / 64, 1);
 			return -Mth.lerp(progress, 0.05, 0.5);
 		})));
+
+		AsteroidBelts.register(TheMoonDimensionTypes.MOON, new AsteroidBelts.AsteroidBelt(256, 382, 272, 320));
 
 		ServerTickEvents.START_WORLD_TICK.register((serverLevel) -> {
 			AsteroidSpawner.clear(serverLevel);
