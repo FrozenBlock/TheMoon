@@ -28,58 +28,62 @@ public class GravityBeltRenderer {
 			poseStack.mulPose(Axis.YP.rotationDegrees(-90F));
 			if (gravityBelt.renderTop) {
 				float distance = (float) (gravityBelt.maxY - y);
-				float alpha = Mth.lerp(Mth.clamp(Math.abs(distance), 0, 32), 0F, 1F);
-				RenderSystem.setShaderColor(0.25f, 0.45f, 1.0f, alpha);
-				poseStack.pushPose();
-				poseStack.translate(0, distance, 0);
-				//poseStack.mulPose(Axis.XP.rotationDegrees((rotation - xRot) * 360F));
-				Matrix4f matrix4f3 = poseStack.last().pose();
+				float alpha = Mth.lerp(Mth.clamp(Math.abs(distance), 0, 32) / 32F, 1F, 0F);
+				if (alpha > 0) {
+					RenderSystem.setShaderColor(0.25f, 0.45f, 1.0f, 1.0f);
+					poseStack.pushPose();
+					poseStack.translate(0, distance, 0);
+					//poseStack.mulPose(Axis.XP.rotationDegrees((rotation - xRot) * 360F));
+					Matrix4f matrix4f3 = poseStack.last().pose();
 
-				float k = 130;
-				RenderSystem.setShader(GameRenderer::getPositionTexShader);
-				RenderSystem.setShaderTexture(0, FORCEFIELD_LOCATION);
-				bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-				bufferBuilder.vertex(matrix4f3, -k, 0F, -k).uv(0.0f, 0.0f).endVertex();
-				bufferBuilder.vertex(matrix4f3, k, 0F, -k).uv(1.0f, 0.0f).endVertex();
-				bufferBuilder.vertex(matrix4f3, k, 0F, k).uv(1.0f, 1.0f).endVertex();
-				bufferBuilder.vertex(matrix4f3, -k, 0F, k).uv(0.0f, 1.0f).endVertex();
-				BufferUploader.drawWithShader(bufferBuilder.end());
+					float k = 130;
+					RenderSystem.setShader(GameRenderer::getPositionTexShader);
+					RenderSystem.setShaderTexture(0, FORCEFIELD_LOCATION);
+					bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+					bufferBuilder.vertex(matrix4f3, -k, 0F, -k).uv(0.0f, 0.0f).endVertex();
+					bufferBuilder.vertex(matrix4f3, k, 0F, -k).uv(1.0f, 0.0f).endVertex();
+					bufferBuilder.vertex(matrix4f3, k, 0F, k).uv(1.0f, 1.0f).endVertex();
+					bufferBuilder.vertex(matrix4f3, -k, 0F, k).uv(0.0f, 1.0f).endVertex();
+					BufferUploader.drawWithShader(bufferBuilder.end());
 
-				bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-				bufferBuilder.vertex(matrix4f3, -k, 0F, k).uv(0.0f, 0.0f).endVertex();
-				bufferBuilder.vertex(matrix4f3, k, 0F, k).uv(1.0f, 0.0f).endVertex();
-				bufferBuilder.vertex(matrix4f3, k, 0F, -k).uv(1.0f, 1.0f).endVertex();
-				bufferBuilder.vertex(matrix4f3, -k, 0F, -k).uv(0.0f, 1.0f).endVertex();
-				BufferUploader.drawWithShader(bufferBuilder.end());
-				poseStack.popPose();
+					bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+					bufferBuilder.vertex(matrix4f3, -k, 0F, k).uv(0.0f, 0.0f).endVertex();
+					bufferBuilder.vertex(matrix4f3, k, 0F, k).uv(1.0f, 0.0f).endVertex();
+					bufferBuilder.vertex(matrix4f3, k, 0F, -k).uv(1.0f, 1.0f).endVertex();
+					bufferBuilder.vertex(matrix4f3, -k, 0F, -k).uv(0.0f, 1.0f).endVertex();
+					BufferUploader.drawWithShader(bufferBuilder.end());
+					poseStack.popPose();
+				}
 			}
 
 			if (gravityBelt.renderBottom) {
 				float distance = (float) (gravityBelt.minY - y);
-				float alpha = Mth.lerp(Mth.clamp(Math.abs(distance), 0, 32), 0F, 1F);
-				RenderSystem.setShaderColor(0.25f, 0.45f, 1.0f, alpha);
-				poseStack.pushPose();
-				poseStack.translate(0, distance, 0);
-				//poseStack.mulPose(Axis.XP.rotationDegrees((rotation - xRot) * 360F));
-				Matrix4f matrix4f3 = poseStack.last().pose();
+				float alpha = Mth.lerp(Mth.clamp(Math.abs(distance), 0, 32) / 32F, 1F, 0F);
+				if (alpha > 0) {
+					RenderSystem.setShaderColor(0.25f, 0.45f, 1.0f, 1.0f);
+					poseStack.pushPose();
+					poseStack.translate(0, distance, 0);
+					//poseStack.mulPose(Axis.XP.rotationDegrees((rotation - xRot) * 360F));
+					Matrix4f matrix4f3 = poseStack.last().pose();
 
-				float k = 130;
-				RenderSystem.setShader(GameRenderer::getPositionTexShader);
-				RenderSystem.setShaderTexture(0, FORCEFIELD_LOCATION);
-				bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-				bufferBuilder.vertex(matrix4f3, -k, 0F, -k).uv(0.0f, 0.0f).endVertex();
-				bufferBuilder.vertex(matrix4f3, k, 0F, -k).uv(1.0f, 0.0f).endVertex();
-				bufferBuilder.vertex(matrix4f3, k, 0F, k).uv(1.0f, 1.0f).endVertex();
-				bufferBuilder.vertex(matrix4f3, -k, 0F, k).uv(0.0f, 1.0f).endVertex();
-				BufferUploader.drawWithShader(bufferBuilder.end());
+					float k = 130;
+					RenderSystem.setShader(GameRenderer::getPositionTexShader);
+					RenderSystem.setShaderTexture(0, FORCEFIELD_LOCATION);
+					bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+					bufferBuilder.vertex(matrix4f3, -k, 0F, -k).uv(0.0f, 0.0f).endVertex();
+					bufferBuilder.vertex(matrix4f3, k, 0F, -k).uv(1.0f, 0.0f).endVertex();
+					bufferBuilder.vertex(matrix4f3, k, 0F, k).uv(1.0f, 1.0f).endVertex();
+					bufferBuilder.vertex(matrix4f3, -k, 0F, k).uv(0.0f, 1.0f).endVertex();
+					BufferUploader.drawWithShader(bufferBuilder.end());
 
-				bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-				bufferBuilder.vertex(matrix4f3, -k, 0F, k).uv(0.0f, 0.0f).endVertex();
-				bufferBuilder.vertex(matrix4f3, k, 0F, k).uv(1.0f, 0.0f).endVertex();
-				bufferBuilder.vertex(matrix4f3, k, 0F, -k).uv(1.0f, 1.0f).endVertex();
-				bufferBuilder.vertex(matrix4f3, -k, 0F, -k).uv(0.0f, 1.0f).endVertex();
-				BufferUploader.drawWithShader(bufferBuilder.end());
-				poseStack.popPose();
+					bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+					bufferBuilder.vertex(matrix4f3, -k, 0F, k).uv(0.0f, 0.0f).endVertex();
+					bufferBuilder.vertex(matrix4f3, k, 0F, k).uv(1.0f, 0.0f).endVertex();
+					bufferBuilder.vertex(matrix4f3, k, 0F, -k).uv(1.0f, 1.0f).endVertex();
+					bufferBuilder.vertex(matrix4f3, -k, 0F, -k).uv(0.0f, 1.0f).endVertex();
+					BufferUploader.drawWithShader(bufferBuilder.end());
+					poseStack.popPose();
+				}
 			}
 			poseStack.popPose();
 		}

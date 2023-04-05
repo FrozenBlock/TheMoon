@@ -3,3 +3,4 @@ accessible    method    net/minecraft/world/level/levelgen/NoiseRouterData    po
 accessible    method    net/minecraft/world/level/levelgen/NoiseRouterData    slide    (Lnet/minecraft/world/level/levelgen/DensityFunction;IIIIDIID)Lnet/minecraft/world/level/levelgen/DensityFunction;
 accessible    method    net/minecraft/world/level/levelgen/NoiseRouterData    getFunction    (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/level/levelgen/DensityFunction;
 accessible    class    net/minecraft/world/level/levelgen/OreVeinifier$VeinType
+accessible    method    net/minecraft/server/level/ChunkMap    getChunks    ()Ljava/lang/Iterable;

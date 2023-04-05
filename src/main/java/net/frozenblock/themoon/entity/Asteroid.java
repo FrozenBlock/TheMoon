@@ -20,6 +20,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -30,7 +31,9 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -40,6 +43,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -62,6 +66,15 @@ public class Asteroid extends Mob {
 		this.setScale(1F);
 		this.blocksBuilding = true;
 		AsteroidSpawner.add(this);
+	}
+
+	@Nullable
+	@Override
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData, @Nullable CompoundTag entityNbt) {
+		if (spawnReason == MobSpawnType.COMMAND) {
+			this.setScale(1.0F);
+		}
+		return super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
 	}
 
 	@Override
@@ -144,7 +157,7 @@ public class Asteroid extends Mob {
 			if (this.level instanceof ServerLevel serverLevel) {
 				Vec3 deltaMovement = this.getDeltaMovement();
 				WindManager windManager = WindManager.getWindManager(serverLevel);
-				Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.01);
+				Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.075);
 				double windX = wind.x();
 				double windY = wind.y() * 0.2;
 				double windZ = wind.z();
