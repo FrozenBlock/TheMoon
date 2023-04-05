@@ -83,7 +83,7 @@ public class AsteroidSpawner {
 				mutableBlockPos.set(
 						mutableBlockPos.getX() + randomSource.nextInt(-128, 128),
 						(int) ((levelHeight * 0.5) + randomSource.nextInt(0, 64)),
-						mutableBlockPos.getX() + randomSource.nextInt(-128, 128)
+						mutableBlockPos.getZ() + randomSource.nextInt(-128, 128)
 				);
 				mutableChunkBlockPos.set(
 						mutableBlockPos.getX(),
@@ -124,7 +124,7 @@ public class AsteroidSpawner {
 				mutableBlockPos.set(
 						mutableBlockPos.getX() + randomSource.nextInt(-128, 128),
 						(int) ((levelHeight * 0.5) + randomSource.nextInt(0, 64)),
-						mutableBlockPos.getX() + randomSource.nextInt(-128, 128)
+						mutableBlockPos.getZ() + randomSource.nextInt(-128, 128)
 				);
 				mutableChunkBlockPos.set(
 						mutableBlockPos.getX(),
