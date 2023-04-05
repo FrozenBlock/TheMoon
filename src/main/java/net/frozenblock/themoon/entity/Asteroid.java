@@ -363,12 +363,14 @@ public class Asteroid extends Mob {
 			int i;
 			double d = this.horizontalDistanceTo(entity.getX(), entity.getZ());
 			d *= d;
-			if (d > (double)((i = this.getType().getCategory().getDespawnDistance()) * i) && this.removeWhenFarAway(d)) {
+			double verticalDistance = Math.abs(this.getY() - entity.getY());
+			boolean canRemove = (this.removeWhenFarAway(d) && verticalDistance > 36);
+			if (d > (double)((i = this.getType().getCategory().getDespawnDistance()) * i) && canRemove) {
 				this.discard();
 			}
 			int k = this.getType().getCategory().getNoDespawnDistance();
 			int l = k * k;
-			if (this.noActionTime > 600 && this.random.nextInt(800) == 0 && d > (double)l && this.removeWhenFarAway(d)) {
+			if (this.noActionTime > 600 && this.random.nextInt(800) == 0 && d > (double)l && canRemove) {
 				this.discard();
 			} else if (d < (double)l) {
 				this.noActionTime = 0;
