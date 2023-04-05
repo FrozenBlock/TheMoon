@@ -136,7 +136,7 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		poseStack.mulPose(Axis.YP.rotationDegrees(-90F));
 
 		poseStack.pushPose();
-		float rotation = (level.dimensionType().timeOfDay(level.dayTime()));
+		float rotation = (level.dimensionType().timeOfDay(level.dayTime() + 12000));
 		poseStack.mulPose(Axis.XP.rotationDegrees((rotation - xRot) * 360F));
 		poseStack.mulPose(Axis.ZP.rotationDegrees(-zRot * 360F));
 		Matrix4f matrix4f3 = poseStack.last().pose();
