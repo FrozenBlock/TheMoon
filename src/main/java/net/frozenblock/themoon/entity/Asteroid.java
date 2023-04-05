@@ -123,6 +123,7 @@ public class Asteroid extends Mob {
 		this.fallX = deltaMovement.x();
 		this.fallZ = deltaMovement.z();
 		super.tick();
+		deltaMovement = this.getDeltaMovement();
 		if (this.wasTouchingWater && this.getState() != State.IDLE) {
 			this.setState(State.IDLE);
 			if (this.getState() == State.FALLING) {
@@ -137,14 +138,14 @@ public class Asteroid extends Mob {
 				Math.abs(deltaPosTest.y()),
 				Math.abs(deltaPosTest.z())
 		);
-		if (deltaPos.horizontalDistance() != 0) {
-			this.setYRot(-((float) (Mth.atan2(deltaPos.x * 10, deltaPos.z * 10) * 57.2957763671875D) - 90));
+		if (deltaPosTest.horizontalDistance() != 0) {
+			this.setYRot(-((float) (Mth.atan2(deltaPosTest.x * 10, deltaPosTest.z * 10) * 57.2957763671875D) - 90));
 		}
 		this.prevPitch = this.pitch;
 		this.prevRoll = this.roll;
 		float yRotAmount = (float) ((deltaPos.y * 0.5F) * rotationAmount);
-		this.pitch += deltaPos.z * rotationAmount;
-		this.roll += deltaPos.x * rotationAmount;
+		this.pitch += deltaPosTest.z * rotationAmount;
+		this.roll += deltaPosTest.x * rotationAmount;
 		this.pitch += yRotAmount;
 		this.roll += yRotAmount;
 		if (this.pitch > 360F) {
@@ -159,10 +160,9 @@ public class Asteroid extends Mob {
 			this.spawnFlameParticles();
 			this.spawnSmokeParticles();
 			this.setRemainingFireTicks(10);
-			Vec3 newDeltaMovement = this.getDeltaMovement();
-			double xToUse = Math.abs(fallX) > Math.abs(newDeltaMovement.x()) ? fallX : newDeltaMovement.x();
-			double zToUse = Math.abs(fallZ) > Math.abs(newDeltaMovement.z()) ? fallZ : newDeltaMovement.z();
-			this.setDeltaMovement(xToUse, this.getDeltaMovement().y(), zToUse);
+			double xToUse = Math.abs(fallX) > Math.abs(deltaMovement.x()) ? fallX : deltaMovement.x();
+			double zToUse = Math.abs(fallZ) > Math.abs(deltaMovement.z()) ? fallZ : deltaMovement.z();
+			this.setDeltaMovement(xToUse, deltaMovement.y(), zToUse);
 		} else if (this.getState() == State.NO_GRAV) {
 			if (this.level instanceof ServerLevel serverLevel) {
 				WindManager windManager = WindManager.getWindManager(serverLevel);

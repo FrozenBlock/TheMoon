@@ -77,7 +77,9 @@ public class AsteroidSpawner {
 		double levelHeight = level.getLogicalHeight();
 		BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
 		BlockPos.MutableBlockPos mutableChunkBlockPos = new BlockPos.MutableBlockPos();
-		for (ServerPlayer player : level.players()) {
+		List<ServerPlayer> players = level.players();
+		int playerAmount = players.size();
+		for (ServerPlayer player : players) {
 			if (level.getRandom().nextFloat() < 0.075F) {
 				mutableBlockPos.set(player.blockPosition());
 				mutableBlockPos.set(
@@ -97,7 +99,7 @@ public class AsteroidSpawner {
 						asteroid.setPos(mutableBlockPos.getX(), mutableBlockPos.getY(), mutableBlockPos.getZ());
 						asteroid.setScale((randomSource.nextFloat() * 0.5F) + 0.7F);
 						asteroid.setState(Asteroid.State.FALLING);
-						if (getFallingAsteroids(level) <= level.players().size() && !asteroid.isPlayerWithin(32) && level.noCollision(asteroid.makeBoundingBox())) {
+						if (getFallingAsteroids(level) <= playerAmount + 1 && !asteroid.isPlayerWithin(32) && level.noCollision(asteroid.makeBoundingBox())) {
 							asteroid.setRemainingFireTicks(10);
 							asteroid.setDeltaMovement(randomSource.nextDouble() * 2 * posOrNeg(randomSource), -1, randomSource.nextDouble() * 2 * posOrNeg(randomSource));
 							level.addFreshEntity(asteroid);
