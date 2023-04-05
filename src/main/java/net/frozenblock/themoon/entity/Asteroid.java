@@ -178,6 +178,14 @@ public class Asteroid extends Mob {
 		}
 	}
 
+	public boolean isPlayerWithin(double d) {
+		Player closestPlayer = this.level.getNearestPlayer(this, -1.0);
+		if (closestPlayer == null) {
+			return false;
+		}
+		return closestPlayer.distanceTo(this) <= d;
+	}
+
 	public void destroy(boolean killed) {
 		if (this.isAlive()) {
 			this.playSound(SoundEvents.ANVIL_PLACE, this.getSoundVolume(), this.getVoicePitch());

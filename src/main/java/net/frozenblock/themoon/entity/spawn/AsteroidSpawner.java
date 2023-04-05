@@ -78,18 +78,14 @@ public class AsteroidSpawner {
 	public static List<BlockPos> getRandomPoses(ServerLevel level) {
 		List<BlockPos> blockPoses = new ArrayList<>();
 		for (ChunkHolder holder : level.getChunkSource().chunkMap.getChunks()) {
-			LevelChunk chunk = holder.getFullChunk();
-			if (chunk != null) {
-				blockPoses.add(getRandomPosWithin(level, chunk));
-			}
+			blockPoses.add(getRandomPosWithin(level, holder.getPos()));
 		}
 		return blockPoses;
 	}
 
-	private static BlockPos getRandomPosWithin(Level world, LevelChunk chunk) {
-		ChunkPos chunkPos = chunk.getPos();
-		int i = chunkPos.getMinBlockX() + world.random.nextInt(16);
-		int j = chunkPos.getMinBlockZ() + world.random.nextInt(16);
+	private static BlockPos getRandomPosWithin(Level world, ChunkPos pos) {
+		int i = pos.getMinBlockX() + world.random.nextInt(16);
+		int j = pos.getMinBlockZ() + world.random.nextInt(16);
 		return new BlockPos(i, 0, j);
 	}
 
@@ -104,7 +100,7 @@ public class AsteroidSpawner {
 						Asteroid asteroid = new Asteroid(TheMoonEntities.ASTEROID, level);
 						asteroid.setPos(pos.getX(), (levelHeight * 0.5) + randomSource.nextInt(0, 64), pos.getZ());
 						asteroid.setState(Asteroid.State.FALLING);
-						if (getFallingAsteroids(level) <= level.players().size()) {
+						if (getFallingAsteroids(level) <= level.players().size() && !asteroid.isPlayerWithin(32)) {
 							asteroid.setRemainingFireTicks(10);
 							asteroid.setDeltaMovement(randomSource.nextDouble() * 2 * posOrNeg(randomSource), -1, randomSource.nextDouble() * 2 * posOrNeg(randomSource));
 							asteroid.setScale((randomSource.nextFloat() * 0.5F) + 0.7F);
@@ -131,7 +127,7 @@ public class AsteroidSpawner {
 					if (biome.is(TheMoonBiomeTags.FALLING_ASTEROIDS) || spawnBypass) {
 						Asteroid asteroid = new Asteroid(TheMoonEntities.ASTEROID, level);
 						asteroid.setPos(pos.getX(), (levelHeight * 0.5) + randomSource.nextInt(0, 64), pos.getZ());
-						if (getNoGravAsteroids(level) < asteroid.getType().getCategory().getMaxInstancesPerChunk()) {
+						if (getNoGravAsteroids(level) < asteroid.getType().getCategory().getMaxInstancesPerChunk() && !asteroid.isPlayerWithin(32)) {
 							asteroid.setScale((randomSource.nextFloat() * 2) + 0.7F);
 							asteroid.setState(Asteroid.State.NO_GRAV);
 							level.addFreshEntity(asteroid);
