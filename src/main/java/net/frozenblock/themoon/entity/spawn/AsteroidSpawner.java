@@ -89,9 +89,9 @@ public class AsteroidSpawner {
 						asteroid.setState(Asteroid.State.FALLING);
 						if (getFallingAsteroids(level) < players.size() + 1 && !asteroid.isPlayerWithin(32) && level.noCollision(asteroid.makeBoundingBox())) {
 							asteroid.setDeltaMovement(
-									randomSource.nextDouble() * posOrNeg(randomSource) * 2,
+									randomSource.nextDouble() * posOrNeg(randomSource) * 0.75,
 									-1,
-									randomSource.nextDouble() * posOrNeg(randomSource) * 2
+									randomSource.nextDouble() * posOrNeg(randomSource) * 0.75
 							);
 							level.addFreshEntity(asteroid);
 						}
