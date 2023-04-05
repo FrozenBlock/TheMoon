@@ -87,11 +87,11 @@ public class AsteroidSpawner {
 						asteroid.setPos(mutableBlockPos.getX(), mutableBlockPos.getY(), mutableBlockPos.getZ());
 						asteroid.setScale(randomSource.nextFloat() + 0.7F);
 						asteroid.setState(Asteroid.State.FALLING);
-						if (getFallingAsteroids(level) < players.size() + 1 && !asteroid.isPlayerWithin(32) && level.noCollision(asteroid.makeBoundingBox())) {
+						if (!asteroid.isPlayerWithin(32) && level.noCollision(asteroid.makeBoundingBox())) {
 							asteroid.setDeltaMovement(
-									randomSource.nextDouble() * posOrNeg(randomSource) * 0.75,
+									randomSource.nextDouble() * posOrNeg(randomSource) * 0.4,
 									-1,
-									randomSource.nextDouble() * posOrNeg(randomSource) * 0.75
+									randomSource.nextDouble() * posOrNeg(randomSource) * 0.4
 							);
 							level.addFreshEntity(asteroid);
 						}

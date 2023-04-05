@@ -98,13 +98,13 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		this.skyBuffer.drawWithShader(poseStack.last().pose(), matrix, shaderInstance);
 		VertexBuffer.unbind();
 		RenderSystem.enableBlend();
-		float[] fs = level.effects().getSunriseColor(level.getTimeOfDay(tickDelta), tickDelta);
+		float[] fs = level.effects().getSunriseColor(level.dimensionType().timeOfDay(level.dayTime() + 12000), tickDelta);
 		if (fs != null) {
 			RenderSystem.setShader(GameRenderer::getPositionColorShader);
 			RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 			poseStack.pushPose();
 			poseStack.mulPose(Axis.XP.rotationDegrees(90.0f));
-			i = Mth.sin(level.getSunAngle(tickDelta)) < 0.0f ? 180.0f : 0.0f;
+			i = Mth.sin(this.getSunAngle(level)) < 0.0f ? 180.0f : 0.0f;
 			poseStack.mulPose(Axis.ZP.rotationDegrees(i));
 			poseStack.mulPose(Axis.ZP.rotationDegrees(90.0f));
 			float j = fs[0];
@@ -136,7 +136,7 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		poseStack.mulPose(Axis.YP.rotationDegrees(-90F));
 
 		poseStack.pushPose();
-		float rotation = (level.dimensionType().timeOfDay(level.dayTime() + 12000));
+		float rotation = level.dimensionType().timeOfDay(level.dayTime() + 12000);
 		poseStack.mulPose(Axis.XP.rotationDegrees((rotation - xRot) * 360F));
 		poseStack.mulPose(Axis.ZP.rotationDegrees(-zRot * 360F));
 		Matrix4f matrix4f3 = poseStack.last().pose();
@@ -189,6 +189,11 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		RenderSystem.depthMask(true);
 
 		GravityBeltRenderer.renderGravityBelts(level, camera, poseStack);
+	}
+
+	public float getSunAngle(ClientLevel level) {
+		float f = level.dimensionType().timeOfDay(level.dayTime() + 12000);
+		return f * ((float)Math.PI * 2);
 	}
 
 	private static float getSkyOffset(double d) {

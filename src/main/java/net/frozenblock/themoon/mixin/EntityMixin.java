@@ -34,14 +34,13 @@ public class EntityMixin {
 	@Unique
 	private void theMoon$spawnMoonDustParticle() {
 		Entity entity = Entity.class.cast(this);
-		double length;
-		if (entity.level.getRandom().nextBoolean() && !entity.isPassenger() && (!(entity instanceof LivingEntity livingEntity) || !livingEntity.isFallFlying()) && entity.isOnGround() && ((length = entity.getDeltaMovement().length()) > 0.075 || length > 0.025 && entity.level.getRandom().nextBoolean())) {
+		if (!entity.isPassenger() && (!(entity instanceof LivingEntity livingEntity) || !livingEntity.isFallFlying()) && entity.isOnGround() && entity.getDeltaMovement().length() > random.nextFloat() * 0.3) {
 			int i = Mth.floor(entity.getX());
 			BlockPos blockPos = new BlockPos(i, Mth.floor(entity.getY() - (double) 0.2f), Mth.floor(entity.getZ()));
 			BlockState blockState = entity.level.getBlockState(blockPos);
 			if (blockState.is(TheMoonBlockTags.MOON_DUST)) {
 				Vec3 vec3 = entity.getDeltaMovement();
-				entity.level.addParticle(TheMoonParticleTypes.MOON_DUST, entity.getX() + (this.random.nextDouble() - 0.5) * (double) this.dimensions.width, entity.getY() + 0.1, entity.getZ() + (this.random.nextDouble() - 0.5) * (double) this.dimensions.width, vec3.x * -0.5, 0.065, vec3.z * -0.5);
+				entity.level.addParticle(TheMoonParticleTypes.MOON_DUST, entity.getX() + (this.random.nextDouble() - 0.5) * (double) this.dimensions.width, entity.getY() + 0.1, entity.getZ() + (this.random.nextDouble() - 0.5) * (double) this.dimensions.width, vec3.x * -0.5, 0.0325, vec3.z * -0.5);
 			}
 		}
 	}
