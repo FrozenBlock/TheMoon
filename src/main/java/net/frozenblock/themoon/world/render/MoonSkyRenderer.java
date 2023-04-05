@@ -42,6 +42,7 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 	private static final float MIDNIGHT_TIME = 18000F;
 	private static final float NOON_TIME_FIXED = timeOfDay(6000);
 	private static final float MIDNIGHT_TIME_FIXED = timeOfDay(18000);
+	private static final float FLIP_TIME_FIXED = timeOfDay(12000);
 	private static final double WORLD_WIDTH = 30000000;
 	private static final double WORLD_LENGTH = 60000000;
 
@@ -136,7 +137,7 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		poseStack.mulPose(Axis.YP.rotationDegrees(-90F));
 
 		poseStack.pushPose();
-		float rotation = (level.getTimeOfDay(tickDelta) + 12000F);
+		float rotation = (level.getTimeOfDay(tickDelta) + FLIP_TIME_FIXED);
 		poseStack.mulPose(Axis.XP.rotationDegrees((rotation - xRot) * 360F));
 		poseStack.mulPose(Axis.ZP.rotationDegrees(-zRot * 360F));
 		Matrix4f matrix4f3 = poseStack.last().pose();
