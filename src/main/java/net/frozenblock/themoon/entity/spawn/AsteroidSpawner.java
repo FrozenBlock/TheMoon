@@ -41,7 +41,7 @@ public class AsteroidSpawner {
 	public static List<Asteroid> getAsteroids(ServerLevel level) {
 		ArrayList<Asteroid> asteroids = new ArrayList<>();
 		for (Entity entity : level.entityManager.getEntityGetter().getAll()) {
-			if (entity instanceof Asteroid asteroid && !asteroid.isRemoved()) {
+			if (entity instanceof Asteroid asteroid && !asteroid.isRemoved() && !asteroid.isDeadOrDying()) {
 				asteroids.add(asteroid);
 			}
 		}
