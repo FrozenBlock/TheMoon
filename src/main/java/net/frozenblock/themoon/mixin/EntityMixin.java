@@ -55,22 +55,21 @@ public class EntityMixin {
 
 	@Inject(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity$MovementEmission;emitsEvents()Z", ordinal = 1, shift = At.Shift.BEFORE))
 	public void theMoon$youllStumbleInMyFootsteps(CallbackInfo info) {
-		if (this.theMoon$canSpawnFootprintParticle()) {
-			this.theMoon$spawnFootprintParticle();
+		if (this.theMoon$keepTheSameAppointmentsIKept()) {
+			this.theMoon$ifYouTryWalkingInMyShoes();
 		}
 	}
 
 	@Unique
-	public void theMoon$spawnFootprintParticle() {
-		Entity entity = Entity.class.cast(this);
-		entity.level.addParticle(TheMoonParticleTypes.FOOTSTEP, entity.getX(), entity.getY() + 0.001, entity.getZ(), this.yRot, 0.0, 0.0);
-	}
-
-	@Unique
-	public boolean theMoon$canSpawnFootprintParticle() {
+	public boolean theMoon$keepTheSameAppointmentsIKept() {
 		Entity entity = Entity.class.cast(this);
 		return entity instanceof LivingEntity livingEntity && !livingEntity.isInWater() && !livingEntity.isSpectator() && !livingEntity.isInLava() && livingEntity.isAlive()
 				&& entity.level.getBlockState(BlockPos.containing(entity.getX(), entity.getY() - 0.1, entity.getZ())).is(TheMoonBlockTags.MOON_DUST);
 	}
 
+	@Unique
+	public void theMoon$ifYouTryWalkingInMyShoes() {
+		Entity entity = Entity.class.cast(this);
+		entity.level.addParticle(TheMoonParticleTypes.FOOTSTEP, entity.getX(), entity.getY() + 0.001, entity.getZ(), this.yRot, 0.0, 0.0);
+	}
 }
