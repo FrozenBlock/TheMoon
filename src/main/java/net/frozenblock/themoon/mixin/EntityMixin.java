@@ -53,7 +53,7 @@ public class EntityMixin {
 		}
 	}
 
-	@Inject(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity$MovementEmission;emitsEvents()Z", ordinal = 0, shift = At.Shift.BEFORE))
+	@Inject(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity$MovementEmission;emitsEvents()Z", ordinal = 1, shift = At.Shift.BEFORE))
 	public void theMoon$youllStumbleInMyFootsteps(CallbackInfo info) {
 		if (this.theMoon$canSpawnFootprintParticle()) {
 			this.theMoon$spawnFootprintParticle();
