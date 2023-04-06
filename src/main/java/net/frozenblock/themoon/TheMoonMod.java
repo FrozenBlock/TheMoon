@@ -66,9 +66,9 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 			return 0.1;
 		})));
 
-		AsteroidBelts.register(TheMoonDimensionTypes.EXOSPHERE, new AsteroidBelts.AsteroidBelt(0, 256, 4, 200));
+		AsteroidBelts.register(TheMoonDimensionTypes.EXOSPHERE, new AsteroidBelts.AsteroidBelt(0, 200, -32, 200));
 
-		AsteroidSpawner.registerSpawnRules(TheMoonDimensionTypes.EXOSPHERE, new AsteroidSpawner.AsteroidSpawnRules(500, 20, 0.9F, 0.05F, 500));
+		AsteroidSpawner.registerSpawnRules(TheMoonDimensionTypes.EXOSPHERE, new AsteroidSpawner.AsteroidSpawnRules(800, 40, 1F, 0.1F, 500));
 
 		ServerTickEvents.START_WORLD_TICK.register((serverLevel) -> {
 			AsteroidSpawner.spawn(serverLevel, true);
