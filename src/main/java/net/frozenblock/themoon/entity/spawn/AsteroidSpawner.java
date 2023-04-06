@@ -141,7 +141,7 @@ public class AsteroidSpawner {
 						Asteroid asteroid = new Asteroid(TheMoonEntities.ASTEROID, level);
 						asteroid.setPos(mutableBlockPos.getX(), mutableBlockPos.getY(), mutableBlockPos.getZ());
 						asteroid.setScale((randomSource.nextFloat() * 2) + 0.7F);
-						if (getNoGravAsteroids(level) < asteroid.getType().getCategory().getMaxInstancesPerChunk() && !asteroid.isPlayerWithin(32) && level.noCollision(asteroid.makeBoundingBox())) {
+						if (!asteroid.isPlayerWithin(32) && level.noCollision(asteroid.makeBoundingBox())) {
 							asteroid.setState(Asteroid.State.NO_GRAV);
 							level.addFreshEntity(asteroid);
 						}
