@@ -67,7 +67,7 @@ public class EntityMixin {
 					}
 
 					if (level.dimensionTypeId() == TheMoonDimensionTypes.EXOSPHERE) {
-						if (entity.getBlockY() > 200) {
+						if (entity.getBlockY() > 200 && !isAsteroid) {
 							ServerLevel moon = serverLevel.getServer().getLevel(TheMoonDimensionTypes.MOON_LEVEL);
 							if (moon != null) {
 								entity.setDeltaMovement(entity.getDeltaMovement().add(0, -1, 0));
