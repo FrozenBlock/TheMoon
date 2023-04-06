@@ -172,13 +172,6 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		RenderSystem.disableBlend();
 		RenderSystem.defaultBlendFunc();
 		poseStack.popPose();
-		RenderSystem.setShaderColor(0.0f, 0.0f, 0.0f, 1.0f);
-		poseStack.pushPose();
-		poseStack.translate(0.0f, 12.0f, 0.0f);
-		this.darkBuffer.bind();
-		this.darkBuffer.drawWithShader(poseStack.last().pose(), matrix, shaderInstance);
-		VertexBuffer.unbind();
-		poseStack.popPose();
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		RenderSystem.depthMask(true);
 
