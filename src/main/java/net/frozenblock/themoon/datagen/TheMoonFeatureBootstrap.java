@@ -57,6 +57,7 @@ public class TheMoonFeatureBootstrap {
 		final var structures = asLookup(entries.getLookup(Registries.STRUCTURE));
 		final var structureSets = asLookup(entries.getLookup(Registries.STRUCTURE_SET));
 		final var noiseSettings = asLookup(entries.getLookup(Registries.NOISE_SETTINGS));
+		final var dimensionTypes = asLookup(entries.getLookup(Registries.DIMENSION_TYPE));
 
 		TheMoonSharedConstants.log("Adding finalized configured features to datagen", true);
 		entries.addAll(configuredFeatures);
@@ -76,6 +77,8 @@ public class TheMoonFeatureBootstrap {
 		entries.addAll(structureSets);
 		TheMoonSharedConstants.log("Adding finalized noise settings to datagen", true);
 		entries.addAll(noiseSettings);
+		TheMoonSharedConstants.log("Adding finalized dimension types to datagen", true);
+		entries.addAll(dimensionTypes);
 	}
 
 	/**
