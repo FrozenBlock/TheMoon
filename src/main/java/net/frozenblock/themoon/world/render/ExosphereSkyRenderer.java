@@ -37,7 +37,7 @@ public class ExosphereSkyRenderer implements DimensionRenderingRegistry.SkyRende
 	private static final ResourceLocation SUN_LOCATION = new ResourceLocation("textures/environment/sun.png");
 	private static final float MOON_SIZE = 30F;
 	private static final ResourceLocation MOON_LOCATION = new ResourceLocation("textures/environment/moon_phases.png");
-	private static final float EARTH_SIZE = 110F;
+	private static final float EARTH_SIZE = 140F;
 	private static final ResourceLocation EARTH_LOCATION = TheMoonSharedConstants.id("textures/environment/earth.png");
 	private static final float NOON_TIME = 6000F;
 	private static final float MIDNIGHT_TIME = 18000F;

@@ -62,7 +62,7 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 
 		AsteroidBelts.register(TheMoonDimensionTypes.MOON, new AsteroidBelts.AsteroidBelt(256, 382, 272, 320));
 
-		GravityCalculator.register(TheMoonDimensionTypes.EXOSPHERE, new GravityCalculator.GravityBelt(-64, true, 999, false, ((entity, y) -> {
+		GravityCalculator.register(TheMoonDimensionTypes.EXOSPHERE, new GravityCalculator.GravityBelt(-64, true, 999, true, ((entity, y) -> {
 			return 0.1;
 		})));
 
