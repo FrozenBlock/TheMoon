@@ -208,15 +208,16 @@ public class Asteroid extends Mob {
 			} else if (this.trueFallDistance > this.getScale() * 2 && !this.alreadyFell) {
 				this.trueFallDistance = 0;
 				this.setState(State.FALLING);
-			}
-			Player closestPlayer = this.level.getNearestPlayer(this, -1.0);
-			if (!this.requiresCustomPersistence() && (((closestPlayer == null || closestPlayer.distanceTo(this) > 48)) || (this.wasTouchingWater))) {
-				++this.ticksSinceActive;
-				if (this.ticksSinceActive >= 400) {
-					this.destroy(false);
-				}
 			} else {
-				this.ticksSinceActive = 0;
+				Player closestPlayer = this.level.getNearestPlayer(this, -1.0);
+				if (!this.requiresCustomPersistence() && (((closestPlayer == null || closestPlayer.distanceTo(this) > 48)) || (this.wasTouchingWater))) {
+					++this.ticksSinceActive;
+					if (this.ticksSinceActive >= 400) {
+						this.destroy(false);
+					}
+				} else {
+					this.ticksSinceActive = 0;
+				}
 			}
 		}
 	}
