@@ -45,7 +45,7 @@ public class EntityMixin {
 			if (blockState.is(TheMoonBlockTags.MOON_DUST)) {
 				Vec3 vec3 = entity.getDeltaMovement();
 				for (int c = 0; c < 3; c++) {
-					if (length > 0 && random.nextFloat() * 4 < length) {
+					if (length > 0 && random.nextFloat() * 8 < length) {
 						entity.level.addParticle(TheMoonParticleTypes.MOON_DUST, entity.getX() + (this.random.nextDouble() - 0.5) * (double) this.dimensions.width, entity.getY() + 0.1, entity.getZ() + (this.random.nextDouble() - 0.5) * (double) this.dimensions.width, vec3.x * -0.5, 0.0325, vec3.z * -0.5);
 					}
 				}
