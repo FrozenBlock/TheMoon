@@ -176,7 +176,12 @@ public class Asteroid extends Mob {
 			this.setRemainingFireTicks(200);
 			double xToUse = Math.abs(fallX) > Math.abs(deltaMovement.x()) ? fallX : deltaMovement.x();
 			double zToUse = Math.abs(fallZ) > Math.abs(deltaMovement.z()) ? fallZ : deltaMovement.z();
-			this.setDeltaMovement(xToUse, deltaMovement.y(), zToUse);
+			double y = deltaMovement.y();
+			this.setDeltaMovement(xToUse, y, zToUse);
+			if (this.isInAsteroidBelt && Math.abs(y) < 0.075) {
+				this.setState(State.IDLE);
+				this.extinguishFire();
+			}
 		} else if (this.getState() == State.NO_GRAV) {
 			this.ticksSinceActive = 0;
 			if (this.level instanceof ServerLevel serverLevel) {
