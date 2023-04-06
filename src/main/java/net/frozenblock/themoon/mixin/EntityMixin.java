@@ -1,5 +1,6 @@
 package net.frozenblock.themoon.mixin;
 
+import net.frozenblock.themoon.entity.Asteroid;
 import net.frozenblock.themoon.registry.TheMoonDimensionTypes;
 import net.frozenblock.themoon.registry.TheMoonParticleTypes;
 import net.frozenblock.themoon.tag.TheMoonBlockTags;
@@ -53,9 +54,10 @@ public class EntityMixin {
 		if (level instanceof ServerLevel serverLevel) {
 			if (!entity.isRemoved()) {
 				if (entity.canChangeDimensions() && !entity.isPassenger()) {
+					boolean isAsteroid = entity instanceof Asteroid;
 
 					if (level.dimensionTypeId() == BuiltinDimensionTypes.OVERWORLD) {
-						if (entity.getBlockY() > 384) {
+						if (entity.getBlockY() > 384 && !isAsteroid) {
 							ServerLevel exosphere = serverLevel.getServer().getLevel(TheMoonDimensionTypes.EXOSPHERE_LEVEL);
 							if (exosphere != null) {
 								entity.setDeltaMovement(entity.getDeltaMovement().add(0, 3, 0));
@@ -71,7 +73,7 @@ public class EntityMixin {
 								entity.setDeltaMovement(entity.getDeltaMovement().add(0, -1, 0));
 								entity.teleportTo(moon, entity.getX(), 336, entity.getZ(), Set.of(), entity.getYRot(), 90.0f);
 							}
-						} else if (entity.getBlockY() < -32) {
+						} else if (entity.getBlockY() < -32 && !isAsteroid) {
 							ServerLevel overworld = serverLevel.getServer().overworld();
 							if (overworld != null) {
 								entity.teleportTo(overworld, entity.getX(), 380, entity.getZ(), Set.of(), entity.getYRot(), 90.0f);
@@ -80,7 +82,7 @@ public class EntityMixin {
 					}
 
 					if (level.dimensionTypeId() == TheMoonDimensionTypes.MOON) {
-						if (entity.getBlockY() > 334) {
+						if (entity.getBlockY() > 334 && !isAsteroid) {
 							ServerLevel exosphere = serverLevel.getServer().getLevel(TheMoonDimensionTypes.EXOSPHERE_LEVEL);
 							if (exosphere != null) {
 								entity.teleportTo(exosphere, entity.getX(), 195, entity.getZ(), Set.of(), entity.getYRot(), 90.0f);
