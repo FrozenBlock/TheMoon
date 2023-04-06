@@ -57,12 +57,12 @@ public class GravityCalculator {
 				GravityBelt gravityBelt = optionalGravityBelt.get();
 				double gravity = gravityBelt.getGravity(entity, y);
 				if (entity instanceof Asteroid asteroid) {
-					if (AsteroidBelts.getEffectingAsteroidBelt(AsteroidBelts.getAllBelts(entity.level), entity.getY()).isEmpty()) {
-						return asteroid.getState() == Asteroid.State.FALLING ? 1 : gravity;
-					} else {
+					double asteroidGravity = 1;
+					if (AsteroidBelts.getEffectingAsteroidBelt(AsteroidBelts.getAllBelts(entity.level), entity.getY()).isPresent()) {
 						asteroid.isInAsteroidBelt = true;
-						return 0;
+						asteroidGravity = 0;
 					}
+					return asteroid.getState() == Asteroid.State.FALLING ? 1 : asteroidGravity;
 				}
 				return gravity;
 			}
