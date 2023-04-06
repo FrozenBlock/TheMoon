@@ -3,6 +3,7 @@ package net.frozenblock.themoon.mixin;
 import net.frozenblock.themoon.registry.TheMoonParticleTypes;
 import net.frozenblock.themoon.tag.TheMoonBlockTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -22,11 +23,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class EntityMixin {
 	@Shadow
 	private EntityDimensions dimensions;
-
 	@Shadow @Final
 	public RandomSource random;
+	@Shadow
+	private float yRot;
 
-	@Inject(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;canSpawnSprintParticle()Z", shift = At.Shift.BEFORE))
+	@Inject(method = "baseTick", at = @At("HEAD"))
 	public void theMoon$baseTick(CallbackInfo info) {
 		this.theMoon$spawnMoonDustParticle();
 	}
@@ -34,15 +36,40 @@ public class EntityMixin {
 	@Unique
 	private void theMoon$spawnMoonDustParticle() {
 		Entity entity = Entity.class.cast(this);
-		if (!entity.isPassenger() && (!(entity instanceof LivingEntity livingEntity) || !livingEntity.isFallFlying()) && entity.isOnGround() && entity.getDeltaMovement().length() > random.nextFloat() * 0.375) {
+		double length = entity.walkDist - entity.walkDistO;
+		length *= 2;
+		if (!entity.isPassenger() && (!(entity instanceof LivingEntity livingEntity) || !livingEntity.isFallFlying()) && entity.isOnGround()) {
 			int i = Mth.floor(entity.getX());
 			BlockPos blockPos = new BlockPos(i, Mth.floor(entity.getY() - (double) 0.2f), Mth.floor(entity.getZ()));
 			BlockState blockState = entity.level.getBlockState(blockPos);
 			if (blockState.is(TheMoonBlockTags.MOON_DUST)) {
 				Vec3 vec3 = entity.getDeltaMovement();
-				entity.level.addParticle(TheMoonParticleTypes.MOON_DUST, entity.getX() + (this.random.nextDouble() - 0.5) * (double) this.dimensions.width, entity.getY() + 0.1, entity.getZ() + (this.random.nextDouble() - 0.5) * (double) this.dimensions.width, vec3.x * -0.5, 0.0325, vec3.z * -0.5);
+				for (int c = 0; c < 3; c++) {
+					if (length > 0 && random.nextFloat() * 2 < length) {
+						entity.level.addParticle(TheMoonParticleTypes.MOON_DUST, entity.getX() + (this.random.nextDouble() - 0.5) * (double) this.dimensions.width, entity.getY() + 0.1, entity.getZ() + (this.random.nextDouble() - 0.5) * (double) this.dimensions.width, vec3.x * -0.5, 0.0325, vec3.z * -0.5);
+					}
+				}
 			}
 		}
+	}
+
+	@Inject(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity$MovementEmission;emitsEvents()Z", ordinal = 0, shift = At.Shift.BEFORE))
+	public void theMoon$youllStumbleInMyFootsteps(CallbackInfo info) {
+		if (this.theMoon$canSpawnFootprintParticle()) {
+			this.theMoon$spawnFootprintParticle();
+		}
+	}
+
+	@Unique
+	public void theMoon$spawnFootprintParticle() {
+		Entity entity = Entity.class.cast(this);
+		entity.level.addParticle(TheMoonParticleTypes.FOOTSTEP, entity.getX(), entity.getY() + 0.001, entity.getZ(), this.yRot, 0.0, 0.0);
+	}
+
+	@Unique
+	public boolean theMoon$canSpawnFootprintParticle() {
+		Entity entity = Entity.class.cast(this);
+		return entity instanceof LivingEntity livingEntity && !livingEntity.isInWater() && !livingEntity.isSpectator() && !livingEntity.isInLava() && livingEntity.isAlive();
 	}
 
 }

@@ -47,6 +47,10 @@
     {
       "type": "single",
       "resource": "the_moon:particle/moon_dust_11"
+    },
+    {
+      "type": "single",
+      "resource": "the_moon:particle/footstep"
     }
   ]
 }

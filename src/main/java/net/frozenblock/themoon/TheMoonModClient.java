@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.frozenblock.themoon.entity.render.model.AsteroidModel;
 import net.frozenblock.themoon.entity.render.renderer.AsteroidRenderer;
+import net.frozenblock.themoon.particle.FootstepParticle;
 import net.frozenblock.themoon.particle.MoonDustParticle;
 import net.frozenblock.themoon.registry.TheMoonDimensionTypes;
 import net.frozenblock.themoon.registry.TheMoonEntities;
@@ -29,5 +30,6 @@ public class TheMoonModClient implements ClientModInitializer {
 		DimensionRenderingRegistry.registerSkyRenderer(TheMoonDimensionTypes.MOON_LEVEL, new MoonSkyRenderer());
 
 		ParticleFactoryRegistry.getInstance().register(TheMoonParticleTypes.MOON_DUST, MoonDustParticle.Provider::new);
+		ParticleFactoryRegistry.getInstance().register(TheMoonParticleTypes.FOOTSTEP, FootstepParticle.Provider::new);
     }
 }
