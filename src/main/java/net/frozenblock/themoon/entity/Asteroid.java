@@ -123,6 +123,10 @@ public class Asteroid extends Mob {
 
 	@Override
 	public void tick() {
+		if (this.getBlockY() <= this.level.getMinBuildHeight() - 128) {
+			this.destroy(false);
+			return;
+		}
 		Vec3 deltaMovement = this.getDeltaMovement();
 		this.fallX = deltaMovement.x();
 		this.fallZ = deltaMovement.z();
@@ -237,7 +241,11 @@ public class Asteroid extends Mob {
 			this.playSound(SoundEvents.ANVIL_PLACE, this.getSoundVolume(), this.getVoicePitch());
 		}
 		this.spawnBreakParticles();
-		this.remove(RemovalReason.KILLED);
+		if (killed) {
+			this.remove(RemovalReason.KILLED);
+		} else {
+			this.discard();
+		}
 	}
 
 	public boolean isMovingTowards(@NotNull Entity entity) {
