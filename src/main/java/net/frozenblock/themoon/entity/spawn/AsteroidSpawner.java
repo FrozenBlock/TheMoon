@@ -139,7 +139,7 @@ public class AsteroidSpawner {
 		Optional<Integer> optionalInteger = Optional.empty();
 		AsteroidBelts.AsteroidBelt belt = getWeightedBelt(AsteroidBelts.getAllBelts(level));
 		if (belt != null) {
-			optionalInteger = Optional.of(level.getRandom().nextInt(belt.minSpawnY, belt.maxSpawnY));
+			optionalInteger = Optional.of(level.getRandom().nextInt(belt.minSpawnY(), belt.maxSpawnY()));
 		}
 		return optionalInteger;
 	}
@@ -148,12 +148,12 @@ public class AsteroidSpawner {
 	private static AsteroidBelts.AsteroidBelt getWeightedBelt(List<AsteroidBelts.AsteroidBelt> belts) {
 		double completeWeight = 0;
 		for (AsteroidBelts.AsteroidBelt belt : belts) {
-			completeWeight += (belt.maxSpawnY - belt.minSpawnY);
+			completeWeight += (belt.maxSpawnY() - belt.minSpawnY());
 		}
 		double r = Math.random() * completeWeight;
 		double countWeight = 0;
 		for (AsteroidBelts.AsteroidBelt belt : belts) {
-			countWeight += (belt.maxSpawnY - belt.minSpawnY);
+			countWeight += (belt.maxSpawnY() - belt.minSpawnY());
 			if (countWeight >= r)
 				return belt;
 		}

@@ -4,7 +4,10 @@ import net.frozenblock.themoon.entity.Asteroid;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 
-public class TheMoonEntityDataSerializers {
+public final class TheMoonEntityDataSerializers {
+	private TheMoonEntityDataSerializers() {
+	}
+
 	public static final EntityDataSerializer<Asteroid.State> ASTEROID_STATE = EntityDataSerializer.simpleEnum(Asteroid.State.class);
 
 	public static void init() {

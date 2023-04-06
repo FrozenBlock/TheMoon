@@ -9,7 +9,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 
-public class AsteroidBelts {
+public final class AsteroidBelts {
+	private AsteroidBelts() {
+	}
+
 	private static final Map<ResourceKey<DimensionType>, List<AsteroidBelt>> ASTEROID_BELTS = new HashMap<>();
 
 	public static void register(ResourceKey<DimensionType> dimension, AsteroidBelt asteroidBelt) {
@@ -42,25 +45,14 @@ public class AsteroidBelts {
 		return optionalAsteroidBelt;
 	}
 
-	public static class AsteroidBelt {
-		public final int minY;
-		public final int maxY;
-		public final int minSpawnY;
-		public final int maxSpawnY;
-
-		public AsteroidBelt(int minY, int maxY, int minSpawnY, int maxSpawnY) {
-			this.minY = minY;
-			this.maxY = maxY;
-			this.minSpawnY = minSpawnY;
-			this.maxSpawnY = maxSpawnY;
-		}
+	public record AsteroidBelt(int minY, int maxY, int minSpawnY, int maxSpawnY) {
 
 		public boolean effectsPosition(double y) {
-			return y >= minY && y < maxY;
-		}
+				return y >= minY && y < maxY;
+			}
 
-		public boolean canSpawn(double y) {
-			return y >= minSpawnY && y < maxSpawnY;
+			public boolean canSpawn(double y) {
+				return y >= minSpawnY && y < maxSpawnY;
+			}
 		}
-	}
 }

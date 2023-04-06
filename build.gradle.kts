@@ -119,10 +119,10 @@ loom {
         }
 
         named("client") {
-            ideConfigGenerated(false)
+            ideConfigGenerated(true)
         }
         named("server") {
-            ideConfigGenerated(false)
+            ideConfigGenerated(true)
         }
     }
 }
