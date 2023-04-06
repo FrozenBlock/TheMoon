@@ -15,6 +15,7 @@ import net.frozenblock.themoon.registry.TheMoonDimensionTypes;
 import net.frozenblock.themoon.registry.TheMoonEntities;
 import net.frozenblock.themoon.registry.TheMoonParticleTypes;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
+import net.frozenblock.themoon.world.render.ExosphereSkyRenderer;
 import net.frozenblock.themoon.world.render.MoonSkyRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 
@@ -28,6 +29,7 @@ public class TheMoonModClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(ASTEROID, AsteroidModel::createBodyLayer);
 
 		DimensionRenderingRegistry.registerSkyRenderer(TheMoonDimensionTypes.MOON_LEVEL, new MoonSkyRenderer());
+		DimensionRenderingRegistry.registerSkyRenderer(TheMoonDimensionTypes.EXOSPHERE_LEVEL, new ExosphereSkyRenderer());
 
 		ParticleFactoryRegistry.getInstance().register(TheMoonParticleTypes.MOON_DUST, MoonDustParticle.Provider::new);
 		ParticleFactoryRegistry.getInstance().register(TheMoonParticleTypes.FOOTSTEP, FootstepParticle.Provider::new);

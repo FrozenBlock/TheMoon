@@ -32,10 +32,12 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
-public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
+public class ExosphereSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 	private static final float SUN_SIZE = 30F;
 	private static final ResourceLocation SUN_LOCATION = new ResourceLocation("textures/environment/sun.png");
-	private static final float EARTH_SIZE = 80F;
+	private static final float MOON_SIZE = 30F;
+	private static final ResourceLocation MOON_LOCATION = new ResourceLocation("textures/environment/moon_phases.png");
+	private static final float EARTH_SIZE = 110F;
 	private static final ResourceLocation EARTH_LOCATION = TheMoonSharedConstants.id("textures/environment/earth.png");
 	private static final float NOON_TIME = 6000F;
 	private static final float MIDNIGHT_TIME = 18000F;
@@ -124,18 +126,15 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		poseStack.pushPose();
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-		//SUN & EARTH
+		//SUN & MOON & EARTH
 
 		Vec3 playerPos = camera.getPosition();
-		float xRot = getSkyOffset(playerPos.x());
-		float zRot = getSkyOffset(playerPos.z());
 
 		poseStack.mulPose(Axis.YP.rotationDegrees(-90F));
 
 		poseStack.pushPose();
-		float rotation = level.dimensionType().timeOfDay(level.dayTime() + 12000);
-		poseStack.mulPose(Axis.XP.rotationDegrees((rotation - xRot) * 360F));
-		poseStack.mulPose(Axis.ZP.rotationDegrees(-zRot * 360F));
+		float rotation = level.dimensionType().timeOfDay(level.dayTime());
+		poseStack.mulPose(Axis.XP.rotationDegrees(rotation * 360F));
 		Matrix4f matrix4f3 = poseStack.last().pose();
 
 		k = SUN_SIZE;
@@ -147,18 +146,32 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		bufferBuilder.vertex(matrix4f3, k, 100F, k).uv(1.0f, 1.0f).endVertex();
 		bufferBuilder.vertex(matrix4f3, -k, 100F, k).uv(0.0f, 1.0f).endVertex();
 		BufferUploader.drawWithShader(bufferBuilder.end());
+
+		k = MOON_SIZE;
+		RenderSystem.setShaderTexture(0, MOON_LOCATION);
+		int r = level.getMoonPhase();
+		int s = r % 4;
+		int m = r / 4 % 2;
+		float t = (float)s / 4.0F;
+		o = (float)m / 2.0F;
+		p = (float)(s + 1) / 4.0F;
+		q = (float)(m + 1) / 2.0F;
+		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+		bufferBuilder.vertex(matrix4f3, -k, -100F, k).uv(p, q).endVertex();
+		bufferBuilder.vertex(matrix4f3, k, -100F, k).uv(t, q).endVertex();
+		bufferBuilder.vertex(matrix4f3, k, -100F, -k).uv(t, o).endVertex();
+		bufferBuilder.vertex(matrix4f3, -k, -100F, -k).uv(p, o).endVertex();
+		BufferUploader.drawWithShader(bufferBuilder.end());
 		poseStack.popPose();
 
-		poseStack.mulPose(Axis.XP.rotationDegrees((xRot + MIDNIGHT_TIME_FIXED) * 360F));
-		poseStack.mulPose(Axis.ZP.rotationDegrees((zRot + MIDNIGHT_TIME_FIXED) * 360F));
 		matrix4f3 = poseStack.last().pose();
 		k = EARTH_SIZE;
 		RenderSystem.setShaderTexture(0, EARTH_LOCATION);
 		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-		bufferBuilder.vertex(matrix4f3, -k, 99F, -k).uv(0.0f, 0.0f).endVertex();
-		bufferBuilder.vertex(matrix4f3, k, 99F, -k).uv(1.0f, 0.0f).endVertex();
-		bufferBuilder.vertex(matrix4f3, k, 99F, k).uv(1.0f, 1.0f).endVertex();
-		bufferBuilder.vertex(matrix4f3, -k, 99F, k).uv(0.0f, 1.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, -k, 90F, k).uv(0.0f, 0.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, k, 90F, k).uv(1.0f, 0.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, k, 90F, -k).uv(1.0f, 1.0f).endVertex();
+		bufferBuilder.vertex(matrix4f3, -k, 90F, -k).uv(0.0f, 1.0f).endVertex();
 		BufferUploader.drawWithShader(bufferBuilder.end());
 
 		//STARS

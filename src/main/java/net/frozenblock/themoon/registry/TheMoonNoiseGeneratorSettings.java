@@ -23,8 +23,10 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise;
 public class TheMoonNoiseGeneratorSettings {
 
 	public static final ResourceKey<NoiseGeneratorSettings> MOON = ResourceKey.create(Registries.NOISE_SETTINGS, TheMoonSharedConstants.id("the_moon"));
+	public static final ResourceKey<NoiseGeneratorSettings> EXOSPHERE = ResourceKey.create(Registries.NOISE_SETTINGS, TheMoonSharedConstants.id("the_exosphere"));
 
 	public static final NoiseSettings MOON_NOISE_SETTINGS = NoiseSettings.create(0, 208, 2, 1);
+	public static final NoiseSettings EXOSPHERE_NOISE_SETTINGS = NoiseSettings.create(0, 32, 2, 1);
 
 	protected static NoiseRouter moonNoiseRouter(HolderGetter<DensityFunction> densityGetter, HolderGetter<NormalNoise.NoiseParameters> noiseGetter) {
 		DensityFunction densityFunction = NoiseRouterData.postProcess(slideMoon(NoiseRouterData.getFunction(densityGetter, NoiseRouterData.DEPTH)));
@@ -62,10 +64,15 @@ public class TheMoonNoiseGeneratorSettings {
 
 	public static void bootstrap(BootstapContext<NoiseGeneratorSettings> context) {
 		context.register(MOON, moon(context));
+		context.register(EXOSPHERE, exosphere(context));
 	}
 
 	private static NoiseGeneratorSettings moon(BootstapContext<?> bootstapContext) {
 		return new NoiseGeneratorSettings(MOON_NOISE_SETTINGS, TheMoonBlocks.MOON_ROCK.defaultBlockState(), Blocks.AIR.defaultBlockState(), moonNoiseRouter(bootstapContext.lookup(Registries.DENSITY_FUNCTION), bootstapContext.lookup(Registries.NOISE)), TheMoonSurfaceRules.moon(), List.of(), 0, false, false, true, false);
+	}
+
+	private static NoiseGeneratorSettings exosphere(BootstapContext<?> bootstapContext) {
+		return new NoiseGeneratorSettings(EXOSPHERE_NOISE_SETTINGS, Blocks.AIR.defaultBlockState(), Blocks.AIR.defaultBlockState(), moonNoiseRouter(bootstapContext.lookup(Registries.DENSITY_FUNCTION), bootstapContext.lookup(Registries.NOISE)), TheMoonSurfaceRules.moon(), List.of(), 0, false, false, false, false);
 	}
 
 	private static DensityFunction yLimitedInterpolatable(DensityFunction input, DensityFunction whenInRange, int minInclusive, int maxInclusive, int maxRange) {

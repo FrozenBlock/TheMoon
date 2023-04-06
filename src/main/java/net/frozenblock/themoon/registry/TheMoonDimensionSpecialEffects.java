@@ -10,10 +10,34 @@ import org.jetbrains.annotations.Nullable;
 
 public class TheMoonDimensionSpecialEffects {
 	public static final ResourceLocation MOON_EFFECTS = TheMoonSharedConstants.id("the_moon");
+	public static final ResourceLocation EXOSPHERE_EFFECTS = TheMoonSharedConstants.id("the_exosphere");
 
 	@Environment(EnvType.CLIENT)
 	public static class MoonEffects extends DimensionSpecialEffects {
 		public MoonEffects() {
+			super(Float.NaN, false, SkyType.NORMAL, true, false);
+		}
+
+		@Override
+		public Vec3 getBrightnessDependentFogColor(Vec3 fogColor, float brightness) {
+			return fogColor.scale(0.15f);
+		}
+
+		@Override
+		public boolean isFoggyAt(int x, int y) {
+			return false;
+		}
+
+		@Override
+		@Nullable
+		public float[] getSunriseColor(float timeOfDay, float partialTicks) {
+			return null;
+		}
+	}
+
+	@Environment(EnvType.CLIENT)
+	public static class ExosphereEffects extends DimensionSpecialEffects {
+		public ExosphereEffects() {
 			super(Float.NaN, false, SkyType.NORMAL, true, false);
 		}
 

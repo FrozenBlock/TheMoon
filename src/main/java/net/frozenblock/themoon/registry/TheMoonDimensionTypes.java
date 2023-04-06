@@ -14,6 +14,9 @@ public class TheMoonDimensionTypes {
 	public static final ResourceKey<DimensionType> MOON = register("the_moon");
 	public static final ResourceKey<Level> MOON_LEVEL = registerLevel("the_moon");
 
+	public static final ResourceKey<DimensionType> EXOSPHERE = register("the_exosphere");
+	public static final ResourceKey<Level> EXOSPHERE_LEVEL = registerLevel("the_exosphere");
+
 	public static void bootstrap(BootstapContext<DimensionType> bootstapContext) {
 		TheMoonSharedConstants.logMod("Registering Dimension Types for", TheMoonSharedConstants.UNSTABLE_LOGGING);
 
@@ -24,13 +27,37 @@ public class TheMoonDimensionTypes {
 						false,
 						false,
 						false,
-						false,
+						true,
 						1.0,
 						false,
 						false,
 						0, 320, 320,
 						BlockTags.INFINIBURN_END,
 						TheMoonDimensionSpecialEffects.MOON_EFFECTS,
+						0.0f,
+						new DimensionType.MonsterSettings(
+								false,
+								false,
+								UniformInt.of(0, 7),
+								0
+						)
+				)
+		);
+
+		bootstapContext.register(
+				TheMoonDimensionTypes.EXOSPHERE,
+				new DimensionType(
+						OptionalLong.empty(),
+						false,
+						false,
+						false,
+						true,
+						1.0,
+						false,
+						false,
+						0, 64, 64,
+						BlockTags.INFINIBURN_END,
+						TheMoonDimensionSpecialEffects.EXOSPHERE_EFFECTS,
 						0.0f,
 						new DimensionType.MonsterSettings(
 								false,

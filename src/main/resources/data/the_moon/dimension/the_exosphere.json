@@ -1,0 +1,11 @@
+{
+  "type": "the_moon:the_exosphere",
+  "generator": {
+    "type": "the_moon:the_exosphere",
+    "settings": "the_moon:the_exosphere",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "the_moon:the_exosphere"
+    }
+  }
+}

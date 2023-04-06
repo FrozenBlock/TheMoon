@@ -15,11 +15,13 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 public final class TheMoonBiomes {
 
 	public static final ResourceKey<Biome> LUNAR_WASTELANDS = register("lunar_wastelands");
+	public static final ResourceKey<Biome> THE_EXOSPHERE = register("the_exosphere");
 
 	public static void bootstrap(BootstapContext<Biome> context) {
 		TheMoonSharedConstants.logMod("Registering Biomes for", TheMoonSharedConstants.UNSTABLE_LOGGING);
 
 		register(context, TheMoonBiomes.LUNAR_WASTELANDS, TheMoonBiomes.lunarWastelands(context));
+		register(context, TheMoonBiomes.THE_EXOSPHERE, TheMoonBiomes.theExosphere(context));
 	}
 
 	public static Biome lunarWastelands(BootstapContext<Biome> entries) {
@@ -34,7 +36,6 @@ public final class TheMoonBiomes {
 
 	private static Biome baseMoonBiome(BiomeGenerationSettings.Builder builder) {
 		net.minecraft.world.level.biome.MobSpawnSettings.Builder mobSpawns = new net.minecraft.world.level.biome.MobSpawnSettings.Builder();
-		//.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(EntityType.MOON_COW, 8, 1, 5));
 		mobSpawns.creatureGenerationProbability(0.07F);
 		return new Biome.BiomeBuilder()
 				.hasPrecipitation(false)
@@ -50,6 +51,37 @@ public final class TheMoonBiomes {
 								.grassColorOverride(6908265)
 								.ambientParticle(
 										new AmbientParticleSettings(ParticleTypes.WHITE_ASH, 0.001F)
+								)
+								.ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS).build()
+				)
+				.mobSpawnSettings(mobSpawns.build())
+				.generationSettings(builder.build()).build();
+	}
+
+	public static Biome theExosphere(BootstapContext<Biome> entries) {
+		var placedFeatures = entries.lookup(Registries.PLACED_FEATURE);
+		var worldCarvers = entries.lookup(Registries.CONFIGURED_CARVER);
+		BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers);
+		return baseExosphereBiome(builder);
+	}
+
+	private static Biome baseExosphereBiome(BiomeGenerationSettings.Builder builder) {
+		net.minecraft.world.level.biome.MobSpawnSettings.Builder mobSpawns = new net.minecraft.world.level.biome.MobSpawnSettings.Builder();
+		mobSpawns.creatureGenerationProbability(0.01F);
+		return new Biome.BiomeBuilder()
+				.hasPrecipitation(false)
+				.temperature(-0.5F)
+				.downfall(0.5F)
+				.specialEffects(
+						new net.minecraft.world.level.biome.BiomeSpecialEffects.Builder()
+								.waterColor(4159204)
+								.waterFogColor(329011)
+								.fogColor(0)
+								.skyColor(0)
+								.foliageColorOverride(16777215)
+								.grassColorOverride(6908265)
+								.ambientParticle(
+										new AmbientParticleSettings(ParticleTypes.WHITE_ASH, 0.007F)
 								)
 								.ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS).build()
 				)

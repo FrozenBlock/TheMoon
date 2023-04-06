@@ -27,7 +27,7 @@ public class AsteroidModel<T extends Asteroid> extends HierarchicalModel<T> {
 	private static final float pi180 = Mth.PI / 180;
 
 	public AsteroidModel(ModelPart root) {
-		super(RenderType::entityCutoutNoCull);
+		super(RenderType::entitySolid);
 		this.root = root;
 		this.bone = root.getChild("bone");
 	}

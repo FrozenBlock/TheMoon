@@ -52,6 +52,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Asteroid extends Mob {
+	public static final boolean FALLING_ASTEROIDS_EFFECTED_BY_ASTEROID_BELTS = false;
+
 	public float prevPitch;
 	public float prevRoll;
 	public float pitch;
@@ -178,7 +180,7 @@ public class Asteroid extends Mob {
 			double zToUse = Math.abs(fallZ) > Math.abs(deltaMovement.z()) ? fallZ : deltaMovement.z();
 			double y = deltaMovement.y();
 			this.setDeltaMovement(xToUse, y, zToUse);
-			if (this.isInAsteroidBelt && Math.abs(y) < 0.075) {
+			if (FALLING_ASTEROIDS_EFFECTED_BY_ASTEROID_BELTS && this.isInAsteroidBelt && Math.abs(y) < 0.075) {
 				this.setState(State.IDLE);
 				this.extinguishFire();
 			}
@@ -205,7 +207,7 @@ public class Asteroid extends Mob {
 						this.setState(State.NO_GRAV);
 					}
 				}
-			} else if (this.trueFallDistance > this.getScale() * 2 && !this.alreadyFell) {
+			} else if (this.trueFallDistance > this.getScale() && !this.alreadyFell) {
 				this.trueFallDistance = 0;
 				this.setState(State.FALLING);
 			} else {

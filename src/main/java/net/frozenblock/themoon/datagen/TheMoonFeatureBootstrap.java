@@ -1,5 +1,7 @@
 package net.frozenblock.themoon.datagen;
 
+import java.util.Arrays;
+import java.util.List;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.frozenblock.lib.worldgen.feature.api.FrozenConfiguredFeatureUtils;
 import net.frozenblock.lib.worldgen.feature.api.FrozenFeatureUtils;
@@ -20,8 +22,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
-import java.util.Arrays;
-import java.util.List;
 
 public class TheMoonFeatureBootstrap {
 
