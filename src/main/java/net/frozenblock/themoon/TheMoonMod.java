@@ -68,7 +68,7 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 
 		AsteroidBelts.register(TheMoonDimensionTypes.EXOSPHERE, new AsteroidBelts.AsteroidBelt(0, 256, 4, 200));
 
-		AsteroidSpawner.registerSpawnRules(TheMoonDimensionTypes.EXOSPHERE, new AsteroidSpawner.AsteroidSpawnRules(500, 20, 0.1F, 0.05F, 500));
+		AsteroidSpawner.registerSpawnRules(TheMoonDimensionTypes.EXOSPHERE, new AsteroidSpawner.AsteroidSpawnRules(500, 20, 0.9F, 0.05F, 500));
 
 		ServerTickEvents.START_WORLD_TICK.register((serverLevel) -> {
 			AsteroidSpawner.spawn(serverLevel, true);
