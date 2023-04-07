@@ -173,6 +173,7 @@ public class Asteroid extends Mob {
 			this.prevRoll -= 360F;
 		}
 		if (this.getState() == State.FALLING) {
+			this.noActionTime = 0;
 			this.ticksSinceActive = 0;
 			this.alreadyFell = true;
 			this.spawnSmokeParticles();
@@ -192,9 +193,9 @@ public class Asteroid extends Mob {
 			this.ticksSinceActive = 0;
 			if (this.level instanceof ServerLevel serverLevel) {
 				WindManager windManager = WindManager.getWindManager(serverLevel);
-				Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.125);
+				Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.2);
 				double windX = wind.x();
-				double windY = wind.y() * 0.5;
+				double windY = wind.y() * 0.75;
 				double windZ = wind.z();
 				deltaMovement = deltaMovement.add((windX * 0.015), (windY * 0.015), (windZ * 0.015));
 				this.setDeltaMovement(deltaMovement);
@@ -323,7 +324,7 @@ public class Asteroid extends Mob {
 	@Override
 	public boolean causeFallDamage(float fallDistance, float multiplier, @NotNull DamageSource source) {
 		if (this.getState() == State.FALLING) {
-			this.level.explode(this, this.getX(), this.getEyeY(), this.getZ(), Math.min(fallDistance * this.getScale(), 10), Level.ExplosionInteraction.MOB);
+			this.level.explode(this, this.getX(), this.getEyeY(), this.getZ(), Math.min(this.getScale() * 3, 10), Level.ExplosionInteraction.MOB);
 			this.destroy(false);
 		}
 		return true;
@@ -367,12 +368,11 @@ public class Asteroid extends Mob {
 			int i;
 			double d = this.horizontalDistanceTo(entity.getX(), entity.getZ());
 			d *= d;
-			double verticalDistance = Math.abs(this.getY() - entity.getY());
 			boolean falling = this.getState() == State.FALLING;
 			if (!falling && ((d > (double)((i = this.getType().getCategory().getDespawnDistance()) * i) && this.removeWhenFarAway(d)))) {
 				this.discard();
 			}
-			int k = this.getType().getCategory().getNoDespawnDistance();
+			int k = 48;
 			int l = k * k;
 			if (!falling && (this.noActionTime > 600 && this.random.nextInt(800) == 0 && ((d > (double)l && this.removeWhenFarAway(d))))) {
 				this.discard();

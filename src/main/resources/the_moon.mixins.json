@@ -4,6 +4,7 @@
   "package": "net.frozenblock.themoon.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "BlockMixin",
     "DimensionSpecialEffectsMixin",
     "EntityMixin",
     "LevelMixin",
@@ -21,6 +22,7 @@
     "gravity.ThrowableProjectileMixin"
   ],
   "client": [
+    "client.LevelRendererMixin",
     "gravity.client.ParticleMixin"
   ],
   "injectors": {
