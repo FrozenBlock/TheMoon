@@ -16,18 +16,6 @@
     {
       "id": "the_moon:moon_rock_wall",
       "required": false
-    },
-    {
-      "id": "the_moon:polished_moon_rock",
-      "required": false
-    },
-    {
-      "id": "the_moon:polished_moon_rock_stairs",
-      "required": false
-    },
-    {
-      "id": "the_moon:polished_moon_rock_slab",
-      "required": false
     }
   ]
 }
