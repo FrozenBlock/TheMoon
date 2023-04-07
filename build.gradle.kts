@@ -195,6 +195,10 @@ repositories {
         name = "Quilt"
         url = uri("https://maven.quiltmc.org/repository/release")
     }
+    maven {
+        name = "Quilt Snapshot"
+        url = uri("https://maven.quiltmc.org/repository/snapshot")
+    }
 
     flatDir {
         dirs("libs")
@@ -258,7 +262,9 @@ dependencies {
 }
 
 quiltflower {
-    quiltflowerVersion.set("1.8.0")
+    //quiltflowerVersion.set("1.8.0")
+    quiltflowerVersion.set("1.10.0-SNAPSHOT")
+    fromProjectRepositories()
 }
 
 tasks {
