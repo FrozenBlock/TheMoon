@@ -363,7 +363,10 @@ public class Asteroid extends Mob {
 			this.noActionTime = 0;
 			return;
 		}
-		Player entity = this.level.getNearestPlayer(this, -1.0);
+		Player entity = this.level.getNearestPlayer(this, -1);
+		if (entity == null) {
+			entity = this.level.getNearestPlayer(this.getX(), this.getY(), this.getZ(), -1, entity1 -> true);
+		}
 		if (entity != null) {
 			int i;
 			double d = this.horizontalDistanceTo(entity.getX(), entity.getZ());
