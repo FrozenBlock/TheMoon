@@ -1,26 +1,20 @@
 package net.frozenblock.themoon.mixin;
 
+import java.util.Set;
 import net.frozenblock.themoon.entity.Asteroid;
 import net.frozenblock.themoon.registry.TheMoonDimensionTypes;
 import net.frozenblock.themoon.registry.TheMoonParticleTypes;
 import net.frozenblock.themoon.tag.TheMoonBlockTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Bee;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
-import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,9 +23,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 @Mixin(Entity.class)
 public class EntityMixin {
@@ -102,7 +93,7 @@ public class EntityMixin {
 		length *= 2;
 		if (!entity.isPassenger() && (!(entity instanceof LivingEntity livingEntity) || !livingEntity.isFallFlying()) && entity.isOnGround()) {
 			int i = Mth.floor(entity.getX());
-			BlockPos blockPos = new BlockPos(i, Mth.floor(entity.getY() - (double) 0.2f), Mth.floor(entity.getZ()));
+			BlockPos blockPos = entity.getOnPosLegacy();
 			BlockState blockState = entity.level.getBlockState(blockPos);
 			if (blockState.is(TheMoonBlockTags.MOON_DUST)) {
 				Vec3 vec3 = entity.getDeltaMovement();
@@ -125,8 +116,8 @@ public class EntityMixin {
 	@Unique
 	public boolean theMoon$keepTheSameAppointmentsIKept() {
 		Entity entity = Entity.class.cast(this);
-		return entity instanceof LivingEntity livingEntity && !livingEntity.isInWater() && !livingEntity.isSpectator() && !livingEntity.isInLava() && livingEntity.isAlive()
-				&& entity.level.getBlockState(BlockPos.containing(entity.getX(), entity.getY() - 0.1, entity.getZ())).is(TheMoonBlockTags.MOON_DUST);
+		return entity instanceof LivingEntity livingEntity && !livingEntity.isInWater() && !livingEntity.isSpectator() && !livingEntity.isInLava() && livingEntity.isAlive() && livingEntity.isOnGround()
+				&& entity.level.getBlockState(BlockPos.containing(entity.getX(), entity.getY() - 0.05, entity.getZ())).is(TheMoonBlockTags.MOON_DUST);
 	}
 
 	@Unique
