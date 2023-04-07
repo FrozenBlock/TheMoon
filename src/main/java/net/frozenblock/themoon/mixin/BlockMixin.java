@@ -33,7 +33,7 @@ public class BlockMixin {
 						1,
 						1,
 						1,
-						0.01
+						0.03
 				);
 			}
 		}
