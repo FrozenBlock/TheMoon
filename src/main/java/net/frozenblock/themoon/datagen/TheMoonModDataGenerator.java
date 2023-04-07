@@ -85,9 +85,38 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 		@Override
 		protected void addTags(HolderLookup.Provider arg) {
 			this.getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
-					.addOptional(TheMoonSharedConstants.id("moon_rock"));
+					.addOptional(TheMoonSharedConstants.id("moon_rock"))
+					.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
+					.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
+					.addOptional(TheMoonSharedConstants.id("moon_rock_wall"))
+					.addOptional(TheMoonSharedConstants.id("polished_moon_rock"))
+					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_stairs"))
+					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_slab"));
 
 			this.getOrCreateTagBuilder(TheMoonBlockTags.MOON_DUST)
+					.addOptional(TheMoonSharedConstants.id("moon_rock"))
+					.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
+					.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
+					.addOptional(TheMoonSharedConstants.id("moon_rock_wall"))
+					.addOptional(TheMoonSharedConstants.id("polished_moon_rock"))
+					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_stairs"))
+					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_slab"));
+
+			this.getOrCreateTagBuilder(BlockTags.STAIRS)
+					.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
+					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_stairs"));
+
+			this.getOrCreateTagBuilder(BlockTags.SLABS)
+					.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
+					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_slab"));
+
+			this.getOrCreateTagBuilder(BlockTags.WALLS)
+					.addOptional(TheMoonSharedConstants.id("moon_rock_wall"));
+
+			this.getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE)
+					.addOptional(TheMoonSharedConstants.id("moon_rock"));
+
+			this.getOrCreateTagBuilder(BlockTags.DRIPSTONE_REPLACEABLE)
 					.addOptional(TheMoonSharedConstants.id("moon_rock"));
 		}
 	}
@@ -101,6 +130,17 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 		protected void addTags(HolderLookup.Provider arg) {
 			this.getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS)
 					.addOptional(TheMoonSharedConstants.id("moon_rock"));
+
+			this.getOrCreateTagBuilder(ItemTags.STAIRS)
+					.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
+					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_stairs"));
+
+			this.getOrCreateTagBuilder(ItemTags.SLABS)
+					.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
+					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_slab"));
+
+			this.getOrCreateTagBuilder(ItemTags.WALLS)
+					.addOptional(TheMoonSharedConstants.id("moon_rock_wall"));
 		}
 	}
 

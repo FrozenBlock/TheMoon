@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "the_moon:moon_rock_stairs",
+      "required": false
+    },
+    {
+      "id": "the_moon:polished_moon_rock_stairs",
+      "required": false
+    }
+  ]
+}

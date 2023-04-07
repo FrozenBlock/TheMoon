@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 2,
+  "ingredient": {
+    "item": "the_moon:moon_rock"
+  },
+  "result": "the_moon:moon_rock_slab"
+}

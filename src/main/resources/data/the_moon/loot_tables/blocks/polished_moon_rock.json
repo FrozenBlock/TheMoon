@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "the_moon:moon_rock"
+          "name": "the_moon:polished_moon_rock"
         }
       ],
       "rolls": 1.0

@@ -2,25 +2,39 @@ package net.frozenblock.themoon.registry;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.frozenblock.lib.item.api.FrozenCreativeTabs;
+import net.frozenblock.themoon.block.properties.TheMoonBlockProperties;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
 
 public class TheMoonBlocks {
 
-	public static final Block MOON_ROCK = new Block(BlockBehaviour.Properties.copy(Blocks.CALCITE).color(MaterialColor.COLOR_LIGHT_GRAY));
+	public static final Block MOON_ROCK = new Block(TheMoonBlockProperties.MOON_ROCK_PROPERTIES);
+	public static final Block MOON_ROCK_SLAB = new SlabBlock(TheMoonBlockProperties.MOON_ROCK_PROPERTIES);
+	public static final Block MOON_ROCK_STAIRS = new StairBlock(MOON_ROCK.defaultBlockState(), TheMoonBlockProperties.MOON_ROCK_PROPERTIES);
+	public static final Block MOON_ROCK_WALL = new WallBlock(TheMoonBlockProperties.MOON_ROCK_PROPERTIES);
+
+	public static final Block POLISHED_MOON_ROCK = new Block(TheMoonBlockProperties.POLISHED_MOON_ROCK_PROPERTIES);
+	public static final Block POLISHED_MOON_ROCK_SLAB = new SlabBlock(TheMoonBlockProperties.POLISHED_MOON_ROCK_PROPERTIES);
+	public static final Block POLISHED_MOON_ROCK_STAIRS = new StairBlock(POLISHED_MOON_ROCK.defaultBlockState(), TheMoonBlockProperties.POLISHED_MOON_ROCK_PROPERTIES);
 
 	public static void register() {
-		registerBlockAfter(Items.STONE,"moon_rock", MOON_ROCK, CreativeModeTabs.NATURAL_BLOCKS);
+		registerBlock(true,"moon_rock", MOON_ROCK, CreativeModeTabs.NATURAL_BLOCKS, CreativeModeTabs.BUILDING_BLOCKS);
+		registerBlock(true,"moon_rock_slab", MOON_ROCK_SLAB, CreativeModeTabs.BUILDING_BLOCKS);
+		registerBlock(true,"moon_rock_stairs", MOON_ROCK_STAIRS, CreativeModeTabs.BUILDING_BLOCKS);
+		registerBlock(true,"moon_rock_wall", MOON_ROCK_WALL, CreativeModeTabs.BUILDING_BLOCKS);
+
+		registerBlock(true,"polished_moon_rock", POLISHED_MOON_ROCK, CreativeModeTabs.BUILDING_BLOCKS);
+		registerBlock(true,"polished_moon_rock_slab", POLISHED_MOON_ROCK_SLAB, CreativeModeTabs.BUILDING_BLOCKS);
+		registerBlock(true,"polished_moon_rock_stairs", POLISHED_MOON_ROCK_STAIRS, CreativeModeTabs.BUILDING_BLOCKS);
 	}
 
 	private static void registerBlock(boolean registerBlockItem, String path, Block block, CreativeModeTab... tabs) {

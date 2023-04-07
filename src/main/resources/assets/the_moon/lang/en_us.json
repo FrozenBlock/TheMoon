@@ -1,5 +1,12 @@
 {
   "block.the_moon.moon_rock": "Moon Rock",
+  "block.the_moon.moon_rock_slab": "Moon Rock Slab",
+  "block.the_moon.moon_rock_stairs": "Moon Rock Stairs",
+  "block.the_moon.moon_rock_wall": "Moon Rock Wall",
+
+  "block.the_moon.polished_moon_rock": "Polished Moon Rock",
+  "block.the_moon.polished_moon_rock_slab": "Polished Moon Rock Slab",
+  "block.the_moon.polished_moon_rock_stairs": "Polished Moon Rock Stairs",
 
   "entity.the_moon.asteroid": "Asteroid",
 
