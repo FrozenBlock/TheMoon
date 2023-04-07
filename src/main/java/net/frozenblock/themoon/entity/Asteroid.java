@@ -369,7 +369,7 @@ public class Asteroid extends Mob {
 			double d = this.horizontalDistanceTo(entity.getX(), entity.getZ());
 			d *= d;
 			boolean falling = this.getState() == State.FALLING;
-			if (!falling && ((d > (double)((i = this.getType().getCategory().getDespawnDistance()) * i) && this.removeWhenFarAway(d)))) {
+			if (((d > (double)((i = this.getType().getCategory().getDespawnDistance()) * i) && this.removeWhenFarAway(d)))) {
 				this.destroy(false);
 			}
 			int k = 48;
