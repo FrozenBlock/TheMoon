@@ -21,7 +21,7 @@ import org.joml.Matrix4f;
 @Environment(EnvType.CLIENT)
 public class FootstepParticle extends Particle {
 	private static final float radians = (float)Math.PI / 180F;
-	
+
 	private final TextureAtlasSprite sprite;
 	private final float rot;
 
@@ -52,7 +52,7 @@ public class FootstepParticle extends Particle {
 
 	@Override
 	public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
-		float alpha = Mth.lerp(((float)this.age + partialTicks) / (float)this.lifetime, 1F, 0F);
+		float alpha = Mth.lerp((Math.min(this.age + partialTicks, (float)this.lifetime)) / (float)this.lifetime, 1F, 0F);
 		Vec3 vec3 = renderInfo.getPosition();
 		int l = this.getLightColor(partialTicks);
 		float u0 = this.sprite.getU0();
