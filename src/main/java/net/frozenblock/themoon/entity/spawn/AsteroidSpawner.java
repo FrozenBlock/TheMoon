@@ -88,9 +88,9 @@ public class AsteroidSpawner {
 			if (level.getRandom().nextFloat() <= spawnRules.fallingSpawnChance() && getFallingAsteroids(level) < spawnRules.maxFalling()) {
 				mutableBlockPos.set(player.blockPosition());
 				mutableBlockPos.set(
-						mutableBlockPos.getX() + randomSource.nextInt(-128, 128),
+						mutableBlockPos.getX() + randomSource.nextInt(-127, 127),
 						spawnRules.fallingSpawnHeight(),
-						mutableBlockPos.getZ() + randomSource.nextInt(-128, 128)
+						mutableBlockPos.getZ() + randomSource.nextInt(-127, 127)
 				);
 				mutableChunkBlockPos.set(
 						mutableBlockPos.getX(),
@@ -127,9 +127,9 @@ public class AsteroidSpawner {
 				if (optionalInteger.isPresent()) {
 					mutableBlockPos.set(player.blockPosition());
 					mutableBlockPos.set(
-							mutableBlockPos.getX() + randomSource.nextInt(-128, 128),
+							mutableBlockPos.getX() + randomSource.nextInt(-127, 127),
 							optionalInteger.get(),
-							mutableBlockPos.getZ() + randomSource.nextInt(-128, 128)
+							mutableBlockPos.getZ() + randomSource.nextInt(-127, 127)
 					);
 					mutableChunkBlockPos.set(
 							mutableBlockPos.getX(),

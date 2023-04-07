@@ -19,6 +19,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 
 public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 
@@ -29,6 +30,7 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(TheMoonEntityTagProvider::new);
 		pack.addProvider(TheMoonBiomeTagProvider::new);
 		pack.addProvider(TheMoonBlockTagProvider::new);
+		pack.addProvider(TheMoonItemTagProvider::new);
 		//pack.addProvider(TheMoonDamageTypeTagProvider::new);
 		//pack.addProvider(TheMoonItemTagProvider::new);
 		//pack.addProvider(TheMoonEntityTagProvider::new);
@@ -86,6 +88,18 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 					.addOptional(TheMoonSharedConstants.id("moon_rock"));
 
 			this.getOrCreateTagBuilder(TheMoonBlockTags.MOON_DUST)
+					.addOptional(TheMoonSharedConstants.id("moon_rock"));
+		}
+	}
+
+	private static final class TheMoonItemTagProvider extends FabricTagProvider.ItemTagProvider {
+		public TheMoonItemTagProvider(FabricDataOutput output, CompletableFuture completableFuture) {
+			super(output, completableFuture);
+		}
+
+		@Override
+		protected void addTags(HolderLookup.Provider arg) {
+			this.getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS)
 					.addOptional(TheMoonSharedConstants.id("moon_rock"));
 		}
 	}

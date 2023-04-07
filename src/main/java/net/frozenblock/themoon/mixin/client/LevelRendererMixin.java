@@ -27,7 +27,7 @@ public class LevelRendererMixin {
 		BlockState state = args.get(1);
 		if (state.is(TheMoonBlockTags.MOON_DUST)) {
 			RandomSource randomSource = level.getRandom();
-			int maxParticles = randomSource.nextInt(0, 6);
+			int maxParticles = randomSource.nextInt(0, 4);
 			for (int j = 0; j < maxParticles; ++j) {
 				double addedX = randomSource.nextDouble() * 0.8D + 0.1D;
 				double addedY = randomSource.nextDouble() * 0.8D + 0.1D;

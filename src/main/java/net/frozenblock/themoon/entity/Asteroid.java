@@ -356,7 +356,7 @@ public class Asteroid extends Mob {
 	@Override
 	public void checkDespawn() {
 		if (this.level.getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
-			this.discard();
+			this.destroy(false);
 			return;
 		}
 		if (this.isPersistenceRequired() || this.requiresCustomPersistence()) {
@@ -370,15 +370,17 @@ public class Asteroid extends Mob {
 			d *= d;
 			boolean falling = this.getState() == State.FALLING;
 			if (!falling && ((d > (double)((i = this.getType().getCategory().getDespawnDistance()) * i) && this.removeWhenFarAway(d)))) {
-				this.discard();
+				this.destroy(false);
 			}
 			int k = 48;
 			int l = k * k;
 			if (!falling && (this.noActionTime > 600 && this.random.nextInt(800) == 0 && ((d > (double)l && this.removeWhenFarAway(d))))) {
-				this.discard();
+				this.destroy(false);
 			} else if (d < (double)l) {
 				this.noActionTime = 0;
 			}
+		} else {
+			this.destroy(false);
 		}
 	}
 
