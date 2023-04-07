@@ -4,6 +4,7 @@ import net.frozenblock.themoon.registry.TheMoonParticleTypes;
 import net.frozenblock.themoon.tag.TheMoonBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
@@ -20,17 +21,21 @@ public class BlockMixin {
 	public void theMoon$wasExploded(Level level, BlockPos pos, Explosion explosion, CallbackInfo info) {
 		if (!level.isClientSide && Block.class.cast(this).defaultBlockState().is(TheMoonBlockTags.MOON_DUST)) {
 			RandomSource randomSource = level.getRandom();
-			((ServerLevel)level).sendParticles(
-					TheMoonParticleTypes.MOON_DUST,
-					pos.getX(),
-					pos.getY(),
-					pos.getZ(),
-					randomSource.nextInt(1, 6),
-					1,
-					1,
-					1,
-					0.01
-			);
+			for (ServerPlayer player : ((ServerLevel) level).players()) {
+				((ServerLevel) level).sendParticles(
+						player,
+						TheMoonParticleTypes.MOON_DUST,
+						true,
+						pos.getX(),
+						pos.getY(),
+						pos.getZ(),
+						randomSource.nextInt(1, 4),
+						1,
+						1,
+						1,
+						0.01
+				);
+			}
 		}
 	}
 
