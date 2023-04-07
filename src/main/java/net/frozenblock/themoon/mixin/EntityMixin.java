@@ -67,11 +67,11 @@ public class EntityMixin {
 					}
 
 					if (level.dimensionTypeId() == TheMoonDimensionTypes.EXOSPHERE) {
-						if (entity.getBlockY() > 200 && !isAsteroid) {
+						if (entity.getBlockY() > 624 && !isAsteroid) {
 							ServerLevel moon = serverLevel.getServer().getLevel(TheMoonDimensionTypes.MOON_LEVEL);
 							if (moon != null) {
 								entity.setDeltaMovement(entity.getDeltaMovement().add(0, -1, 0));
-								entity.teleportTo(moon, entity.getX(), 336, entity.getZ(), Set.of(), entity.getYRot(), 90.0f);
+								entity.teleportTo(moon, entity.getX(), 330, entity.getZ(), Set.of(), entity.getYRot(), 90.0f);
 							}
 						} else if (entity.getBlockY() < -32 && !isAsteroid) {
 							ServerLevel overworld = serverLevel.getServer().overworld();
@@ -85,7 +85,7 @@ public class EntityMixin {
 						if (entity.getBlockY() > 334 && !isAsteroid) {
 							ServerLevel exosphere = serverLevel.getServer().getLevel(TheMoonDimensionTypes.EXOSPHERE_LEVEL);
 							if (exosphere != null) {
-								entity.teleportTo(exosphere, entity.getX(), 195, entity.getZ(), Set.of(), entity.getYRot(), 90.0f);
+								entity.teleportTo(exosphere, entity.getX(), 610, entity.getZ(), Set.of(), entity.getYRot(), 90.0f);
 							}
 						}
 					}

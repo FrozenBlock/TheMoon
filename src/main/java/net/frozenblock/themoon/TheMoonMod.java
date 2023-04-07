@@ -61,13 +61,13 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 
 		AsteroidBelts.register(TheMoonDimensionTypes.MOON, new AsteroidBelts.AsteroidBelt(256, 382, 272, 320));
 
-		GravityCalculator.register(TheMoonDimensionTypes.EXOSPHERE, new GravityCalculator.GravityBelt(-64, true, 200, true, ((entity, y) -> 0.04)));
+		GravityCalculator.register(TheMoonDimensionTypes.EXOSPHERE, new GravityCalculator.GravityBelt(-64, true, 624, true, ((entity, y) -> 0.0435)));
 
-		GravityCalculator.register(TheMoonDimensionTypes.EXOSPHERE, new GravityCalculator.GravityBelt(200, false, 999, false, ((entity, y) -> 0.04)));
+		GravityCalculator.register(TheMoonDimensionTypes.EXOSPHERE, new GravityCalculator.GravityBelt(624, false, 999, false, ((entity, y) -> 0.0435)));
 
-		AsteroidBelts.register(TheMoonDimensionTypes.EXOSPHERE, new AsteroidBelts.AsteroidBelt(0, 200, -32, 200));
+		AsteroidBelts.register(TheMoonDimensionTypes.EXOSPHERE, new AsteroidBelts.AsteroidBelt(0, 624, 0, 624));
 
-		AsteroidSpawner.registerSpawnRules(TheMoonDimensionTypes.EXOSPHERE, new AsteroidSpawner.AsteroidSpawnRules(300, 40, 1F, 0.1F, 500));
+		AsteroidSpawner.registerSpawnRules(TheMoonDimensionTypes.EXOSPHERE, new AsteroidSpawner.AsteroidSpawnRules(350, 40, 1F, 0.1F, 500));
 
 		GravityCalculator.register(BuiltinDimensionTypes.OVERWORLD, new GravityCalculator.GravityBelt(384, true, 385, false, ((entity, y) -> 1)));
 

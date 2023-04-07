@@ -192,7 +192,7 @@ public class Asteroid extends Mob {
 			this.ticksSinceActive = 0;
 			if (this.level instanceof ServerLevel serverLevel) {
 				WindManager windManager = WindManager.getWindManager(serverLevel);
-				Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.075);
+				Vec3 wind = windManager.getWindMovement3D(this.position(), 5, windClamp, 0.125);
 				double windX = wind.x();
 				double windY = wind.y() * 0.5;
 				double windZ = wind.z();
