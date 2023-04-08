@@ -86,14 +86,13 @@ public class TheMoonNoiseGeneratorSettings {
 	}
 
 	private static DensityFunction moonUnderground(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noiseParameters, DensityFunction function) {
-		DensityFunction densityFunction = NoiseRouterData.getFunction(densityFunctions, createKey("overworld/caves/spaghetti_2d"));
-		DensityFunction densityFunction2 = NoiseRouterData.getFunction(densityFunctions, createKey("overworld/caves/spaghetti_roughness_function"));
-		DensityFunction densityFunction3 = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.CAVE_LAYER), 12.0);
-		DensityFunction densityFunction4 = DensityFunctions.mul(DensityFunctions.constant(4.0), densityFunction3.square());
-		DensityFunction densityFunction5 = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.CAVE_CHEESE), 0.999999999);
-		DensityFunction densityFunction6 = DensityFunctions.add(DensityFunctions.add(DensityFunctions.constant(0.27), densityFunction5).clamp(-1.0, 1.0), DensityFunctions.add(DensityFunctions.constant(1.5), DensityFunctions.mul(DensityFunctions.constant(-0.64), function)).clamp(0.0, 0.5));
-		DensityFunction densityFunction7 = DensityFunctions.add(densityFunction4, densityFunction6);
-		DensityFunction densityFunction8 = DensityFunctions.min(DensityFunctions.min(densityFunction7, NoiseRouterData.getFunction(densityFunctions, createKey("overworld/caves/entrances"))), DensityFunctions.add(densityFunction, densityFunction2));
+		DensityFunction spaghetti2D = NoiseRouterData.getFunction(densityFunctions, createKey("overworld/caves/spaghetti_2d"));
+		DensityFunction spaghettiRoundness = NoiseRouterData.getFunction(densityFunctions, createKey("overworld/caves/spaghetti_roughness_function"));
+		DensityFunction caveLayer = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.CAVE_LAYER), 12.0);
+		DensityFunction cheese = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.CAVE_CHEESE), 0.999999999);
+		DensityFunction densityFunction6 = DensityFunctions.add(DensityFunctions.add(DensityFunctions.constant(0.27), cheese).clamp(-1.0, 1.0), DensityFunctions.add(DensityFunctions.constant(1.5), DensityFunctions.mul(DensityFunctions.constant(-0.64), function)).clamp(-0.25, 0.5));
+		DensityFunction densityFunction7 = DensityFunctions.add(caveLayer, densityFunction6);
+		DensityFunction densityFunction8 = DensityFunctions.min(DensityFunctions.min(densityFunction7, NoiseRouterData.getFunction(densityFunctions, createKey("overworld/caves/entrances"))), DensityFunctions.add(spaghetti2D, spaghettiRoundness));
 		return densityFunction8;
 	}
 

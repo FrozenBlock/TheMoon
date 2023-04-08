@@ -3,10 +3,10 @@ package net.frozenblock.themoon;
 import java.util.ArrayList;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.loader.api.ModContainer;
 import net.frozenblock.lib.mobcategory.api.entrypoint.FrozenMobCategoryEntrypoint;
 import net.frozenblock.lib.mobcategory.impl.FrozenMobCategory;
-import net.frozenblock.themoon.entity.Asteroid;
 import net.frozenblock.themoon.entity.data.TheMoonEntityDataSerializers;
 import net.frozenblock.themoon.entity.spawn.AsteroidBelts;
 import net.frozenblock.themoon.entity.spawn.AsteroidSpawner;
@@ -20,8 +20,11 @@ import net.frozenblock.themoon.registry.TheMoonFeatures;
 import net.frozenblock.themoon.registry.TheMoonParticleTypes;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import net.frozenblock.themoon.util.gravity.api.GravityCalculator;
+import net.frozenblock.themoon.world.generation.saved.crater.SavedCraterManager;
+import net.frozenblock.themoon.world.generation.saved.crater.SavedCraterStorage;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
+import net.minecraft.world.level.storage.DimensionDataStorage;
 import org.jetbrains.annotations.NotNull;
 import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.QuiltDataFixerBuilder;
 import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.QuiltDataFixes;
@@ -74,6 +77,14 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 		ServerTickEvents.START_WORLD_TICK.register((serverLevel) -> {
 			AsteroidSpawner.spawn(serverLevel, true);
 			AsteroidSpawner.spawnFalling(serverLevel, true);
+			SavedCraterManager craterManager = SavedCraterManager.getSavedCraterManager(serverLevel);
+			craterManager.tick(serverLevel);
+		});
+
+		ServerWorldEvents.LOAD.register((server, level) -> {
+			DimensionDataStorage dimensionDataStorage = level.getDataStorage();
+			SavedCraterManager craterManager = SavedCraterManager.getSavedCraterManager(level);
+			dimensionDataStorage.computeIfAbsent(craterManager::createData, craterManager::createData, SavedCraterStorage.CRATER_FILE_ID);
 		});
 
 		TheMoonSharedConstants.stopMeasuring(this);
