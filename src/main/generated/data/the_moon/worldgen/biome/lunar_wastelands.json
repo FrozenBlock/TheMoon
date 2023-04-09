@@ -24,8 +24,8 @@
   },
   "features": [
     [
-      "the_moon:crater_mega",
-      "the_moon:crater_large"
+      "the_moon:crater_large",
+      "the_moon:crater_small"
     ],
     [],
     [],
