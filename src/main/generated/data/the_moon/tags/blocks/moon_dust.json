@@ -16,6 +16,38 @@
     {
       "id": "the_moon:moon_rock_wall",
       "required": false
+    },
+    {
+      "id": "the_moon:moon_rock_coal_ore",
+      "required": false
+    },
+    {
+      "id": "the_moon:moon_rock_iron_ore",
+      "required": false
+    },
+    {
+      "id": "the_moon:moon_rock_lapis_ore",
+      "required": false
+    },
+    {
+      "id": "the_moon:moon_rock_copper_ore",
+      "required": false
+    },
+    {
+      "id": "the_moon:moon_rock_diamond_ore",
+      "required": false
+    },
+    {
+      "id": "the_moon:moon_rock_emerald_ore",
+      "required": false
+    },
+    {
+      "id": "the_moon:moon_rock_gold_ore",
+      "required": false
+    },
+    {
+      "id": "the_moon:moon_rock_redstone_ore",
+      "required": false
     }
   ]
 }

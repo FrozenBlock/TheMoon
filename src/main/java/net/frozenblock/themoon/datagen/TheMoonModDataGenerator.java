@@ -104,7 +104,15 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 				.addOptional(TheMoonSharedConstants.id("moon_rock"))
 				.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
 				.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
-				.addOptional(TheMoonSharedConstants.id("moon_rock_wall"));
+				.addOptional(TheMoonSharedConstants.id("moon_rock_wall"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_coal_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_iron_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_lapis_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_copper_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_diamond_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_emerald_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_gold_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_redstone_ore"));
 
 			this.getOrCreateTagBuilder(BlockTags.STAIRS)
 				.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))

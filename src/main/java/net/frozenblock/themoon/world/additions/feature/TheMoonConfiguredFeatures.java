@@ -64,34 +64,48 @@ public final class TheMoonConfiguredFeatures {
 		List<OreConfiguration.TargetBlockState> moonEmeraldList = List.of(OreConfiguration.target(moonOreReplaceable, TheMoonBlocks.MOON_ROCK_EMERALD_ORE.defaultBlockState()));
 
 		MOON_ORE_COAL.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonCoalList, 17));
+			new OreConfiguration(moonCoalList, 2, 0.3F));
+
 		MOON_ORE_COAL_BURIED.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonCoalList, 17, 0.5F));
+			new OreConfiguration(moonCoalList, 4, 0.5F));
+
 		MOON_ORE_IRON.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonIronList, 9));
+			new OreConfiguration(moonIronList, 6, 0.3F));
+
 		MOON_ORE_IRON_SMALL.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonCoalList, 4));
+			new OreConfiguration(moonCoalList, 3, 0.3F));
+
 		MOON_ORE_GOLD.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonGoldList, 9));
+			new OreConfiguration(moonGoldList, 3, 0.3F));
+
 		MOON_ORE_GOLD_BURIED.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonCoalList, 9, 0.5F));
+			new OreConfiguration(moonCoalList, 7, 0.7F));
+
 		MOON_ORE_REDSTONE.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonRedstoneList, 8));
+			new OreConfiguration(moonRedstoneList, 8, 0.3F));
+
 		MOON_ORE_DIAMOND_SMALL.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonDiamondList, 4, 0.5F));
+			new OreConfiguration(moonDiamondList, 2, 0.7F));
+
 		MOON_ORE_DIAMOND_LARGE.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonDiamondList, 12, 0.7F));
+			new OreConfiguration(moonDiamondList, 6, 0.8F));
+
 		MOON_ORE_DIAMOND_BURIED.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonDiamondList, 8, 1.0F));
+			new OreConfiguration(moonDiamondList, 4, 1.0F));
+
 		MOON_ORE_LAPIS.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonLapisList, 7));
+			new OreConfiguration(moonLapisList, 7, 0.3F));
+
 		MOON_ORE_LAPIS_BURIED.makeAndSetHolder(Feature.ORE,
 			new OreConfiguration(moonLapisList, 7, 1.0F));
+
 		MOON_ORE_EMERALD.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonEmeraldList, 3));
+			new OreConfiguration(moonEmeraldList, 3, 0.3F));
+
 		MOON_ORE_COPPER_SMALL.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonCopperList, 10));
+			new OreConfiguration(moonCopperList, 7, 0.3F));
+
 		MOON_ORE_COPPER_LARGE.makeAndSetHolder(Feature.ORE,
-			new OreConfiguration(moonCopperList, 20));
+			new OreConfiguration(moonCopperList, 14, 0.3F));
 	}
 }
