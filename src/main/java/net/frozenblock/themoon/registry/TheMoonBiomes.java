@@ -36,8 +36,8 @@ public final class TheMoonBiomes {
 		var worldCarvers = entries.lookup(Registries.CONFIGURED_CARVER);
 
 		//builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, placedFeatures.getOrThrow(TheMoonPlacedFeatures.CRATER_MEGA.getKey()));
-		builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, placedFeatures.getOrThrow(TheMoonPlacedFeatures.CRATER_LARGE.getKey()));
-		builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, placedFeatures.getOrThrow(TheMoonPlacedFeatures.CRATER_SMALL.getKey()));
+		//builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, placedFeatures.getOrThrow(TheMoonPlacedFeatures.CRATER_LARGE.getKey()));
+		//builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, placedFeatures.getOrThrow(TheMoonPlacedFeatures.CRATER_SMALL.getKey()));
 
 		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_COAL_UPPER.getKey()));
 		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_COAL_LOWER.getKey()));

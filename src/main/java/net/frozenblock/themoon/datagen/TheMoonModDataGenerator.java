@@ -84,37 +84,44 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 
 		@Override
 		protected void addTags(HolderLookup.Provider arg) {
-			this.getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
-					.addOptional(TheMoonSharedConstants.id("moon_rock"))
-					.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
-					.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
-					.addOptional(TheMoonSharedConstants.id("moon_rock_wall"))
-					.addOptional(TheMoonSharedConstants.id("polished_moon_rock"))
-					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_stairs"))
-					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_slab"));
+			this.getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE).addOptional(TheMoonSharedConstants.id("moon_rock"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_wall"))
+				.addOptional(TheMoonSharedConstants.id("polished_moon_rock"))
+				.addOptional(TheMoonSharedConstants.id("polished_moon_rock_stairs"))
+				.addOptional(TheMoonSharedConstants.id("polished_moon_rock_slab"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_coal_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_iron_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_lapis_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_copper_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_diamond_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_emerald_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_gold_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_redstone_ore"));
 
 			this.getOrCreateTagBuilder(TheMoonBlockTags.MOON_DUST)
-					.addOptional(TheMoonSharedConstants.id("moon_rock"))
-					.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
-					.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
-					.addOptional(TheMoonSharedConstants.id("moon_rock_wall"));
+				.addOptional(TheMoonSharedConstants.id("moon_rock"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_wall"));
 
 			this.getOrCreateTagBuilder(BlockTags.STAIRS)
-					.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
-					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_stairs"));
+				.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
+				.addOptional(TheMoonSharedConstants.id("polished_moon_rock_stairs"));
 
 			this.getOrCreateTagBuilder(BlockTags.SLABS)
-					.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
-					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_slab"));
+				.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
+				.addOptional(TheMoonSharedConstants.id("polished_moon_rock_slab"));
 
 			this.getOrCreateTagBuilder(BlockTags.WALLS)
-					.addOptional(TheMoonSharedConstants.id("moon_rock_wall"));
+				.addOptional(TheMoonSharedConstants.id("moon_rock_wall"));
 
 			this.getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE)
-					.addOptional(TheMoonSharedConstants.id("moon_rock"));
+				.addOptional(TheMoonSharedConstants.id("moon_rock"));
 
 			this.getOrCreateTagBuilder(BlockTags.DRIPSTONE_REPLACEABLE)
-					.addOptional(TheMoonSharedConstants.id("moon_rock"));
+				.addOptional(TheMoonSharedConstants.id("moon_rock"));
 
 			this.getOrCreateTagBuilder(TheMoonBlockTags.MOON_ROCK_ORE_REPLACEABLES)
 				.addOptional(TheMoonSharedConstants.id("moon_rock"));
@@ -164,18 +171,18 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 		@Override
 		protected void addTags(HolderLookup.Provider arg) {
 			this.getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS)
-					.addOptional(TheMoonSharedConstants.id("moon_rock"));
+				.addOptional(TheMoonSharedConstants.id("moon_rock"));
 
 			this.getOrCreateTagBuilder(ItemTags.STAIRS)
-					.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
-					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_stairs"));
+				.addOptional(TheMoonSharedConstants.id("moon_rock_stairs"))
+				.addOptional(TheMoonSharedConstants.id("polished_moon_rock_stairs"));
 
 			this.getOrCreateTagBuilder(ItemTags.SLABS)
-					.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
-					.addOptional(TheMoonSharedConstants.id("polished_moon_rock_slab"));
+				.addOptional(TheMoonSharedConstants.id("moon_rock_slab"))
+				.addOptional(TheMoonSharedConstants.id("polished_moon_rock_slab"));
 
 			this.getOrCreateTagBuilder(ItemTags.WALLS)
-					.addOptional(TheMoonSharedConstants.id("moon_rock_wall"));
+				.addOptional(TheMoonSharedConstants.id("moon_rock_wall"));
 
 			this.getOrCreateTagBuilder(ItemTags.COAL_ORES)
 				.addOptional(TheMoonSharedConstants.id("moon_rock_coal_ore"));
