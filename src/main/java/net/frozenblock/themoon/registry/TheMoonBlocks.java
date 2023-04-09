@@ -6,14 +6,21 @@ import net.frozenblock.themoon.block.properties.TheMoonBlockProperties;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DropExperienceBlock;
+import net.minecraft.world.level.block.RedStoneOreBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.MaterialColor;
 
 public class TheMoonBlocks {
 
@@ -26,6 +33,16 @@ public class TheMoonBlocks {
 	public static final Block POLISHED_MOON_ROCK_SLAB = new SlabBlock(TheMoonBlockProperties.POLISHED_MOON_ROCK_PROPERTIES);
 	public static final Block POLISHED_MOON_ROCK_STAIRS = new StairBlock(POLISHED_MOON_ROCK.defaultBlockState(), TheMoonBlockProperties.POLISHED_MOON_ROCK_PROPERTIES);
 
+	//ORES
+	public static final Block MOON_ROCK_COAL_ORE = new DropExperienceBlock(TheMoonBlockProperties.MOON_ROCK_ORE_PROPERTIES, UniformInt.of(0, 2));
+	public static final Block MOON_ROCK_GOLD_ORE = new DropExperienceBlock(TheMoonBlockProperties.MOON_ROCK_ORE_PROPERTIES);
+	public static final Block MOON_ROCK_IRON_ORE = new DropExperienceBlock(TheMoonBlockProperties.MOON_ROCK_ORE_PROPERTIES);
+	public static final Block MOON_ROCK_LAPIS_ORE = new DropExperienceBlock(TheMoonBlockProperties.MOON_ROCK_ORE_PROPERTIES, UniformInt.of(2, 5));
+	public static final Block MOON_ROCK_DIAMOND_ORE = new DropExperienceBlock(TheMoonBlockProperties.MOON_ROCK_ORE_PROPERTIES, UniformInt.of(3, 7));
+	public static final Block MOON_ROCK_REDSTONE_ORE = new RedStoneOreBlock(TheMoonBlockProperties.MOON_ROCK_REDSTONE_ORE_PROPERTIES);
+	public static final Block MOON_ROCK_EMERALD_ORE = new DropExperienceBlock(TheMoonBlockProperties.MOON_ROCK_ORE_PROPERTIES, UniformInt.of(3, 7));
+	public static final Block MOON_ROCK_COPPER_ORE = new DropExperienceBlock(TheMoonBlockProperties.MOON_ROCK_ORE_PROPERTIES);
+
 	public static void register() {
 		registerBlock(true,"moon_rock", MOON_ROCK, CreativeModeTabs.NATURAL_BLOCKS, CreativeModeTabs.BUILDING_BLOCKS);
 		registerBlock(true,"moon_rock_slab", MOON_ROCK_SLAB, CreativeModeTabs.BUILDING_BLOCKS);
@@ -35,6 +52,15 @@ public class TheMoonBlocks {
 		registerBlock(true,"polished_moon_rock", POLISHED_MOON_ROCK, CreativeModeTabs.BUILDING_BLOCKS);
 		registerBlock(true,"polished_moon_rock_slab", POLISHED_MOON_ROCK_SLAB, CreativeModeTabs.BUILDING_BLOCKS);
 		registerBlock(true,"polished_moon_rock_stairs", POLISHED_MOON_ROCK_STAIRS, CreativeModeTabs.BUILDING_BLOCKS);
+
+		registerBlock(true,"moon_rock_coal_ore", MOON_ROCK_COAL_ORE, CreativeModeTabs.NATURAL_BLOCKS);
+		registerBlock(true,"moon_rock_gold_ore", MOON_ROCK_GOLD_ORE, CreativeModeTabs.NATURAL_BLOCKS);
+		registerBlock(true,"moon_rock_iron_ore", MOON_ROCK_IRON_ORE, CreativeModeTabs.NATURAL_BLOCKS);
+		registerBlock(true,"moon_rock_lapis_ore", MOON_ROCK_LAPIS_ORE, CreativeModeTabs.NATURAL_BLOCKS);
+		registerBlock(true,"moon_rock_diamond_ore", MOON_ROCK_DIAMOND_ORE, CreativeModeTabs.NATURAL_BLOCKS);
+		registerBlock(true,"moon_rock_redstone_ore", MOON_ROCK_REDSTONE_ORE, CreativeModeTabs.NATURAL_BLOCKS);
+		registerBlock(true,"moon_rock_emerald_ore", MOON_ROCK_EMERALD_ORE, CreativeModeTabs.NATURAL_BLOCKS);
+		registerBlock(true,"moon_rock_copper_ore", MOON_ROCK_COPPER_ORE, CreativeModeTabs.NATURAL_BLOCKS);
 	}
 
 	private static void registerBlock(boolean registerBlockItem, String path, Block block, CreativeModeTab... tabs) {

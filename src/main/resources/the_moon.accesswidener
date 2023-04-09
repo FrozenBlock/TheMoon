@@ -6,3 +6,4 @@ accessible    method    net/minecraft/world/level/levelgen/NoiseRouterData    un
 accessible    class    net/minecraft/world/level/levelgen/OreVeinifier$VeinType
 accessible    method    net/minecraft/server/level/ChunkMap    getChunks    ()Ljava/lang/Iterable;
 accessible    field    net/minecraft/server/level/ServerLevel    entityManager    Lnet/minecraft/world/level/entity/PersistentEntitySectionManager;
+accessible    method    net/minecraft/world/level/block/Blocks    litBlockEmission    (I)Ljava/util/function/ToIntFunction;

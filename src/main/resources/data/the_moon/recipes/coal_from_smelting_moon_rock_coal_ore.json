@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "group": "coal",
+  "ingredient": {
+    "item": "the_moon:moon_rock_coal_ore"
+  },
+  "result": "minecraft:coal"
+}

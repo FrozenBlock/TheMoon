@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "the_moon:moon_rock_iron_ore",
+      "required": false
+    },
+    {
+      "id": "the_moon:moon_rock_lapis_ore",
+      "required": false
+    },
+    {
+      "id": "the_moon:moon_rock_copper_ore",
+      "required": false
+    }
+  ]
+}

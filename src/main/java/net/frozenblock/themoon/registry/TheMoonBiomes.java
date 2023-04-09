@@ -28,15 +28,39 @@ public final class TheMoonBiomes {
 		var placedFeatures = entries.lookup(Registries.PLACED_FEATURE);
 		var worldCarvers = entries.lookup(Registries.CONFIGURED_CARVER);
 		BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers);
-		builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, placedFeatures.getOrThrow(TheMoonPlacedFeatures.CRATER_MEGA.getKey()));
-		builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, placedFeatures.getOrThrow(TheMoonPlacedFeatures.CRATER_LARGE.getKey()));
-		builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, placedFeatures.getOrThrow(TheMoonPlacedFeatures.CRATER_SMALL.getKey()));
-		return baseMoonBiome(builder);
+		return baseMoonBiome(entries, builder);
 	}
 
-	private static Biome baseMoonBiome(BiomeGenerationSettings.Builder builder) {
+	private static Biome baseMoonBiome(BootstapContext<Biome> entries, BiomeGenerationSettings.Builder builder) {
+		var placedFeatures = entries.lookup(Registries.PLACED_FEATURE);
+		var worldCarvers = entries.lookup(Registries.CONFIGURED_CARVER);
+
+		builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, placedFeatures.getOrThrow(TheMoonPlacedFeatures.CRATER_MEGA.getKey()));
+		builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, placedFeatures.getOrThrow(TheMoonPlacedFeatures.CRATER_LARGE.getKey()));
+		//builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, placedFeatures.getOrThrow(TheMoonPlacedFeatures.CRATER_SMALL.getKey()));
+
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_COAL_UPPER.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_COAL_LOWER.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_IRON.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_IRON_MIDDLE.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_IRON_SMALL.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_GOLD.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_GOLD_LOWER.getKey()));
+		//builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_GOLD_EXTRA.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_REDSTONE.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_REDSTONE_LOWER.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_DIAMOND.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_DIAMOND_LARGE.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_DIAMOND_BURIED.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_LAPIS.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_LAPIS_BURIED.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_EMERALD.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_COPPER.getKey()));
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatures.getOrThrow(TheMoonPlacedFeatures.MOON_ORE_COPPER_LARGE.getKey()));
+
 		net.minecraft.world.level.biome.MobSpawnSettings.Builder mobSpawns = new net.minecraft.world.level.biome.MobSpawnSettings.Builder();
 		mobSpawns.creatureGenerationProbability(0.07F);
+
 		return new Biome.BiomeBuilder()
 				.hasPrecipitation(false)
 				.temperature(-0.5F)

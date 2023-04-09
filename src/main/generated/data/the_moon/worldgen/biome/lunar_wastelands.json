@@ -25,8 +25,31 @@
   "features": [
     [
       "the_moon:crater_mega",
-      "the_moon:crater_large",
-      "the_moon:crater_small"
+      "the_moon:crater_large"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "the_moon:moon_ore_coal_upper",
+      "the_moon:moon_ore_coal_lower",
+      "the_moon:moon_ore_iron",
+      "the_moon:moon_ore_iron_middle",
+      "the_moon:moon_ore_iron_small",
+      "the_moon:moon_ore_gold",
+      "the_moon:moon_ore_gold_lower",
+      "the_moon:moon_ore_redstone",
+      "the_moon:moon_ore_redstone_lower",
+      "the_moon:moon_ore_diamond",
+      "the_moon:moon_ore_diamond_large",
+      "the_moon:moon_ore_diamond_buried",
+      "the_moon:moon_ore_copper_lapis",
+      "the_moon:moon_ore_lapis_buried",
+      "the_moon:moon_ore_emerald",
+      "the_moon:moon_ore_copper",
+      "the_moon:moon_ore_copper_large"
     ]
   ],
   "has_precipitation": false,

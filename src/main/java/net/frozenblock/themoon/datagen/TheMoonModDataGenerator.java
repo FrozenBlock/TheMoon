@@ -115,6 +115,44 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 
 			this.getOrCreateTagBuilder(BlockTags.DRIPSTONE_REPLACEABLE)
 					.addOptional(TheMoonSharedConstants.id("moon_rock"));
+
+			this.getOrCreateTagBuilder(TheMoonBlockTags.MOON_ROCK_ORE_REPLACEABLES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock"));
+
+			this.getOrCreateTagBuilder(BlockTags.COAL_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_coal_ore"));
+
+			this.getOrCreateTagBuilder(BlockTags.COPPER_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_copper_ore"));
+
+			this.getOrCreateTagBuilder(BlockTags.DIAMOND_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_diamond_ore"));
+
+			this.getOrCreateTagBuilder(BlockTags.EMERALD_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_emerald_ore"));
+
+			this.getOrCreateTagBuilder(BlockTags.GOLD_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_gold_ore"));
+
+			this.getOrCreateTagBuilder(BlockTags.IRON_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_iron_ore"));
+
+			this.getOrCreateTagBuilder(BlockTags.LAPIS_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_lapis_ore"));
+
+			this.getOrCreateTagBuilder(BlockTags.REDSTONE_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_redstone_ore"));
+
+			this.getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_iron_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_lapis_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_copper_ore"));
+
+			this.getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_diamond_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_emerald_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_gold_ore"))
+				.addOptional(TheMoonSharedConstants.id("moon_rock_redstone_ore"));
 		}
 	}
 
@@ -138,6 +176,30 @@ public class TheMoonModDataGenerator implements DataGeneratorEntrypoint {
 
 			this.getOrCreateTagBuilder(ItemTags.WALLS)
 					.addOptional(TheMoonSharedConstants.id("moon_rock_wall"));
+
+			this.getOrCreateTagBuilder(ItemTags.COAL_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_coal_ore"));
+
+			this.getOrCreateTagBuilder(ItemTags.COPPER_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_copper_ore"));
+
+			this.getOrCreateTagBuilder(ItemTags.DIAMOND_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_diamond_ore"));
+
+			this.getOrCreateTagBuilder(ItemTags.EMERALD_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_emerald_ore"));
+
+			this.getOrCreateTagBuilder(ItemTags.GOLD_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_gold_ore"));
+
+			this.getOrCreateTagBuilder(ItemTags.IRON_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_iron_ore"));
+
+			this.getOrCreateTagBuilder(ItemTags.LAPIS_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_lapis_ore"));
+
+			this.getOrCreateTagBuilder(ItemTags.REDSTONE_ORES)
+				.addOptional(TheMoonSharedConstants.id("moon_rock_redstone_ore"));
 		}
 	}
 

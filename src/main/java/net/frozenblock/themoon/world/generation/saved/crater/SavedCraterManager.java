@@ -27,11 +27,13 @@ public class SavedCraterManager {
 	}
 
 	public void tick(ServerLevel level) {
+		/*
 		if (this.canRun) {
 			ArrayList<SavedCrater> savedCraters = (ArrayList<SavedCrater>) this.craters.clone();
 			savedCraters.removeIf(savedCrater -> savedCrater.generate(level));
 			this.craters = savedCraters;
 		}
+		 */
 	}
 
 	public boolean hasCraterAtSamePosAndChunk(BlockPos chunk, BlockPos pos) {

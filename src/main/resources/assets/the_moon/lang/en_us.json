@@ -8,6 +8,15 @@
   "block.the_moon.polished_moon_rock_slab": "Polished Moon Rock Slab",
   "block.the_moon.polished_moon_rock_stairs": "Polished Moon Rock Stairs",
 
+  "block.the_moon.moon_rock_coal_ore": "Moon Rock Coal Ore",
+  "block.the_moon.moon_rock_copper_ore": "Moon Rock Copper Ore",
+  "block.the_moon.moon_rock_diamond_ore": "Moon Rock Diamond Ore",
+  "block.the_moon.moon_rock_emerald_ore": "Moon Rock Emerald Ore",
+  "block.the_moon.moon_rock_gold_ore": "Moon Rock Gold Ore",
+  "block.the_moon.moon_rock_iron_ore": "Moon Rock Iron Ore",
+  "block.the_moon.moon_rock_lapis_ore": "Moon Rock Lapis Lazuli Ore",
+  "block.the_moon.moon_rock_redstone_ore": "Moon Rock Redstone Ore",
+
   "entity.the_moon.asteroid": "Asteroid",
 
   "biome.the_moon.lunar_wastelands": "Lunar Wastelands"
