@@ -71,13 +71,13 @@ public final class TheMoonPlacedFeatures {
 		);
 
 		MOON_ORE_COAL_UPPER.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_COAL.getKey()),
-			commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.top()))
+			commonOrePlacement(1, HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.top()))
 		);
 		MOON_ORE_COAL_LOWER.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_COAL_BURIED.getKey()),
 			commonOrePlacement(1, HeightRangePlacement.triangle(VerticalAnchor.absolute(20), VerticalAnchor.absolute(96)))
 		);
 		MOON_ORE_IRON.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_IRON.getKey()),
-			commonOrePlacement(30, HeightRangePlacement.triangle(VerticalAnchor.bottom(), VerticalAnchor.absolute(208)))
+			commonOrePlacement(15, HeightRangePlacement.triangle(VerticalAnchor.bottom(), VerticalAnchor.absolute(208)))
 		);
 		MOON_ORE_IRON_MIDDLE.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_IRON.getKey()),
 			commonOrePlacement(5, HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(30)))
@@ -86,19 +86,19 @@ public final class TheMoonPlacedFeatures {
 			commonOrePlacement(5, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(40)))
 		);
 		MOON_ORE_GOLD_EXTRA.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_GOLD.getKey()),
-			commonOrePlacement(25, HeightRangePlacement.uniform(VerticalAnchor.absolute(16), VerticalAnchor.absolute(208)))
+			commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.absolute(16), VerticalAnchor.absolute(208)))
 		);
 		MOON_ORE_GOLD.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_GOLD_BURIED.getKey()),
-			commonOrePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(24)))
+			commonOrePlacement(1, HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(24)))
 		);
 		MOON_ORE_GOLD_LOWER.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_GOLD_BURIED.getKey()),
 			orePlacement(CountPlacement.of(UniformInt.of(0, 1)), HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(12)))
 		);
 		MOON_ORE_REDSTONE.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_REDSTONE.getKey()),
-			commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(80)))
+			commonOrePlacement(1, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(80)))
 		);
 		MOON_ORE_REDSTONE_LOWER.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_REDSTONE.getKey()),
-			commonOrePlacement(4, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(32)))
+			commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(32)))
 		);
 		MOON_ORE_DIAMOND.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_DIAMOND_SMALL.getKey()),
 			orePlacement(CountPlacement.of(UniformInt.of(0, 1)), HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-24), VerticalAnchor.aboveBottom(40)))
@@ -113,16 +113,16 @@ public final class TheMoonPlacedFeatures {
 			commonOrePlacement(1, HeightRangePlacement.triangle(VerticalAnchor.absolute(2), VerticalAnchor.absolute(16)))
 		);
 		MOON_ORE_LAPIS_BURIED.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_LAPIS_BURIED.getKey()),
-			commonOrePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.bottom(), VerticalAnchor.absolute(82)))
+			commonOrePlacement(1, HeightRangePlacement.triangle(VerticalAnchor.bottom(), VerticalAnchor.absolute(82)))
 		);
 		MOON_ORE_EMERALD.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_EMERALD.getKey()),
-			commonOrePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(256)))
+			commonOrePlacement(1, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(256)))
 		);
 		MOON_ORE_COPPER.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_COPPER_SMALL.getKey()),
-			commonOrePlacement(6, HeightRangePlacement.triangle(VerticalAnchor.bottom(), VerticalAnchor.absolute(208)))
+			commonOrePlacement(3, HeightRangePlacement.triangle(VerticalAnchor.bottom(), VerticalAnchor.absolute(208)))
 		);
 		MOON_ORE_COPPER_LARGE.makeAndSetHolder(configuredFeatures.getOrThrow(TheMoonConfiguredFeatures.MOON_ORE_COPPER_LARGE.getKey()),
-			commonOrePlacement(6, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-16), VerticalAnchor.absolute(38)))
+			commonOrePlacement(3, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-16), VerticalAnchor.absolute(38)))
 		);
 	}
 
