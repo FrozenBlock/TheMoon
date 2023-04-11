@@ -25,7 +25,7 @@ public class TheMoonNoiseGeneratorSettings {
 	public static final ResourceKey<NoiseGeneratorSettings> MOON = ResourceKey.create(Registries.NOISE_SETTINGS, TheMoonSharedConstants.id("the_moon"));
 	public static final ResourceKey<NoiseGeneratorSettings> EXOSPHERE = ResourceKey.create(Registries.NOISE_SETTINGS, TheMoonSharedConstants.id("the_exosphere"));
 
-	public static final NoiseSettings MOON_NOISE_SETTINGS = NoiseSettings.create(0, 208, 2, 1);
+	public static final NoiseSettings MOON_NOISE_SETTINGS = NoiseSettings.create(-64, 208, 4, 2);
 	public static final NoiseSettings EXOSPHERE_NOISE_SETTINGS = NoiseSettings.create(0, 32, 2, 1);
 
 	protected static NoiseRouter moonNoiseRouter(HolderGetter<DensityFunction> densityGetter, HolderGetter<NormalNoise.NoiseParameters> noiseGetter) {
@@ -74,7 +74,7 @@ public class TheMoonNoiseGeneratorSettings {
 	}
 
 	private static NoiseGeneratorSettings moon(BootstapContext<?> bootstapContext) {
-		return new NoiseGeneratorSettings(MOON_NOISE_SETTINGS, TheMoonBlocks.MOON_ROCK.defaultBlockState(), Blocks.AIR.defaultBlockState(), moonNoiseRouter(bootstapContext.lookup(Registries.DENSITY_FUNCTION), bootstapContext.lookup(Registries.NOISE)), TheMoonSurfaceRules.moon(), List.of(), 0, false, false, false, false);
+		return new NoiseGeneratorSettings(MOON_NOISE_SETTINGS, TheMoonBlocks.MOON_ROCK.defaultBlockState(), Blocks.AIR.defaultBlockState(), moonNoiseRouter(bootstapContext.lookup(Registries.DENSITY_FUNCTION), bootstapContext.lookup(Registries.NOISE)), TheMoonSurfaceRules.moon(), List.of(), -64, false, false, false, false);
 	}
 
 	private static NoiseGeneratorSettings exosphere(BootstapContext<?> bootstapContext) {
@@ -88,9 +88,9 @@ public class TheMoonNoiseGeneratorSettings {
 	private static DensityFunction moonUnderground(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noiseParameters, DensityFunction function) {
 		DensityFunction spaghetti2D = NoiseRouterData.getFunction(densityFunctions, createKey("overworld/caves/spaghetti_2d"));
 		DensityFunction spaghettiRoundness = NoiseRouterData.getFunction(densityFunctions, createKey("overworld/caves/spaghetti_roughness_function"));
-		DensityFunction caveLayer = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.CAVE_LAYER), 12.0);
-		DensityFunction cheese = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.CAVE_CHEESE), 0.999999999);
-		DensityFunction densityFunction6 = DensityFunctions.add(DensityFunctions.add(DensityFunctions.constant(0.27), cheese).clamp(-1.0, 1.0), DensityFunctions.add(DensityFunctions.constant(1.5), DensityFunctions.mul(DensityFunctions.constant(-0.64), function)).clamp(-0.25, 0.5));
+		DensityFunction caveLayer = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.CAVE_LAYER), 10.0);
+		DensityFunction cheese = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.CAVE_CHEESE), 0.7);
+		DensityFunction densityFunction6 = DensityFunctions.add(DensityFunctions.add(DensityFunctions.constant(0.27), cheese).clamp(-1.0, 1.0), DensityFunctions.add(DensityFunctions.constant(1.5), DensityFunctions.mul(DensityFunctions.constant(-0.64), function)).clamp(-0.15, 0.45));
 		DensityFunction densityFunction7 = DensityFunctions.add(caveLayer, densityFunction6);
 		DensityFunction densityFunction8 = DensityFunctions.min(DensityFunctions.min(densityFunction7, NoiseRouterData.getFunction(densityFunctions, createKey("overworld/caves/entrances"))), DensityFunctions.add(spaghetti2D, spaghettiRoundness));
 		return densityFunction8;

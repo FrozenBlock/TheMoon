@@ -3,13 +3,7 @@
   "placement": [
     {
       "type": "minecraft:count",
-      "count": {
-        "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 2,
-          "min_inclusive": 0
-        }
-      }
+      "count": 2
     },
     {
       "type": "minecraft:in_square"
@@ -19,10 +13,10 @@
       "height": {
         "type": "minecraft:trapezoid",
         "max_inclusive": {
-          "absolute": 128
+          "absolute": 4
         },
         "min_inclusive": {
-          "above_bottom": -24
+          "above_bottom": -60
         }
       }
     },
