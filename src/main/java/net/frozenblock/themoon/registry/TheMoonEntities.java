@@ -18,7 +18,7 @@ public final class TheMoonEntities {
 					.spawnGroup(FrozenMobCategories.getCategory(TheMoonSharedConstants.MOD_ID, "asteroids"))
 					.entityFactory(Asteroid::new)
 					.defaultAttributes(Asteroid::addAttributes)
-					.dimensions(EntityDimensions.scalable(0.98F, 0.98F))
+					.dimensions(EntityDimensions.scalable(1F, 1F))
 					.build()
 	);
 
