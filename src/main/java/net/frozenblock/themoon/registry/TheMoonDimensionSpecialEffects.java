@@ -15,7 +15,7 @@ public class TheMoonDimensionSpecialEffects {
 	@Environment(EnvType.CLIENT)
 	public static class MoonEffects extends DimensionSpecialEffects {
 		public MoonEffects() {
-			super(Float.NaN, false, SkyType.NORMAL, true, false);
+			super(Float.NaN, true, SkyType.NORMAL, false, true);
 		}
 
 		@Override

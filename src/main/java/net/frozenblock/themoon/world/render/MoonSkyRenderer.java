@@ -127,15 +127,22 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		//SUN & EARTH
 
 		Vec3 playerPos = camera.getPosition();
-		float xRot = getSkyOffset(playerPos.x());
-		float zRot = getSkyOffset(playerPos.z());
+		//float xRot = getSkyOffset(playerPos.x());
+		//float zRot = getSkyOffset(playerPos.z());
 
 		poseStack.mulPose(Axis.YP.rotationDegrees(-90F));
 
+		/*
 		poseStack.pushPose();
-		float rotation = level.dimensionType().timeOfDay(level.dayTime() + 12000);
+		float rotation = level.getTimeOfDay(tickDelta);
 		poseStack.mulPose(Axis.XP.rotationDegrees((rotation - xRot) * 360F));
 		poseStack.mulPose(Axis.ZP.rotationDegrees(-zRot * 360F));
+		Matrix4f matrix4f3 = poseStack.last().pose();
+		 */
+
+		poseStack.pushPose();
+		float rotation = level.getTimeOfDay(tickDelta);
+		poseStack.mulPose(Axis.XP.rotationDegrees((rotation) * 360F));
 		Matrix4f matrix4f3 = poseStack.last().pose();
 
 		k = SUN_SIZE;
@@ -149,8 +156,9 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		BufferUploader.drawWithShader(bufferBuilder.end());
 		poseStack.popPose();
 
-		poseStack.mulPose(Axis.XP.rotationDegrees((xRot + MIDNIGHT_TIME_FIXED) * 360F));
-		poseStack.mulPose(Axis.ZP.rotationDegrees((zRot + MIDNIGHT_TIME_FIXED) * 360F));
+		//poseStack.mulPose(Axis.XP.rotationDegrees((xRot + MIDNIGHT_TIME_FIXED) * 360F));
+		//poseStack.mulPose(Axis.ZP.rotationDegrees((zRot + MIDNIGHT_TIME_FIXED) * 360F));
+
 		matrix4f3 = poseStack.last().pose();
 		k = EARTH_SIZE;
 		RenderSystem.setShaderTexture(0, EARTH_LOCATION);
@@ -163,7 +171,7 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 
 		//STARS
 
-		RenderSystem.setShaderColor(255F, 255F, 255F, 255F);
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		FogRenderer.setupNoFog();
 		this.starBuffer.bind();
 		this.starBuffer.drawWithShader(poseStack.last().pose(), matrix, GameRenderer.getPositionShader());
@@ -172,6 +180,7 @@ public class MoonSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 		RenderSystem.disableBlend();
 		RenderSystem.defaultBlendFunc();
 		poseStack.popPose();
+
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		RenderSystem.depthMask(true);
 
