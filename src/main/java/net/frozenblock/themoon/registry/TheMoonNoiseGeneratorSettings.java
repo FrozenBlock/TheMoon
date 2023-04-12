@@ -25,7 +25,7 @@ public class TheMoonNoiseGeneratorSettings {
 	public static final ResourceKey<NoiseGeneratorSettings> MOON = ResourceKey.create(Registries.NOISE_SETTINGS, TheMoonSharedConstants.id("the_moon"));
 	public static final ResourceKey<NoiseGeneratorSettings> EXOSPHERE = ResourceKey.create(Registries.NOISE_SETTINGS, TheMoonSharedConstants.id("the_exosphere"));
 
-	public static final NoiseSettings MOON_NOISE_SETTINGS = NoiseSettings.create(-64, 208, 4, 2);
+	public static final NoiseSettings MOON_NOISE_SETTINGS = NoiseSettings.create(-64, 208, 2, 1);
 	public static final NoiseSettings EXOSPHERE_NOISE_SETTINGS = NoiseSettings.create(0, 32, 2, 1);
 
 	protected static NoiseRouter moonNoiseRouter(HolderGetter<DensityFunction> densityGetter, HolderGetter<NormalNoise.NoiseParameters> noiseGetter) {
@@ -102,9 +102,10 @@ public class TheMoonNoiseGeneratorSettings {
 		DensityFunction tweakedCheeseCaves = DensityFunctions.add(DensityFunctions.add(DensityFunctions.constant(0.27), cheeseCaves).clamp(-1.0, 1.0), DensityFunctions.add(DensityFunctions.constant(1.5), DensityFunctions.mul(DensityFunctions.constant(-0.64), function)).clamp(0.0, 0.5));
 		DensityFunction caveLayerAndCheese = DensityFunctions.add(tweakedCaveLayer, tweakedCheeseCaves);
 		DensityFunction allCaves = DensityFunctions.min(DensityFunctions.min(caveLayerAndCheese, NoiseRouterData.getFunction(holderGetter, createKey("overworld/caves/entrances"))), DensityFunctions.add(spaghetti, spaghettiRoughness));
-		DensityFunction pillars = NoiseRouterData.getFunction(holderGetter, createKey("overworld/caves/pillars"));
-		DensityFunction pillarFunction = DensityFunctions.rangeChoice(pillars, -1000000.0, 0.0, DensityFunctions.constant(-1000000.0), pillars);
-		return DensityFunctions.max(allCaves, pillarFunction);
+		return allCaves;
+		//DensityFunction pillars = NoiseRouterData.getFunction(holderGetter, createKey("overworld/caves/pillars"));
+		//DensityFunction pillarFunction = DensityFunctions.rangeChoice(pillars, -1000000.0, 0.03, DensityFunctions.constant(-1000000.0), pillars);
+		//return DensityFunctions.max(allCaves, pillarFunction);
 	}
 
 	private static ResourceKey<DensityFunction> createKey(String id) {

@@ -15,7 +15,7 @@
   },
 
   "license": "LGPL-3.0",
-  "icon": "assets/frozenblock_template_mod/icon.png",
+  "icon": "assets/the_moon/textures/block/moon_rock.png",
 
   "environment": "*",
   "entrypoints": {
