@@ -17,13 +17,56 @@
   "noise_router": {
     "barrier": 0.0,
     "continents": 0.0,
-    "depth": 0.0,
+    "depth": {
+      "type": "minecraft:range_choice",
+      "input": {
+        "type": "minecraft:add",
+        "argument1": {
+          "type": "minecraft:add",
+          "argument1": "minecraft:overworld/caves/pillars",
+          "argument2": "minecraft:overworld/caves/pillars"
+        },
+        "argument2": {
+          "type": "minecraft:add",
+          "argument1": "minecraft:overworld/caves/pillars",
+          "argument2": "minecraft:overworld/caves/pillars"
+        }
+      },
+      "max_exclusive": 0.0,
+      "min_inclusive": -1000000.0,
+      "when_in_range": {
+        "type": "minecraft:add",
+        "argument1": 0.0,
+        "argument2": {
+          "type": "minecraft:add",
+          "argument1": {
+            "type": "minecraft:add",
+            "argument1": "minecraft:overworld/caves/pillars",
+            "argument2": "minecraft:overworld/caves/pillars"
+          },
+          "argument2": {
+            "type": "minecraft:add",
+            "argument1": "minecraft:overworld/caves/pillars",
+            "argument2": "minecraft:overworld/caves/pillars"
+          }
+        }
+      },
+      "when_out_of_range": 0.0
+    },
     "erosion": {
       "type": "minecraft:range_choice",
       "input": {
         "type": "minecraft:add",
-        "argument1": "minecraft:overworld/caves/pillars",
-        "argument2": "minecraft:overworld/caves/pillars"
+        "argument1": {
+          "type": "minecraft:add",
+          "argument1": "minecraft:overworld/caves/pillars",
+          "argument2": "minecraft:overworld/caves/pillars"
+        },
+        "argument2": {
+          "type": "minecraft:add",
+          "argument1": "minecraft:overworld/caves/pillars",
+          "argument2": "minecraft:overworld/caves/pillars"
+        }
       },
       "max_exclusive": 0.0,
       "min_inclusive": -1000000.0,
@@ -32,8 +75,16 @@
         "type": "minecraft:add",
         "argument1": {
           "type": "minecraft:add",
-          "argument1": "minecraft:overworld/caves/pillars",
-          "argument2": "minecraft:overworld/caves/pillars"
+          "argument1": {
+            "type": "minecraft:add",
+            "argument1": "minecraft:overworld/caves/pillars",
+            "argument2": "minecraft:overworld/caves/pillars"
+          },
+          "argument2": {
+            "type": "minecraft:add",
+            "argument1": "minecraft:overworld/caves/pillars",
+            "argument2": "minecraft:overworld/caves/pillars"
+          }
         },
         "argument2": "minecraft:overworld_large_biomes/erosion"
       }

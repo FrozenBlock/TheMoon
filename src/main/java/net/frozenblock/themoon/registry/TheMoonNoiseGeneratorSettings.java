@@ -40,27 +40,27 @@ public class TheMoonNoiseGeneratorSettings {
 		DensityFunction densityFunction15 = DensityFunctions.min(NoiseRouterData.postProcess(slideMoon(densityFunction14)), NoiseRouterData.getFunction(densityGetter, createKey("overworld/caves/noodle")));
 
 		return new NoiseRouter(
-				DensityFunctions.zero(), //BARRIER NOISE
-				DensityFunctions.zero(), //FLUID LEVEL FLOODEDNESS NOISE
-				DensityFunctions.zero(), //FLUID LEVEL SPREAD NOISE
-				DensityFunctions.zero(), //LAVA NOISE
-				DensityFunctions.zero(), //TEMPERATURE
-				DensityFunctions.zero(), //VEGETATION
-				DensityFunctions.zero(), //CONTINENTS
-				moonErosion(densityGetter, noiseGetter), //EROSION
-				DensityFunctions.zero(), //DEPTH
-				NoiseRouterData.getFunction(densityGetter, NoiseRouterData.RIDGES), //RIDGES
-				slideMoon(DensityFunctions.constant(-0.703125)), //INITIAL DENSITY WITHOUT JADDEGNESS
-				densityFunction15, //FINAL DENSITY
-				yLimitedInterpolatable(Y, DensityFunctions.noise(noiseGetter.getOrThrow(Noises.ORE_VEININESS), 1.5, 1.5), i, j, 0), //VEIN TOGGLE
-				DensityFunctions.add(
-						DensityFunctions.constant(-0.08f),
-						DensityFunctions.max(
-								yLimitedInterpolatable(Y, DensityFunctions.noise(noiseGetter.getOrThrow(Noises.ORE_VEIN_A), 4.0, 4.0), i, j, 0).abs(),
-								yLimitedInterpolatable(Y, DensityFunctions.noise(noiseGetter.getOrThrow(Noises.ORE_VEIN_B), 4.0, 4.0), i, j, 0).abs()
-						)
-				), //VEIN RIDGED
-				DensityFunctions.noise(noiseGetter.getOrThrow(Noises.ORE_GAP)) //VEIN GAP
+			DensityFunctions.zero(), //BARRIER NOISE
+			DensityFunctions.zero(), //FLUID LEVEL FLOODEDNESS NOISE
+			DensityFunctions.zero(), //FLUID LEVEL SPREAD NOISE
+			DensityFunctions.zero(), //LAVA NOISE
+			DensityFunctions.zero(), //TEMPERATURE
+			DensityFunctions.zero(), //VEGETATION
+			DensityFunctions.zero(), //CONTINENTS
+			moonErosion(densityGetter, noiseGetter), //EROSION
+			moonContinents(densityGetter, noiseGetter), //DEPTH
+			NoiseRouterData.getFunction(densityGetter, NoiseRouterData.RIDGES), //RIDGES
+			slideMoon(DensityFunctions.constant(-0.703125)), //INITIAL DENSITY WITHOUT JADDEGNESS
+			densityFunction15, //FINAL DENSITY
+			yLimitedInterpolatable(Y, DensityFunctions.noise(noiseGetter.getOrThrow(Noises.ORE_VEININESS), 1.5, 1.5), i, j, 0), //VEIN TOGGLE
+			DensityFunctions.add(
+				DensityFunctions.constant(-0.08f),
+				DensityFunctions.max(
+					yLimitedInterpolatable(Y, DensityFunctions.noise(noiseGetter.getOrThrow(Noises.ORE_VEIN_A), 4.0, 4.0), i, j, 0).abs(),
+					yLimitedInterpolatable(Y, DensityFunctions.noise(noiseGetter.getOrThrow(Noises.ORE_VEIN_B), 4.0, 4.0), i, j, 0).abs()
+				)
+			), //VEIN RIDGED
+			DensityFunctions.noise(noiseGetter.getOrThrow(Noises.ORE_GAP)) //VEIN GAP
 		);
 	}
 
@@ -85,11 +85,21 @@ public class TheMoonNoiseGeneratorSettings {
 		return DensityFunctions.interpolated(DensityFunctions.rangeChoice(input, minInclusive, maxInclusive + 1, whenInRange, DensityFunctions.constant(maxRange)));
 	}
 
+	public static DensityFunction moonContinents(HolderGetter<DensityFunction> densityGetter, HolderGetter<NormalNoise.NoiseParameters> noiseGetter) {
+		DensityFunction continents = DensityFunctions.zero();
+		DensityFunction pillars = NoiseRouterData.getFunction(densityGetter, createKey("overworld/caves/pillars"));
+		DensityFunction largePillars = DensityFunctions.add(pillars, pillars);
+		DensityFunction comedicallyLargePillars = DensityFunctions.add(largePillars, largePillars);
+		DensityFunction withErosion = DensityFunctions.rangeChoice(comedicallyLargePillars, -1000000.0, 0, DensityFunctions.add(comedicallyLargePillars, continents), continents);
+		return withErosion;
+	}
+
 	public static DensityFunction moonErosion(HolderGetter<DensityFunction> densityGetter, HolderGetter<NormalNoise.NoiseParameters> noiseGetter) {
 		DensityFunction erosionLarge = NoiseRouterData.getFunction(densityGetter, NoiseRouterData.EROSION_LARGE);
 		DensityFunction pillars = NoiseRouterData.getFunction(densityGetter, createKey("overworld/caves/pillars"));
 		DensityFunction largePillars = DensityFunctions.add(pillars, pillars);
-		DensityFunction withErosion = DensityFunctions.rangeChoice(largePillars, -1000000.0, 0, erosionLarge, DensityFunctions.add(largePillars, erosionLarge));
+		DensityFunction comedicallyLargePillars = DensityFunctions.add(largePillars, largePillars);
+		DensityFunction withErosion = DensityFunctions.rangeChoice(comedicallyLargePillars, -1000000.0, 0, erosionLarge, DensityFunctions.add(comedicallyLargePillars, erosionLarge));
 		return withErosion;
 	}
 
