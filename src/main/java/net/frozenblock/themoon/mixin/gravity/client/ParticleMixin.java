@@ -19,16 +19,16 @@ public class ParticleMixin {
 	private double theMoon$oldYD;
 
 	@Shadow
-	public double yd;
+	protected double yd;
 
 	@Shadow
-	public float gravity;
+	protected float gravity;
 
 	@Shadow @Final
-	public ClientLevel level;
+	protected ClientLevel level;
 
 	@Shadow
-	public double y;
+	protected double y;
 
 	@Inject(method = "tick", at = @At("HEAD"))
 	public void theMoon$storeY(CallbackInfo info) {

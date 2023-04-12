@@ -40,6 +40,11 @@ public class EntityMixin {
 
 	@Inject(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;handleNetherPortal()V", shift = At.Shift.AFTER))
 	public void theMoon$switchDimensions(CallbackInfo info) {
+		this.theMoon$dimensionHeightTeleport();
+	}
+
+	@Unique
+	private void theMoon$dimensionHeightTeleport() {
 		Entity entity = Entity.class.cast(this);
 		Level level = entity.level;
 		if (level instanceof ServerLevel serverLevel) {
@@ -55,9 +60,7 @@ public class EntityMixin {
 								entity.teleportTo(exosphere, entity.getX(), 64, entity.getZ(), Set.of(), entity.getYRot(), 90.0f);
 							}
 						}
-					}
-
-					if (level.dimensionTypeId() == TheMoonDimensionTypes.EXOSPHERE) {
+					} else if (level.dimensionTypeId() == TheMoonDimensionTypes.EXOSPHERE) {
 						if (entity.getBlockY() > 624 && !isAsteroid) {
 							ServerLevel moon = serverLevel.getServer().getLevel(TheMoonDimensionTypes.MOON_LEVEL);
 							if (moon != null) {
@@ -66,13 +69,9 @@ public class EntityMixin {
 							}
 						} else if (entity.getBlockY() < -32 && !isAsteroid) {
 							ServerLevel overworld = serverLevel.getServer().overworld();
-							if (overworld != null) {
-								entity.teleportTo(overworld, entity.getX(), 380, entity.getZ(), Set.of(), entity.getYRot(), 90.0f);
-							}
+							entity.teleportTo(overworld, entity.getX(), 380, entity.getZ(), Set.of(), entity.getYRot(), 90.0f);
 						}
-					}
-
-					if (level.dimensionTypeId() == TheMoonDimensionTypes.MOON) {
+					} else if (level.dimensionTypeId() == TheMoonDimensionTypes.MOON) {
 						if (entity.getBlockY() > 334 && !isAsteroid) {
 							ServerLevel exosphere = serverLevel.getServer().getLevel(TheMoonDimensionTypes.EXOSPHERE_LEVEL);
 							if (exosphere != null) {
@@ -92,7 +91,6 @@ public class EntityMixin {
 		double length = entity.walkDist - entity.walkDistO;
 		length *= 2;
 		if (!entity.isPassenger() && (!(entity instanceof LivingEntity livingEntity) || !livingEntity.isFallFlying()) && entity.isOnGround()) {
-			int i = Mth.floor(entity.getX());
 			BlockPos blockPos = entity.getOnPosLegacy();
 			BlockState blockState = entity.level.getBlockState(blockPos);
 			if (blockState.is(TheMoonBlockTags.MOON_DUST)) {
