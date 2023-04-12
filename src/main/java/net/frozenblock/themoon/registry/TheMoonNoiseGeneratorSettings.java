@@ -65,7 +65,7 @@ public class TheMoonNoiseGeneratorSettings {
 	}
 
 	private static DensityFunction slideMoon(DensityFunction densityFunction) {
-		return NoiseRouterData.slide(densityFunction, 0, 208, 80, 64, -0.1, 0, 24, 0.1);
+		return NoiseRouterData.slide(densityFunction, -64, 208, 80, 64, -0.1, 0, 24, 0.1);
 	}
 
 	public static void bootstrap(BootstapContext<NoiseGeneratorSettings> context) {
@@ -89,7 +89,7 @@ public class TheMoonNoiseGeneratorSettings {
 		DensityFunction erosionLarge = NoiseRouterData.getFunction(densityGetter, NoiseRouterData.EROSION_LARGE);
 		DensityFunction pillars = NoiseRouterData.getFunction(densityGetter, createKey("overworld/caves/pillars"));
 		DensityFunction largePillars = DensityFunctions.add(pillars, pillars);
-		DensityFunction withErosion = DensityFunctions.rangeChoice(largePillars, -1000000.0, 0, DensityFunctions.add(largePillars, erosionLarge), erosionLarge);
+		DensityFunction withErosion = DensityFunctions.rangeChoice(largePillars, -1000000.0, 0, erosionLarge, DensityFunctions.add(largePillars, erosionLarge));
 		return withErosion;
 	}
 
@@ -97,8 +97,8 @@ public class TheMoonNoiseGeneratorSettings {
 		DensityFunction spaghetti = NoiseRouterData.getFunction(holderGetter, createKey("overworld/caves/spaghetti_2d"));
 		DensityFunction spaghettiRoughness = NoiseRouterData.getFunction(holderGetter, createKey("overworld/caves/spaghetti_roughness_function"));
 		DensityFunction caveLayer = DensityFunctions.noise(holderGetter2.getOrThrow(Noises.CAVE_LAYER), 8.0); //8.0);
-		DensityFunction tweakedCaveLayer = DensityFunctions.mul(DensityFunctions.constant(4.0), caveLayer.squeeze()); //.square());
-		DensityFunction cheeseCaves = DensityFunctions.noise(holderGetter2.getOrThrow(Noises.CAVE_CHEESE), 0.6666666666666666); //0.6666666666666666);
+		DensityFunction tweakedCaveLayer = DensityFunctions.mul(DensityFunctions.constant(4.0), caveLayer.square()); //.square());
+		DensityFunction cheeseCaves = DensityFunctions.noise(holderGetter2.getOrThrow(Noises.CAVE_CHEESE), 0.7666666666666666); //0.6666666666666666);
 		DensityFunction tweakedCheeseCaves = DensityFunctions.add(DensityFunctions.add(DensityFunctions.constant(0.27), cheeseCaves).clamp(-1.0, 1.0), DensityFunctions.add(DensityFunctions.constant(1.5), DensityFunctions.mul(DensityFunctions.constant(-0.64), function)).clamp(0.0, 0.5));
 		DensityFunction caveLayerAndCheese = DensityFunctions.add(tweakedCaveLayer, tweakedCheeseCaves);
 		DensityFunction allCaves = DensityFunctions.min(DensityFunctions.min(caveLayerAndCheese, NoiseRouterData.getFunction(holderGetter, createKey("overworld/caves/entrances"))), DensityFunctions.add(spaghetti, spaghettiRoughness));

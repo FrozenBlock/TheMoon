@@ -27,7 +27,8 @@
       },
       "max_exclusive": 0.0,
       "min_inclusive": -1000000.0,
-      "when_in_range": {
+      "when_in_range": "minecraft:overworld_large_biomes/erosion",
+      "when_out_of_range": {
         "type": "minecraft:add",
         "argument1": {
           "type": "minecraft:add",
@@ -35,8 +36,7 @@
           "argument2": "minecraft:overworld/caves/pillars"
         },
         "argument2": "minecraft:overworld_large_biomes/erosion"
-      },
-      "when_out_of_range": "minecraft:overworld_large_biomes/erosion"
+      }
     },
     "final_density": {
       "type": "minecraft:min",
@@ -57,9 +57,9 @@
                   "argument1": {
                     "type": "minecraft:y_clamped_gradient",
                     "from_value": 0.0,
-                    "from_y": 0,
+                    "from_y": -64,
                     "to_value": 1.0,
-                    "to_y": 24
+                    "to_y": -40
                   },
                   "argument2": {
                     "type": "minecraft:add",
@@ -72,9 +72,9 @@
                         "argument1": {
                           "type": "minecraft:y_clamped_gradient",
                           "from_value": 1.0,
-                          "from_y": 128,
+                          "from_y": 64,
                           "to_value": 0.0,
-                          "to_y": 144
+                          "to_y": 80
                         },
                         "argument2": {
                           "type": "minecraft:add",
@@ -103,7 +103,7 @@
                                     "type": "minecraft:mul",
                                     "argument1": 4.0,
                                     "argument2": {
-                                      "type": "minecraft:squeeze",
+                                      "type": "minecraft:square",
                                       "argument": {
                                         "type": "minecraft:noise",
                                         "noise": "minecraft:cave_layer",
@@ -123,7 +123,7 @@
                                           "type": "minecraft:noise",
                                           "noise": "minecraft:cave_cheese",
                                           "xz_scale": 1.0,
-                                          "y_scale": 0.6666666666666666
+                                          "y_scale": 0.7666666666666666
                                         }
                                       },
                                       "max": 1.0,
@@ -176,9 +176,9 @@
         "argument1": {
           "type": "minecraft:y_clamped_gradient",
           "from_value": 0.0,
-          "from_y": 0,
+          "from_y": -64,
           "to_value": 1.0,
-          "to_y": 24
+          "to_y": -40
         },
         "argument2": {
           "type": "minecraft:add",
@@ -191,9 +191,9 @@
               "argument1": {
                 "type": "minecraft:y_clamped_gradient",
                 "from_value": 1.0,
-                "from_y": 128,
+                "from_y": 64,
                 "to_value": 0.0,
-                "to_y": 144
+                "to_y": 80
               },
               "argument2": {
                 "type": "minecraft:add",
