@@ -25,7 +25,7 @@ public class TheMoonNoiseGeneratorSettings {
 	public static final ResourceKey<NoiseGeneratorSettings> MOON = ResourceKey.create(Registries.NOISE_SETTINGS, TheMoonSharedConstants.id("the_moon"));
 	public static final ResourceKey<NoiseGeneratorSettings> EXOSPHERE = ResourceKey.create(Registries.NOISE_SETTINGS, TheMoonSharedConstants.id("the_exosphere"));
 
-	public static final NoiseSettings MOON_NOISE_SETTINGS = NoiseSettings.create(-64, 208, 2, 1);
+	public static final NoiseSettings MOON_NOISE_SETTINGS = NoiseSettings.create(-64, 208, 2, 2);
 	public static final NoiseSettings EXOSPHERE_NOISE_SETTINGS = NoiseSettings.create(0, 32, 2, 1);
 
 	protected static NoiseRouter moonNoiseRouter(HolderGetter<DensityFunction> densityGetter, HolderGetter<NormalNoise.NoiseParameters> noiseGetter) {
