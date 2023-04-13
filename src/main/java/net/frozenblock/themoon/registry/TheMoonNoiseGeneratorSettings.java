@@ -90,7 +90,7 @@ public class TheMoonNoiseGeneratorSettings {
 		DensityFunction pillars = NoiseRouterData.getFunction(densityGetter, createKey("overworld/caves/pillars"));
 		DensityFunction largePillars = DensityFunctions.add(pillars, pillars);
 		DensityFunction comedicallyLargePillars = DensityFunctions.add(largePillars, largePillars);
-		DensityFunction withErosion = DensityFunctions.rangeChoice(comedicallyLargePillars, -1000000.0, 0, DensityFunctions.add(comedicallyLargePillars, continents), continents);
+		DensityFunction withErosion = DensityFunctions.rangeChoice(comedicallyLargePillars, -1000000.0, 0, continents, DensityFunctions.add(comedicallyLargePillars, continents));
 		return withErosion;
 	}
 
