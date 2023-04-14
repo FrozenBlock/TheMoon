@@ -36,7 +36,7 @@ public class AsteroidSpawner {
 		return DEFAULT_SPAWN_RULES;
 	}
 
-	private static final AsteroidSpawnRules DEFAULT_SPAWN_RULES = new AsteroidSpawnRules(100, 1, 0.075F, 0.01F, 500);
+	private static final AsteroidSpawnRules DEFAULT_SPAWN_RULES = new AsteroidSpawnRules(0, 0, 0.075F, 0.01F, 500);
 
 	public static List<Asteroid> getAsteroids(ServerLevel level) {
 		ArrayList<Asteroid> asteroids = new ArrayList<>();

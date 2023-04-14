@@ -45,6 +45,8 @@ public class TheMoonMod implements ModInitializer, FrozenMobCategoryEntrypoint {
 		TheMoonParticleTypes.registerParticles();
 		TheMoonChunkGenerators.register();
 
+		AsteroidSpawner.registerSpawnRules(TheMoonDimensionTypes.MOON, new AsteroidSpawner.AsteroidSpawnRules(100, 1, 1F, 0.0025F, 400));
+
 		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(-64, true, 128, false, ((entity, y) -> 0.1)));
 
 		GravityCalculator.register(TheMoonDimensionTypes.MOON, new GravityCalculator.GravityBelt(128, false, 256, false, ((entity, y) -> {
