@@ -34,7 +34,7 @@ public class TheMoonDensityFunctions {
 		DensityFunction shiftZ = registerAndWrap(context, SHIFT_Z, DensityFunctions.flatCache(DensityFunctions.cache2d(DensityFunctions.shiftB(holderGetter.getOrThrow(Noises.SHIFT)))));
 
 		Holder<DensityFunction> continents = context.register(CONTINENTS, DensityFunctions.flatCache(DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25, holderGetter.getOrThrow(TheMoonNoises.CONTINENTALNESS))));
-		DensityFunction erosionBase = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25, holderGetter.getOrThrow(TheMoonNoises.EROSION));
+		DensityFunction erosionBase = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.35, holderGetter.getOrThrow(TheMoonNoises.EROSION));
 		Holder<DensityFunction> erosion = context.register(EROSION, DensityFunctions.flatCache(DensityFunctions.add(DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.75, holderGetter.getOrThrow(TheMoonNoises.EROSION)), DensityFunctions.add(erosionBase, erosionBase))));
 		DensityFunction jagged = DensityFunctions.noise(holderGetter.getOrThrow(Noises.JAGGED), 1000.0, 0.0);
 
