@@ -10,18 +10,22 @@ import net.frozenblock.themoon.registry.TheMoonNoiseGeneratorSettings;
 import net.frozenblock.themoon.util.TheMoonSharedConstants;
 import net.frozenblock.themoon.world.additions.feature.TheMoonConfiguredFeatures;
 import net.frozenblock.themoon.world.additions.feature.TheMoonPlacedFeatures;
+import net.frozenblock.themoon.world.generation.noise.TheMoonDensityFunctions;
+import net.frozenblock.themoon.world.generation.noise.TheMoonNoiseData;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
 public class TheMoonFeatureBootstrap {
 
@@ -47,6 +51,14 @@ public class TheMoonFeatureBootstrap {
 		TheMoonNoiseGeneratorSettings.bootstrap(entries);
 	}
 
+	public static void bootstrapDensityFunctions(BootstapContext<DensityFunction> entries) {
+		TheMoonDensityFunctions.bootstrap(entries);
+	}
+
+	public static void bootstrapNoise(BootstapContext<NormalNoise.NoiseParameters> entries) {
+		TheMoonNoiseData.bootstrap(entries);
+	}
+
 	public static void bootstrap(FabricDynamicRegistryProvider.Entries entries) {
 		final var configuredFeatures = asLookup(entries.getLookup(Registries.CONFIGURED_FEATURE));
 		final var placedFeatures = asLookup(entries.placedFeatures());
@@ -58,6 +70,7 @@ public class TheMoonFeatureBootstrap {
 		final var structureSets = asLookup(entries.getLookup(Registries.STRUCTURE_SET));
 		final var noiseSettings = asLookup(entries.getLookup(Registries.NOISE_SETTINGS));
 		final var dimensionTypes = asLookup(entries.getLookup(Registries.DIMENSION_TYPE));
+		final var densityFunctions = asLookup(entries.getLookup(Registries.DENSITY_FUNCTION));
 
 		TheMoonSharedConstants.log("Adding finalized configured features to datagen", true);
 		entries.addAll(configuredFeatures);
@@ -79,6 +92,8 @@ public class TheMoonFeatureBootstrap {
 		entries.addAll(noiseSettings);
 		TheMoonSharedConstants.log("Adding finalized dimension types to datagen", true);
 		entries.addAll(dimensionTypes);
+		TheMoonSharedConstants.log("Adding finalized density functions to datagen", true);
+		entries.addAll(densityFunctions);
 	}
 
 	/**

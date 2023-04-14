@@ -1,7 +1,6 @@
 package net.frozenblock.themoon.mixin.gravity;
 
 import net.frozenblock.themoon.util.gravity.impl.EntityGravityInterface;
-import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.vehicle.Boat;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

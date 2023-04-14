@@ -1,8 +1,8 @@
 package net.frozenblock.themoon.world.generation.features;
 
 import com.mojang.serialization.Codec;
+import java.util.function.Consumer;
 import net.frozenblock.themoon.world.generation.features.config.CraterFeatureConfiguration;
-import net.frozenblock.themoon.world.generation.saved.crater.SavedCraterManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import java.util.function.Consumer;
 
 public class CraterFeature extends Feature<CraterFeatureConfiguration> {
 	private static final BlockState placeState = Blocks.AIR.defaultBlockState();

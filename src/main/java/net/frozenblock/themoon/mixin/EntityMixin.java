@@ -7,7 +7,6 @@ import net.frozenblock.themoon.registry.TheMoonParticleTypes;
 import net.frozenblock.themoon.tag.TheMoonBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
