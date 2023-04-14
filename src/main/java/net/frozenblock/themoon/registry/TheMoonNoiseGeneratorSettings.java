@@ -84,7 +84,7 @@ public class TheMoonNoiseGeneratorSettings {
 	public static DensityFunction moonErosion(HolderGetter<DensityFunction> densityGetter, HolderGetter<NormalNoise.NoiseParameters> noiseGetter) {
 		DensityFunction erosion = NoiseRouterData.getFunction(densityGetter, TheMoonDensityFunctions.EROSION);
 		DensityFunction craters = NoiseRouterData.getFunction(densityGetter, TheMoonDensityFunctions.CRATERS);
-		DensityFunction largeCraters = DensityFunctions.add(craters, craters).square();
+		DensityFunction largeCraters = DensityFunctions.add(craters, craters).cube();
 		DensityFunction withErosion = DensityFunctions.rangeChoice(largeCraters, -1000000.0, 0, erosion, DensityFunctions.add(largeCraters, erosion));
 		return withErosion;
 	}

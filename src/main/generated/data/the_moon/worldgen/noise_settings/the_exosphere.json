@@ -21,7 +21,7 @@
     "erosion": {
       "type": "minecraft:range_choice",
       "input": {
-        "type": "minecraft:square",
+        "type": "minecraft:cube",
         "argument": {
           "type": "minecraft:add",
           "argument1": "the_moon:the_moon/craters",
@@ -34,7 +34,7 @@
       "when_out_of_range": {
         "type": "minecraft:add",
         "argument1": {
-          "type": "minecraft:square",
+          "type": "minecraft:cube",
           "argument": {
             "type": "minecraft:add",
             "argument1": "the_moon:the_moon/craters",

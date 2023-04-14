@@ -1,12 +1,36 @@
 {
   "type": "minecraft:flat_cache",
   "argument": {
-    "type": "minecraft:shifted_noise",
-    "noise": "the_moon:erosion",
-    "shift_x": "the_moon:shift_x",
-    "shift_y": 0.0,
-    "shift_z": "the_moon:shift_z",
-    "xz_scale": 0.35,
-    "y_scale": 0.0
+    "type": "minecraft:add",
+    "argument1": {
+      "type": "minecraft:shifted_noise",
+      "noise": "the_moon:erosion",
+      "shift_x": "the_moon:shift_x",
+      "shift_y": 0.0,
+      "shift_z": "the_moon:shift_z",
+      "xz_scale": 0.75,
+      "y_scale": 0.0
+    },
+    "argument2": {
+      "type": "minecraft:add",
+      "argument1": {
+        "type": "minecraft:shifted_noise",
+        "noise": "the_moon:erosion",
+        "shift_x": "the_moon:shift_x",
+        "shift_y": 0.0,
+        "shift_z": "the_moon:shift_z",
+        "xz_scale": 0.25,
+        "y_scale": 0.0
+      },
+      "argument2": {
+        "type": "minecraft:shifted_noise",
+        "noise": "the_moon:erosion",
+        "shift_x": "the_moon:shift_x",
+        "shift_y": 0.0,
+        "shift_z": "the_moon:shift_z",
+        "xz_scale": 0.25,
+        "y_scale": 0.0
+      }
+    }
   }
 }

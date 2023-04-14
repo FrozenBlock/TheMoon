@@ -34,7 +34,8 @@ public class TheMoonDensityFunctions {
 		DensityFunction shiftZ = registerAndWrap(context, SHIFT_Z, DensityFunctions.flatCache(DensityFunctions.cache2d(DensityFunctions.shiftB(holderGetter.getOrThrow(Noises.SHIFT)))));
 
 		Holder<DensityFunction> continents = context.register(CONTINENTS, DensityFunctions.flatCache(DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25, holderGetter.getOrThrow(TheMoonNoises.CONTINENTALNESS))));
-		Holder<DensityFunction> erosion = context.register(EROSION, DensityFunctions.flatCache(DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.35, holderGetter.getOrThrow(TheMoonNoises.EROSION))));
+		DensityFunction erosionBase = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25, holderGetter.getOrThrow(TheMoonNoises.EROSION));
+		Holder<DensityFunction> erosion = context.register(EROSION, DensityFunctions.flatCache(DensityFunctions.add(DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.75, holderGetter.getOrThrow(TheMoonNoises.EROSION)), DensityFunctions.add(erosionBase, erosionBase))));
 		DensityFunction jagged = DensityFunctions.noise(holderGetter.getOrThrow(Noises.JAGGED), 1000.0, 0.0);
 
 		registerTerrainNoises(context, holderGetter2, jagged, continents, erosion, OFFSET, FACTOR, JAGGEDNESS, DEPTH, SLOPED_CHEESE, false);
@@ -59,7 +60,7 @@ public class TheMoonDensityFunctions {
 
 	private static DensityFunction craters(HolderGetter<NormalNoise.NoiseParameters> noiseParameters) {
 		DensityFunction densityFunction = DensityFunctions.noise(noiseParameters.getOrThrow(TheMoonNoises.CRATER), 12.0, 2);
-		DensityFunction densityFunction2 = DensityFunctions.mappedNoise(noiseParameters.getOrThrow(TheMoonNoises.CRATER_RARENESS), 0.0, -2.0);
+		DensityFunction densityFunction2 = DensityFunctions.mappedNoise(noiseParameters.getOrThrow(TheMoonNoises.CRATER_RARENESS), 0.0, 1.0);
 		DensityFunction densityFunction3 = DensityFunctions.mappedNoise(noiseParameters.getOrThrow(TheMoonNoises.CRATER_THICKNESS), 2.0, 1.1);
 		DensityFunction densityFunction4 = DensityFunctions.add(DensityFunctions.mul(densityFunction, DensityFunctions.constant(2.0)), densityFunction2);
 		return DensityFunctions.cacheOnce(DensityFunctions.mul(densityFunction4, densityFunction3.square()));
